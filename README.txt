@@ -26,6 +26,7 @@ container ID - hf-container
 css class
 content type
 node ID
+weight
 
 
 Logs:
