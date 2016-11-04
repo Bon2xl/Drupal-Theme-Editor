@@ -1,0 +1,49 @@
+/**********************************************
+Toggle mobile
+***********************************************/
+.toggle-mobile {
+  $w: 3.13rem;
+  $h: 1.25rem;
+
+  display: none;
+  position: absolute;
+  right: $w;
+  top: 2.44rem;
+
+  span {
+    text-indent: -2000px;
+  }
+
+  &::after,
+  &::before,
+  span {
+    border-radius: $bx-corner;
+    content: "";
+    display: block;
+    width: 1.44rem;
+    height: .25rem;
+    background: $mob-icon-bg;
+    margin: .31rem 0;
+
+    &:hover {
+      background: $mob-icon-bg-hover;
+    }
+  }
+
+  &.show {
+    display: block;
+  }
+
+  @media #{$small-only}, #{$medium-only} {
+    display: block;
+    right: 1.19rem;
+  }
+
+  @media #{$medium-only} {
+    top: 1.08rem;
+  }
+
+  @media #{$small-only} {
+    top: .44rem;
+  }
+}

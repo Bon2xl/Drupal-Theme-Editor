@@ -1,0 +1,10 @@
+name = Search Bento
+description = Provides a bento-style interface between search.
+core = 7.x
+dependencies[] = hf_stacks_search_solr
+dependencies[] = search_api
+dependencies[] = search_api_solr
+package = HybridForge Stacks
+version = 7.x-0.1
+
+stylesheets[all][] = css/hf_search_bento.css

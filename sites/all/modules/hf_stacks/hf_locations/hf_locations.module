@@ -1,0 +1,27 @@
+<?php
+/**
+ * Implements hook_block_info().
+ */
+function hf_locations_block_info() {
+  $blocks = array();
+  $blocks['hf_location_bar'] = array(
+	'info' => t('HF Location Bar')
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function hf_locations_block_view($delta='') {
+  $block = array();
+  switch($delta) {
+	case 'hf_location_bar' :
+    module_load_include('tpl.inc', 'hf_locations', 'templates/hf_locations');
+	  $block['content'] = location_bar_view_page_callback();
+	  break;
+  }
+
+  return $block;
+}
+

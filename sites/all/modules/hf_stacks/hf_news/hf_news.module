@@ -1,0 +1,186 @@
+<?php
+/**
+ * Main module file of the News Listing Module.
+ * @author Bryan Lam
+ */
+
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function hf_news_menu() {
+    $items = array();
+    $items['news'] = array(
+        'title' => t('News'),
+        'page callback' => 'hf_news_main',
+        'access arguments' => array('access content'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+/**
+ * Implements hook_theme()
+ */
+function hf_news_theme() {
+    return array(
+        'news_page' => array(
+            'template' => 'templates/hf-news',
+            'variables' => array(),
+        ),
+    );
+}
+
+/**
+ * @page Main Page of News
+ * This function builds the content of the News page. Queries the database for New Nodes returns
+ * array to tpl file.
+ */
+function hf_news_main() {
+    // retrieve query string, if available.
+    $query_params = drupal_get_query_parameters();
+
+    //Query the fields needed for listing
+    $query = db_select('node', 'n')->extend('PagerDefault')->limit(10); //Pagination limit set to 10
+    $query->join('field_data_field_news_date', 'date', 'date.entity_id = n.nid');
+    $query->leftJoin('field_data_field_news_body', 'body', 'body.entity_id = n.nid');
+    $query->leftJoin('field_data_field_news_image', 'img', 'img.entity_id = n.nid');
+    $query->fields('body', array('field_news_body_value'));
+    $query->fields('date', array('field_news_date_value'));
+    $query->fields('img', array('field_news_image_fid'));
+    $query->fields('n', array('title', 'nid'));
+    $query->condition('type', 'news', '=');
+    $query->orderBy('field_news_date_value', 'DESC');
+    $news = $query->execute()->fetchAll();
+
+    /*
+    //Grab all news taxonomy terms
+    $types = get_news_category();
+
+    //If there are taxonomy terms, check to see if filters are set for taxonomy
+    if(count($types) > 0) {
+        //Iterate for each to create custom conditions for queries
+        foreach($types as $type) {
+            if($query_params['filter'] == strtolower($type->name)) {
+                $query->join('field_data_field_news_category', 'news_category', 'news_category.entity_id = n.nid');
+                $query->join('taxonomy_term_data', 'category_term', 'category_term.tid = news_category.field_news_category_tid');
+                $query->condition('category_term.name', $type->name, '=');
+                $news = $query->execute()->fetchAll();
+            }
+        }
+    }
+    */
+
+    //Strips and Trims Body Text for Teaser
+    foreach($news as $posting) {
+        if($posting->field_news_body_value !== null) {
+            $posting->field_news_body_value = word_trim(strip_tags($posting->field_news_body_value), 25, TRUE);
+        }
+    }
+
+    //Return listing to page with pagination
+    $output = theme('news_page', array('news' => $news));
+    $output .= theme('pager');
+    return $output;
+}
+
+
+/**
+ * @form hf_news_form_filter
+ */
+function hf_news_form_filter($form, &$form_state) {
+    $query_params = drupal_get_query_parameters();
+    $form = array();
+
+    //Retrieve all taxonomy terms
+    $types = get_news_category();
+
+    //Initial options array for select list
+    $options = array(
+        'all' => t('All')
+    );
+
+
+    //Create new list options
+    foreach($types as $type) {
+        $options[strtolower($type->name)] = t($type->name);
+    }
+
+    //Filter
+    $form['filter'] = array(
+      '#type' => 'select',
+      '#title' => t('Filter'),
+      '#options' => $options,
+      '#default_value' => (isset($query_params['filter'])) ? $query_params['filter'] : 'all',
+    );
+
+    //Submit Button
+    $form['buttons']['filter'] = array(
+      '#type' => 'submit',
+      '#value' => t('Apply'),
+    );
+
+    if($types) {
+        return $form;
+    } else {
+        return null;
+    }
+}
+
+/**
+ * Implements drupal_form_submit
+ * @param $form
+ * @param $form_state
+ */
+function hf_news_form_filter_submit(&$form, &$form_state) {
+    $selectedFilter = $form_state['values']['filter'];
+
+    drupal_goto("news", array('query' => array('filter' => $selectedFilter)));
+}
+
+/**
+ * Queries the database for all terms in taxonomy
+ * @return array of types
+ */
+function get_news_category(){
+  /*
+    //Query all directory listing types used
+    $query = db_select('field_data_field_news_category', 'news_category')->distinct();
+    $query->join('taxonomy_term_data', 'category_term', 'category_term.tid = news_category.field_news_category_tid');
+    $query->fields('category_term', array('name'));
+    $types = $query->execute()->fetchAll();
+
+    return $types;
+  */
+}
+
+/**
+ * Trim a string to a given number of words
+ *
+ * @param $string
+ *   the original string
+ * @param $count
+ *   the word count
+ * @param $ellipsis
+ *   TRUE to add "..."
+ *   or use a string to define other character
+ * @param $node
+ *   provide the node and we'll set the $node->
+ *
+ * @return
+ *   trimmed string with ellipsis added if it was truncated
+ */
+function word_trim($string, $count, $ellipsis = FALSE){
+    $words = explode(' ', $string);
+    if (count($words) > $count){
+        array_splice($words, $count);
+        $string = implode(' ', $words);
+        if (is_string($ellipsis)){
+            $string .= $ellipsis;
+        }
+        elseif ($ellipsis){
+            $string .= '…';
+        }
+    }
+    return $string;
+}

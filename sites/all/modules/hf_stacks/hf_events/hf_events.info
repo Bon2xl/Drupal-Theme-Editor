@@ -1,0 +1,6 @@
+name = Stacks Events Block
+description = Provides custom blocks for events
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-0.1
+stylesheets[all][] = hf_events.css

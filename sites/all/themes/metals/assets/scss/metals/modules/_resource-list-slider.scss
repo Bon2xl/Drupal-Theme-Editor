@@ -1,0 +1,135 @@
+// /**********************************************
+// Resource List Slider
+// ***********************************************/
+.resource-list-slider {
+  $transition: color .5s ease-in, opacity .5s ease-in;
+
+  @include grid-column(12);
+  background: $resource-slider-bg;
+
+  .views-row {
+    border-radius: $bx-corner;
+    border: 1px solid $resource-slider-row-border-clr;
+    margin-bottom: 0;
+    padding: .45rem;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    position: relative;
+    opacity:.1;
+    transition:$transition;
+  }
+
+  .entity-field-collection-item,
+  .views-label-title {
+    display: none;
+  }
+
+  .views-title {
+    float: left;
+  }
+
+  .views-field-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .field-content {
+    font-size: 0.9em;
+    font-weight: bold;
+    color:$resource-slider-title;
+  }
+
+  .img {
+    border-radius: $bx-corner;
+    width: 3.13rem;
+    height: 3.13rem;
+    display: block;
+    margin-right: .63rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    float: left;
+  }
+
+  .open-modal {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  // Slider
+  .slick-slider {
+    margin: 0 .9em;
+  }
+
+  .slick-list {
+    margin: 0 1.56rem;
+  }
+
+  .slick-dots {
+    display: none!important;
+  }
+
+   .slick-center {
+    opacity: 1!important;
+    background: white;
+    transition:$transition;
+  }
+
+ 
+  // Slider button
+  @include slider-next-prev(32px, 38%, 38%, white);
+
+  .slick-prev, .slick-next {
+    opacity:1;
+    transition: all .1s ease-in;
+    background-color: $secondary-clr;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @media #{$large-up} {
+    .views-row {
+      padding-left:5px;
+      padding-right:5px;
+    }
+
+    .views-row, .slick-list {
+      height: 200px;
+    }
+  }
+
+  @media #{$medium-only}, #{$small-only} {
+    .views-row, .slick-list {
+      height: 110px;
+    }
+  }
+
+  @media #{$medium-only} {
+    .slick-prev { left: 28%; }
+    .slick-next { right: 28%; }
+     
+  }
+
+  @media #{$small-only} {
+    .slick-slider { margin: 0; }
+    .slick-prev { left: 0; }
+    .slick-next { right: 0; }
+  }
+}
+
+
+
+// Animate on load
+.cssanimations .resource-list-slider {
+  @include load-animate();
+}
+

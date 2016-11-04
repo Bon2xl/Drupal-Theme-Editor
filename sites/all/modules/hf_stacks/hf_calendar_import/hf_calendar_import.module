@@ -1,0 +1,298 @@
+<?php
+require_once('./' . drupal_get_path('module', 'date') . '/date_api/date_api_ical.inc');
+require_once('./' . drupal_get_path('module', 'date') . '/date_repeat/date_repeat.module');
+
+/**
+ * Implements hook_module()
+ *
+ * @return array
+ */
+function hf_calendar_import_menu() {
+  $items = array();
+  $items['admin/config/stacks/calendarimport'] = array(
+    'title' => 'Calendar Import',
+    'description' => 'Import events from iCal.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('hf_calendar_import_form'),
+    'access arguments' => array('administer stacks config'),
+    'type' => MENU_CALLBACK,
+    'file' => 'hf_calendar_import.admin.inc'
+  );
+  $items['admin/config/stacks/calendarimport/delete'] = array(
+    'title' => 'Delete current events',
+    'description' => 'Remove all current existing events before importing calendar',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('hf_calendar_import_delete'),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('administer stacks config'),
+    'file' => 'hf_calendar_import.admin.inc'
+  );
+  return $items;
+}
+/**
+ * This function takes the URL inputted by the user and utilizes the ICalReader library to parse the information
+ * into an array. For each array, a node is created with the relevant fields obtained.
+ *
+ * @param $url (string) inputted iCal url.
+ * @param $type (string) The type of event.
+ * @param $category (string) The category of the event.
+ * @param $topic (string) The topic of the event.
+ * @param $location (string) The location of the event.
+ * @return none
+ */
+function hf_calendar_import_load($url,$type=null, $category=null, $topic=null, $location=null) {
+  global $user;
+
+  $newEvents = 0;
+  $updatedEvents = 0;
+  //retrieve existing events
+  $existing_events = get_existing_events();
+
+  //import events from ical url
+  $ical_event_array = date_ical_import($url);
+
+  //$timezone = new DateTimeZone($ical_event_array[0]['X-WR-TIMEZONE']);
+  $timezone = new DateTimeZone(date_default_timezone());
+
+  //dpm($ical_event_array);
+  //grab only the events array
+  $ical_events = $ical_event_array[0]['VEVENT'];
+  //dpm($ical_events);
+  //$example = node_load(2533);
+  //dpm($example);
+
+  $UTC = new DateTimeZone(("UTC"));
+
+  try {
+
+    //Iterate through each event in the event array created by the ICalReader
+    foreach($ical_events as $ical_event) {
+      $existing = false;
+
+      //Convert all times to UTC time zone from the set iCal's timezone
+      if($ical_event['DTSTART']['all_day']) {
+        $start_date = new DateTime($ical_event['DTSTART']['datetime'] . ' 00:15:00', $timezone);
+        $start_date->setTimezone($UTC);
+        $start_date = $start_date->format('Y-m-d H:i:s');
+      } else {
+        $start_date = new DateTime($ical_event['DTSTART']['datetime'], $timezone);
+        //$start_date->setTimezone($UTC);
+        $start_date = $start_date->format('Y-m-d H:i:s');
+      }
+
+      if($ical_event['DTEND']['all_day']) {
+        $end_date = new DateTime($ical_event['DTEND']['datetime'] . ' 23:45:00', $timezone);
+        $end_date->setTimezone($UTC);
+        $end_date = $end_date->format('Y-m-d H:i:s');
+      } else {
+        $end_date = new DateTime($ical_event['DTEND']['datetime'], $timezone);
+        //$end_date->setTimezone($UTC);
+        $end_date = $end_date->format('Y-m-d H:i:s');
+      }
+//      dpm($ical_event['DTSTART']['datetime'] );
+//      dpm($start_date);
+//      dpm($ical_event['DTEND']['datetime']);
+//      dpm($end_date);
+
+      //if there are any existing events in the system
+      if(count($existing_events) > 0) {
+        //Iterate through all existing events in system
+        foreach($existing_events as $existing_event) {
+
+          //If any existing events have an ical uid, check for any changes.
+          if($existing_event->field_ical_uid_value == $ical_event['UID']) {
+            if($existing_event->field_event_date_rrule != null) {
+              $existing_rrule = str_replace("RRULE:", "", $existing_event->field_event_date_rrule);
+              //dpm($existing_rrule);
+            }
+
+            //dpm($existing_event);
+//            dpm($ical_event);
+//            dpm($start_date);
+
+            //Flags
+            $changed = false;
+            $existing = true;
+
+            //Check if title and body has changed. If so, update the title and description.
+            if($existing_event->title != $ical_event['SUMMARY'] || $existing_event->body_value != $ical_event['DESCRIPTION']) {
+
+              //load the node
+              $changed_node = node_load($existing_event->nid);
+
+              //update the title and body of the node
+              $changed_node->title = $ical_event['SUMMARY'];
+              $changed_node->body[LANGUAGE_NONE][0]['value'] = $ical_event['DESCRIPTION'];
+
+              //submit and save the node
+              $changed_node = node_submit($changed_node);
+              node_save($changed_node);
+              $changed = true;
+              //dpm('title changed');
+            }
+            //Check if the dates has changed, if so update them.
+            if($existing_event->field_event_date_value != $start_date
+              || $existing_event->field_event_date_value2 != $end_date) {
+
+              //load the node
+              $changed_node = node_load($existing_event->nid);
+
+              //Wipe out all older dates due to new RRULE.
+              $changed_node->field_event_date[LANGUAGE_NONE] = null;
+
+              //dpm($changed_node);
+
+              //Create an array of dates
+              $dates= array(
+                'value' => $start_date,
+                'value2' => $end_date,
+                'timezone' => $timezone,
+                'timezone_db' => $ical_event['DTSTAMP']['tz'],
+                'date_type' => 'datetime',
+              );
+
+              //Update the node with new dates
+              $changed_node->field_event_date[LANGUAGE_NONE][] = $dates;
+
+              //submit and save the node
+              $changed_node = node_submit($changed_node);
+              node_save($changed_node);
+              $changed = true;
+              //dpm('date changed');
+            }
+
+            //If Topic/Category/Type or Branch has changed
+            if($existing_event->field_event_type_tid != $type ||
+              $existing_event->field_event_topic_tid != $topic ||
+              $existing_event->field_event_category_tid != $category ||
+              $existing_event->field_branch_target_id != $location) {
+              //load the node
+              $changed_node = node_load($existing_event->nid);
+
+              //update the title and body of the node
+              $changed_node->field_event_type[LANGUAGE_NONE][0]['tid'] = $type;
+              $changed_node->field_event_topic[LANGUAGE_NONE][0]['tid'] = $topic;
+              $changed_node->field_event_category[LANGUAGE_NONE][0]['tid'] = $category;
+              $changed_node->field_branch[LANGUAGE_NONE][0]['target_id'] = $location;
+
+              //submit and save the node
+              $changed_node = node_submit($changed_node);
+              node_save($changed_node);
+              $changed = true;
+            }
+
+            //Check if RRULE has changed
+            //dpm($existing_rrule != $ical_event['RRULE']['DATA']);
+            if($existing_rrule != $ical_event['RRULE']['DATA']) {
+              $changed_node = node_load($existing_event->nid);
+
+              $changed_node->field_event_date[LANGUAGE_NONE][0]['rrule'] = ($ical_event['RRULE']['DATA']) ? 'RRULE:'.$ical_event['RRULE']['DATA'] : null;
+
+              $changed_node = node_submit($changed_node);
+              node_save($changed_node);
+              //dpm($changed_node);
+
+              $changed = true;
+              //dpm('rrule changed');
+            }
+            if($changed == true) {
+              $updatedEvents++;
+            }
+          }
+        }
+      }
+
+      //If there isn't an event already existing, create a new event node.
+      if($existing == false) {
+
+        $dates= array(
+          'value' => $start_date,
+          'value2' => $end_date,
+          'rrule' => ($ical_event['RRULE']['DATA'] != null) ? 'RRULE:'.$ical_event['RRULE']['DATA'] : null,
+          'timezone' => $ical_event['DTEND']['tz'],
+          'timezone_db' => $ical_event['DTSTAMP']['tz'],
+          'date_type' => 'datetime',
+        );
+
+        //Create a Node Object
+        $node = new stdClass();
+        $node->type = 'event';
+        node_object_prepare($node);
+        $node->language = LANGUAGE_NONE;
+        $node->title = $ical_event['SUMMARY'];
+        $node->body[LANGUAGE_NONE][0]['value'] = $ical_event['DESCRIPTION'];
+        $node->field_ical_uid[LANGUAGE_NONE][0]['value'] = $ical_event['UID'];
+        $node->field_event_date[LANGUAGE_NONE][] = $dates;
+        //Location is supplied
+        if($location != null) {
+          $node->field_branch[LANGUAGE_NONE][0]['target_id'] = $location;
+        }
+        //Category is supplied
+        if($category != null) {
+          $node->field_event_category[LANGUAGE_NONE][0]['tid'] = $category;
+        }
+        //Event Type is supplied
+        if($type != null) {
+          $node->field_event_type[LANGUAGE_NONE][0]['tid'] = $type;
+        }
+        //Event Topic is supplied
+        if($topic != null) {
+          $node->field_event_topic[LANGUAGE_NONE][0]['tid'] = $topic;
+        }
+        $node->uid = $user->uid;
+        $node->status = 1;
+        $node->promote = 0;
+        $node->comment = 1;
+        //dpm($node);
+        $node = node_submit($node);
+        node_save($node);
+        $newEvents++;
+
+        //dpm($node);
+
+      }
+    }
+  } catch(Exception $e) {
+    //Display error message if something goes wrong.
+    drupal_set_message(t('Unable to import calendar ical_events at this time, please try again later!'), 'error');
+    watchdog('module', 'Error while saving a node. Message: !message', array('!message' => $e->getMessage()), WATCHDOG_ERROR);
+  }
+
+  dpm($newEvents);
+  dpm($updatedEvents);
+  if($newEvents == 0 && $updatedEvents == 0) {
+    drupal_set_message(t('No new events were imported from the provided url.'));
+  } else {
+    if($updatedEvents == 0) {
+      drupal_set_message(t('Successfully imported ' . $newEvents . ' events from provided iCal url.'));
+    } else {
+      drupal_set_message(t('Successfully imported ' . $newEvents . ' events and updated '. $updatedEvents . ' existing events from provided iCal url.'));
+    }
+  }
+
+
+}
+
+function get_existing_events() {
+  $query = db_select('node', 'n');
+  $query->leftJoin('field_data_body', 'body', 'body.entity_id = n.nid');
+  $query->leftJoin('field_data_field_ical_uid', 'uid', 'uid.entity_id = n.nid');
+  $query->leftJoin('field_data_field_event_date', 'date', 'date.entity_id = n.nid');
+  $query->leftJoin('field_data_field_event_category', 'category', 'category.entity_id = n.nid');
+  $query->leftJoin('field_data_field_event_type', 'type', 'type.entity_id = n.nid');
+  $query->leftJoin('field_data_field_event_topic', 'topic', 'topic.entity_id = n.nid');
+  $query->leftJoin('field_data_field_branch', 'branch', 'branch.entity_id = n.nid');
+  $query->fields('date', array('field_event_date_value', 'field_event_date_value2', 'field_event_date_rrule'));
+  $query->fields('uid', array('field_ical_uid_value'));
+  $query->fields('n', array('title', 'nid'));
+  $query->fields("body", array('body_value'));
+  $query->fields('category', array('field_event_category_tid'));
+  $query->fields('type', array('field_event_type_tid'));
+  $query->fields('topic', array('field_event_topic_tid'));
+  $query->fields('branch', array('field_branch_target_id'));
+  $query->condition('n.type', 'event', '=');
+
+  $events = $query->execute()->fetchAll();
+
+  return $events;
+}

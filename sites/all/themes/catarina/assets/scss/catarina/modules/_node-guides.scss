@@ -1,0 +1,135 @@
+/*****************************************
+Node Guides Sidebar
+*****************************************/
+.node-guide .item-list {
+  margin: 0 0 10px!important;
+
+  ul {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none;
+    height: auto !important;
+
+    li {
+      background: none !important;
+      border: none !important;
+      display: block;
+      padding: 0;
+      margin: 0 0 1px;
+      overflow: hidden;
+      white-space: normal;
+    }
+
+    a {
+      border-radius: $bx-corner;
+      padding: 10px;
+      background: $node-guide-side-link-bg;
+      float: left;
+      width: 100%;
+      color: $node-guide-side-link-clr;
+      opacity: .6;
+
+      &:hover {
+        color: $node-guide-side-link-clr;
+        background: $node-guide-side-link-active-bg;
+      }
+    }
+
+    li.active a {
+      color: $node-guide-side-link-clr;
+      background: $node-guide-side-link-active-bg;
+      opacity: 1;
+    }
+  }
+
+  @media #{$large-up}{
+    & {
+      @include grid-column(2);
+    }
+  }
+
+  @media #{$small-only}, #{$medium-only}{
+    @include grid-column(12);
+  }
+}
+
+/*****************************************
+Node Guides
+*****************************************/
+.node-guide #quicktabs-guide {
+  @include grid-row($behavior: nest);
+}
+
+.node-guide #quicktabs-container-guide {
+  @extend .clearfix;
+  position:relative;
+  display: block;
+  overflow: hidden;
+  clear: none;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  background: transparent;
+  border: none;
+
+  .quicktabs-tabpage {
+    display:block !important;
+    opacity: 1;
+  }
+
+  .quicktabs-hide {
+    opacity: 0;
+    height:0;
+  }
+
+  .ttl {
+   color: $node-guide-side-ttl-clr;
+   font-weight: bold;
+  }
+
+  .content-wrp {
+    padding-top: 0.35rem;
+  }
+
+  @media #{$large-up}{
+    & {
+      @include grid-column(10);
+    }
+  }
+
+  @media #{$small-only}, #{$medium-only}{
+    & {
+      @include grid-column(12);
+    }
+  }
+}
+
+/*****************************************
+Node Guides Blocks
+*****************************************/
+.node-guide .block-item {
+  @include grid-column(6);
+
+  .block-inner {
+    @extend .clearfix;
+    background: $main-gradient-fallback;
+    border-radius: $bx-corner;
+    border: $bx-border;
+    padding: $bx-padding ;
+    margin-bottom: .5em;
+  }
+
+  @media #{$small-only}, #{$medium-only}{
+    & {
+      @include grid-column($columns:12, $collapse:true);
+    } 
+  }
+
+  &.related {
+    width: 100% !important;
+    padding-left: 0 !important;
+  }
+}
+
+
+

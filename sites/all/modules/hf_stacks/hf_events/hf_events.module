@@ -1,0 +1,93 @@
+<?php
+/**
+ * Implementation of hook_block_info().
+ */
+function hf_events_block_info() {
+	$blocks = array();
+	$blocks['hf_events_listing'] = array(
+		'info' => t('Events Block'),
+		'cache' => DRUPAL_NO_CACHE,
+	);
+
+	return $blocks;
+}
+
+
+
+/**
+ * Implementation of hook_block_view().
+ */
+function hf_events_block_view($delta = '') {
+  // retrieve query string, if available.
+  $query_params = drupal_get_query_parameters();
+
+  //Query the fields needed for listing
+  $query = db_select('node', 'n');
+  $query->leftJoin('field_data_field_branch', 'branch', 'branch.entity_id = n.nid');
+  $query->leftJoin('field_data_field_publication_date', 'publication', 'publication.entity_id = n.nid');
+  $query->leftJoin('field_data_field_event_date', 'dates', 'dates.entity_id = n.nid');
+  $query->fields('n', array('title', 'created', 'nid', 'type'));
+  $query->fields('dates', array('entity_id', 'field_event_date_value', 'field_event_date_value2', 'field_event_date_rrule'));
+  $query->condition('n.type', 'event', '=');
+  $query->condition('n.status', '1', '=');
+  $query->condition('dates.field_event_date_value', date('Y-m-d'), '>');
+  $query->orderBy('dates.field_event_date_value', 'ASC');
+  $query->range(0,5);
+
+  $events = $query->execute()->fetchAll();
+
+  $block = array();
+
+  $block_content = "<div class=''>";
+
+  foreach ($events as $event) {
+    //dpm($event);
+
+    $block_content .= "<div class='panel row'>";
+      $date_start = new DateTime($event->field_event_date_value);
+
+      $block_content .= "<p><span class='events-block-date'>".date_format($date_start, 'D, F jS')."</span><br/>";
+      $block_content .= "<a href=\"/node/".$event->nid."\">".$event->title."</a></p>";
+
+      //$block_content .= "<span>".date_format($date_start, 'g:i A')."</span>";
+    $block_content .= "</div>";
+  }
+
+  $block_content .= "</div>";
+
+  $block['content'] = $block_content;
+  $block['title'] = 'Upcoming Events';
+
+  //Return listing to page with pagination
+
+  return $block;
+
+  /*
+    SELECT field_data_field_event_date.delta AS field_data_field_event_date_delta,
+    field_data_field_event_date.entity_id AS date_id_field_event_date,
+    field_data_field_event_date.delta AS date_delta_field_event_date,
+    node.nid AS nid,
+    field_data_field_event_date.language AS field_data_field_event_date_language,
+    field_data_field_event_date.bundle AS field_data_field_event_date_bundle,
+    field_data_field_event_date.field_event_date_value AS field_data_field_event_date_field_event_date_value,
+    field_data_field_event_date.field_event_date_value2 AS field_data_field_event_date_field_event_date_value2,
+    field_data_field_event_date.field_event_date_rrule AS field_data_field_event_date_field_event_date_rrule,
+    node.title AS node_title,
+    'node' AS field_data_field_event_date_node_entity_type,
+    'node' AS field_data_body_node_entity_type
+    FROM
+    {node} node
+    LEFT JOIN {field_data_field_branch} field_data_field_branch ON node.nid = field_data_field_branch.entity_id AND field_data_field_branch.entity_type = 'node'
+    LEFT JOIN {node} node_field_data_field_branch ON field_data_field_branch.field_branch_target_id = node_field_data_field_branch.nid
+    LEFT JOIN {field_data_field_publication_date} field_data_field_publication_date ON node.nid = field_data_field_publication_date.entity_id AND field_data_field_publication_date.entity_type = 'node'
+    LEFT JOIN {field_data_field_event_date} field_data_field_event_date ON node.nid = field_data_field_event_date.entity_id AND field_data_field_event_date.entity_type = 'node'
+    WHERE (( (node.status = '1')
+      AND (node.type IN  ('event'))
+      AND (DATE_FORMAT(ADDTIME(field_data_field_publication_date.field_publication_date_value, SEC_TO_TIME(-21600)), '%Y-%m-%d') <= '2016-08-19')
+      AND (DATE_FORMAT(ADDTIME(field_data_field_event_date.field_event_date_value, SEC_TO_TIME(-21600)), '%Y-%m-%d') > '2016-08-19') ))
+    ORDER BY field_data_field_event_date_field_event_date_value ASC
+    LIMIT 10 OFFSET 0
+  */
+
+
+}

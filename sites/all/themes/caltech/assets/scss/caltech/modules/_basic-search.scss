@@ -1,0 +1,100 @@
+/**********************************************
+Basic Search
+***********************************************/
+#top-header .basic-search {
+  z-index: 3;
+  float: right;
+  width: 35px;
+  height: 27px;
+  position: relative;
+  margin-left: 20px;
+  
+  form {
+    opacity: 0;
+    height: 0;
+    position: absolute;
+    right: 6.8%;
+    top: 26px;
+    width: 290px;
+    background: #76777b;
+    padding: 5px;
+    z-index: 9;
+    transition: all .1s ease-in;
+
+    &.active {
+      opacity: 1 !important;
+      height: auto !important;
+    }
+  }
+
+  .form-item,
+  .form-actions {
+    float: left;
+    margin: 0;
+
+    input {
+      height: 1.75rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .form-item { width: 208px; }
+  .form-item input {
+    font-size: .875rem;
+    color: $main-clr;
+    background: none;
+    border-color: #B5BCC7;
+    background: white;
+    
+    &:hover, &:focus {
+      border: 1px solid white;
+    }
+  }
+
+  .form-actions { width: 70px; }
+  .form-actions input {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left:-1px;
+    background-color: rgb(96, 99, 101);
+    color: white;
+    @extend %form-submit-button;
+    border-radius: 0;
+    border: 1px solid #B5BCC7;
+    transition:opacity .1s ease-in;
+
+    &:hover {
+      opacity:.8;
+      border-color:white;
+    }
+  }
+}
+
+
+/**********************************************
+Magnifier
+***********************************************/
+#top-header .basic-search .magnifier-link {
+  background: url(../img/search-mag-white.png);
+  width: 35px;
+  height: 27px;
+  display: block;
+  margin-left: 0;
+  float: right;
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: 7px 4px;
+  transition: opacity .1s ease-in;
+
+  &:hover {
+    opacity:.6;
+  }
+}
+
+
+/**********************************************
+Magnifier
+***********************************************/
+#top-header .basic-search .contextual-links-wrapper {
+  right: -25px;
+}

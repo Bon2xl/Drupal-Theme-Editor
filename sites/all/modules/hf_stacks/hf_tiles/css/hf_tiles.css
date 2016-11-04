@@ -1,0 +1,54 @@
+.page-admin-config-stacks-tiles .form-item-icon .form-radios {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  overflow: hidden;
+  display: block;
+  transition: all .1s ease-in; }
+  .page-admin-config-stacks-tiles .form-item-icon .form-radios.active {
+    display: block !important;
+    transition: all .1s ease-in; }
+  .page-admin-config-stacks-tiles .form-item-icon .form-radios .form-item {
+    float: left;
+    margin: 10px; }
+  .page-admin-config-stacks-tiles .form-item-icon .form-radios input[type=radio] {
+    display: none; }
+  .page-admin-config-stacks-tiles .form-item-icon .form-radios input[type=radio]:checked + label {
+    color: #0E9C57;
+    font-weight: 600; }
+  .page-admin-config-stacks-tiles .form-item-icon .form-radios label {
+    cursor: pointer !important;
+    font-size: 1.2rem; }
+.page-admin-config-stacks-tiles .form-item-icon .description {
+  position: relative;
+  display: inline-block;
+  cursor: pointer; }
+  .page-admin-config-stacks-tiles .form-item-icon .description:hover:after {
+    color: #12cb71; }
+  .page-admin-config-stacks-tiles .form-item-icon .description:after {
+    transition: all .1s ease-in;
+    content: "\f01a";
+    display: block;
+    font-family: fontAwesome;
+    font-size: 20px;
+    color: lightgrey;
+    position: absolute;
+    right: -24px;
+    top: 0; }
+  .page-admin-config-stacks-tiles .form-item-icon .description.active:after {
+    color: #0E9C57;
+    top: -1px;
+    transform: rotate(180deg); }
+
+#admin_tile_table tr td div[id$="-name"] {
+  text-align:left;
+  margin-right:30px;
+}
+#admin_tile_table tr td div[id$="-description"] {
+  text-align:left;
+  white-space: normal!important;
+}
+
+#hf-tiles-main-table-form .tabledrag-toggle-weight {
+  display:none;
+}

@@ -1,0 +1,49 @@
+/**********************************************
+Breadcrumbs
+***********************************************/
+#breadcrumb {
+  @extend .clearfix;
+  @extend %margin-a;
+
+  box-shadow: $bx-shadow;
+  border-radius: $bx-corner;
+
+  .breadcrumb {
+    @include grid-column(12);
+
+    padding-top: .5rem;
+    background: $breadcrumbs-bg;
+    box-shadow: $bx-shadow;
+    border-radius: $bx-corner;
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      &, li{
+        list-style-image: none;
+        list-style-type: none;
+      }
+
+      li {
+        display: inline-block;
+        margin-right: .63rem;
+        font-size: .85em;
+
+      }
+
+      li:not(:first-child) {
+        &:before {
+          content: "\203A";
+          margin-right: .63rem;
+          color: $breadcrumbs-first-clr;
+          display: inline-block;
+        }
+      }
+
+      li a.active {
+        color: $breadcrumbs-active-clr;
+      }
+    }
+  }
+}

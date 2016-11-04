@@ -1,0 +1,54 @@
+/**********************************************
+Section Wrapper !!!important
+.image-bg-enable, .solid-bg-enable, .page-eds
+***********************************************/
+/**********
+Not Front Section Wrapper
+**********/
+.not-front {
+  .main-content > div > .content {
+    border-radius: $bx-corner;
+    border: $bx-border;
+    padding: $bx-padding;
+    background: $bx-background;
+  }
+}
+
+/**********
+Reset main content border and padding for pages
+pages-eds, research guide, page-calendar, upcoming events
+**********/
+.not-front.page-eds, .not-front.page-research-guide, 
+.not-front.page-calendar, .not-front.page-upcoming-events,
+.not-front.page-directorylisting, .not-front.node-type-guide,
+.not-front.page-news, .not-front.page-databases,
+.not-front.page-reserves, .not-front.page-solr,
+.not-front.page-multisearch {
+  .main-content > div > .content {
+    border-radius: $bx-corner;
+    border: none;
+    padding: inherit;
+    background: none;
+  }
+}
+
+.not-front.page-directorylisting {
+  .main-content > div > .content {
+    @include grid-row($behavior: nest);
+  }
+}
+
+.not-front.page-database, .not-front.page-databases {
+  .main-content > div > .content {
+    @media #{$large-up}{
+      @include grid-row($behavior: nest);
+    }
+  }
+}
+
+.not-front.node-type-guide .quicktabs-tabpage {
+  @media #{$large-up}{
+    padding: 0;
+    margin: 0 -.9375rem;    
+  }
+}

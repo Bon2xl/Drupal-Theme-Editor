@@ -1,0 +1,5 @@
+name = Stacks Footer
+description = Provides custom blocks for the footer
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-0.1

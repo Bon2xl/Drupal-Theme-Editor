@@ -1,0 +1,28 @@
+/*********************************************
+User Profile
+**********************************************/
+.page-user .profile {
+	.user-picture {
+		float: none;
+		img {
+			border-radius: 4px;
+		}
+	}
+}
+
+
+/*********************************************
+Login
+**********************************************/
+.page-user {
+	#user-login, #user-pass, .profile, .view-signup-current-signups, .contact-form {
+		background: white;
+		padding: 1rem 2rem;
+		margin: 1px auto 17px;
+		width: 100%;
+
+		@media #{$small-only}{
+			padding: 1rem 0;
+		}
+	}
+}

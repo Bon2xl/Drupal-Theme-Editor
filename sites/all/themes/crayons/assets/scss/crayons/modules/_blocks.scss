@@ -1,0 +1,60 @@
+/**********************************************
+Blocks
+***********************************************/
+.blk-title{
+	display: inline-block;
+	clear: both;
+	margin-bottom: 0;
+
+	.panel-col-bottom & {
+		color: white;
+	}
+
+	@media #{$large-up} {
+		margin-right:0.9375rem;
+	}
+
+	@media #{$medium-up}{
+		color: white;
+		text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.37);
+	}
+
+	@media #{$small-only}{
+		width: 100%;
+		padding: 0;
+		color: $primary-clr;
+		font-weight: 600;
+		position: relative;
+		margin-bottom: 6px;
+	  padding-bottom: 0px;
+	  padding-top: 9px;
+	}
+}
+
+.blk-title {
+	@media #{$medium-up}{
+		.panel-col-top & {
+			@include border-title($color:'teal', $position:'right-arrow', $height:40px, $topBgSize: 345px, $arrowOffset: -31px);
+		}
+
+		.panel-col-first & {
+			@include border-title($color:'yellow', $position:'right-arrow', $height:40px, $topBgSize: 345px, $arrowOffset: -31px);
+            color: #555555;
+		}
+
+		.panel-col-last & {
+			@include border-title($color:'red', $position:'right-arrow', $height:40px, $topBgSize: 345px, $arrowOffset: -31px);
+		}
+
+		.panel-col-bottom & {
+			@include border-title($color:'teal', $position:'right-arrow', $height:40px, $topBgSize: 345px, $arrowOffset: -31px);
+		}
+	}
+}
+
+
+#panels-ipe-regionid-left {
+  button:before, button:after {
+    color: #555555;
+  }
+}

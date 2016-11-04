@@ -1,0 +1,324 @@
+/**********************************************
+Body
+***********************************************/
+body {
+  background-color: $body-bg;
+}
+a {
+  color: $body-link-clr;
+
+  &:hover, &:active, &:focus {
+    color: darken($body-link-clr,10%);
+  }
+}
+
+/**********************************************
+Table
+***********************************************/
+table {
+  background: $base-tbl-bg;
+
+  thead tr th {
+    color: $base-tbl-hr-clr;
+    border-bottom-width: 1px;
+    font-weight: 600;
+  }
+
+  tr td {
+    font-size: .8rem;
+  }
+
+  tr.odd {
+    background-color: $base-tbl-tr-odd-bg;
+  }
+}
+
+/**********************************************
+Full Width
+***********************************************/
+.full-width {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: initial;
+}
+
+/**********************************************
+Top Header
+***********************************************/
+#top-header {
+  position: relative;
+
+  @media #{$small-only}, #{$medium-only} {
+    display: none;
+  }
+}
+
+/**********************************************
+Main Wrapper
+***********************************************/
+.main-wrapper {
+  background-color: $main-wrapper-bg;
+}
+
+/**********************************************
+Section Wrapper
+***********************************************/
+.section-wrapper {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/**********
+Not Front Section Wrapper
+**********/
+.not-front .section-wrapper {
+  .main-content {
+    .content {
+      > h2,  > h3 {
+        margin-top: 1em;
+        padding-bottom: .25em;
+        margin-bottom: .5em;
+      }
+
+      h3.ttl-signup-closed.alert-box {
+        clear: both;
+        width: auto;
+        text-align: center;
+        display: inline-table;
+        padding-bottom: 1.25em;
+        margin: 0.3rem 0 1em 0;
+        background: $grey-clr !important;
+        border-color: $grey-clr;
+      }
+
+      ul {
+        padding-top: 1em;
+        margin-left: 2rem;
+      }
+    }
+  }
+}
+
+.not-front.page-eds {
+  background: none!important;
+}
+
+.not-front:not(.page-eds) {
+  .main-content > div > .content {
+    @extend .clearfix;
+  }
+}
+
+/**********************************************
+Top Header
+***********************************************/
+#top-header {
+  background: white;
+}
+
+/**********************************************
+Header
+***********************************************/
+#header {
+  position:relative;
+  z-index: 1;
+
+  .header-row > .large-12 {
+    position:static;
+  }
+
+  @media #{$small-only}, #{$medium-only} {
+    margin-bottom: 10px;
+  }
+}
+
+/**********************************************
+Main Background
+***********************************************/
+.main-background {
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -2;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+
+  .mobile & {
+    background-attachment: scroll !important;
+  }
+
+  .page-media-browser &{
+    display:none!important;
+  }
+}
+
+/**********************************************
+Modal
+***********************************************/
+#stacks-modal h2 {
+  text-align: center;
+  margin-bottom: 1.25rem;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $primary-clr;
+}
+
+/**********************************************
+Tabs
+***********************************************/
+.page-user {
+  ul.primary li.active a {
+    border-bottom: none;
+    background-color: transparent;
+  }
+}
+.tabs .tabs {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 1em !important;
+  padding: 0;
+  border-bottom: 1px solid $base-tabs-border-clr !important;
+
+  li {
+    float: left;
+    margin-left: -1px;
+    margin-bottom: -1px;
+  }
+
+  a {
+    margin-right: 0;
+    font-size: 0.85em;
+    padding: .31rem .63rem;
+    float: left;
+    background-color: $base-tabs-link-bg;
+    border-color: $base-tabs-link-border-clr;
+  }
+
+  li.active a{
+    border-color: #ddd !important;
+  }
+
+
+  &.secondary {
+    margin-top: -14px;
+    li {
+      padding: 0;
+
+      &:first-child {
+        border-left: 1px solid #cacaca;
+      }
+    }
+    a.active {
+      border-bottom: 1px solid;
+    }
+  }
+
+  @media #{$small-only}, #{$medium-only} {
+    li {
+      height: 27px;
+    }
+  }
+}
+
+
+/**********************************************
+Sharethis-buttons
+***********************************************/
+.sharethis-buttons {
+  .sharethis-wrapper {
+    opacity: .8;
+    //transition: opacity .1s ease-in, transform .1s ease-in;
+
+    &:hover {
+      transform: translate(0, -2px);
+      opacity: 1;
+    }
+
+    .stLarge {
+      $wh: 16px;
+      background-size: $wh $wh;
+      width: $wh;
+      height: $wh;
+    }
+
+    .st_email_large .stLarge{
+      background-image: url(http://w.sharethis.com/images/email_16.png) !important;
+    }
+
+    .st_sharethis_large .stLarge{
+      background-image: url(http://w.sharethis.com/images/sharethis_16.png) !important;
+    }
+  }
+}
+
+/**********************************************
+Panels
+***********************************************/
+.panel-separator, .panels-ipe-button-container .panels-ipe-change-layout {
+  display: none;
+}
+
+.panels-ipe-portlet-content {
+  @extend .clearfix;
+}
+
+.section-wrapper .panel-panel {
+  @media #{$small-only}, #{$medium-only} {
+    width: 100%;
+    float: none;
+  }
+}
+
+/**********************************************
+Page Filter
+***********************************************/
+.page-filter .main-content .content {
+  @extend .bg-box;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/**********************************************
+Bg wrapper
+***********************************************/
+.bg-wrapper {
+  box-shadow: $bx-shadow;
+  border-radius: $bx-corner;
+  border: $bx-border;
+  padding: $bx-padding;
+}
+
+/**********************************************
+Admin Toolbar / Admin Menu
+***********************************************/
+#admin-menu {
+ .dropdown {
+    font-size: 0.7rem;
+  }
+}
+
+/**********************************************
+Sub-footer
+***********************************************/
+#sub-footer {
+  .section {
+    @include grid-row();
+  }
+}
+
+/**********************************************
+Sidebar
+***********************************************/
+.sidebar {
+  @media #{$small-only}, #{$medium-only} {
+    .page-upcoming-events & {
+      height: 0
+    }
+  }
+}

@@ -1,0 +1,234 @@
+<?php
+// $Id$
+
+/**********************************************************
+   Copyright (c) : Hybrid Forge 2010-12 . All Rights Reserved.
+   Author: James Lam
+   Modified by: Jeremy Smereka
+   Date: 2012-08-23
+ **********************************************************/
+
+require_once('includes/day_in_history.event.php');
+
+/*
+ * Implementation of hook_permission().
+ */
+function day_in_history_permission() {
+  return array(
+    'administer day in history' => array(
+      'title' => t('Administer Day in History'),
+      'description' => t('Allows access to Day in History admin page.'),
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function day_in_history_theme() {
+  return array(
+    'day_in_history_list' => array(
+      'arguments' => array('form' => NULL),
+      'file' => 'day_in_history.admin.inc',
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function day_in_history_menu() {
+  $items['admin/content/day_in_history'] = array(
+    'title' => 'This Day In History',
+    'description' => 'Lists all events and their related book.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('day_in_history_list'),
+    'access arguments' => array('administer day in history'),
+    'file' => 'day_in_history.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  $items['admin/content/day_in_history/list'] = array(
+    'title' => 'List',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+
+  $items['node/add/day_in_history'] = array(
+    'title' => 'This Day In History',
+    'description' => 'Create a historical event that will appear on the This Day in History block on the same day of the year as the historical event.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('day_in_history_form', 'add', new day_in_history_event()),
+    'access arguments' => array('administer day in history'),
+    'file' => 'day_in_history.admin.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+
+  $items['admin/content/day_in_history/edit/%day_in_history_event'] = array(
+    'title' => 'Edit',
+    'description' => 'Edit a historical event.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('day_in_history_form', 'edit', 4),
+    'access arguments' => array('administer day in history'),
+    'type' => MENU_CALLBACK,
+    'file' => 'day_in_history.admin.inc',
+  );
+
+  $items['admin/content/day_in_history/delete/%day_in_history_event'] = array(
+    'title' => 'Confirm Delete',
+    'description' => 'Delete a historical event.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('day_in_history_delete', 4),
+    'access arguments' => array('administer day in history'),
+    'type' => MENU_CALLBACK,
+    'file' => 'day_in_history.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implementation of hook_block().
+ */
+function day_in_history_block_info() {
+    $blocks['day_in_history'] = array(
+      'info' => 'This Day In History',
+      'cache' => DRUPAL_NO_CACHE,
+      'status' => 1,
+      'visibility' => 1,
+      'pages' => '<front>',
+      'region' => 'left',
+    );
+    return $blocks;
+}
+
+/**
+ * Implementation of hook_block_configure()
+ */
+function day_in_history_block_configure($delta = '') {
+//  error_log(__FUNCTION__);
+    $form['day_in_history_link_url'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Link URL'),
+      '#col' => 100,
+      '#rows' => 2,
+      '#maxlength' => 255,
+      '#default_value' => variable_get('resource_complete_link_href_php', 'http://catalogue.tracpac.ab.ca/polaris/search/searchresults.aspx?ctx=1.1033.0.0.3&type=Keyword&term=$isbn&by=ISBN&sort=RELEVANCE&limit=TOM=*&query=&page=0'),
+      '#description' => t('Enter URL for resource link. The URL will be evaluated with PHP interpreter. The following variables are created for use: $isbn, $rank, $author, $title'),
+    );
+    $form['day_in_history_img_src'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Image URL'),
+      '#col' => 100,
+      '#rows' => 2,
+      '#maxlength' => 255,
+      '#default_value' => variable_get('resource_complete_img_src_php', 'http://origin.syndetics.com/index.php?isbn=$isbn/SC.GIF&client=tracsys&upc=&oclc=&type=hw7'),
+      '#description' => t('Enter URL for image source. The URL will be evaluated with PHP interpreter. The following variables are created for use: $isbn, $rank, $author, $title'),
+    );
+
+    return $form;     
+}
+
+/**
+ * Implementation of hook_block_save()
+ */
+function day_in_history_block_save($delta = '', $edit = array()){
+  variable_set('resource_complete_link_href_php', $edit['day_in_history_link_url']);
+  variable_set('resource_complete_img_src_php', $edit['day_in_history_img_src']);
+}
+      
+/**
+ * Implementation of hook_block_view()
+ */
+function day_in_history_block_view($delta = '') {
+	$event = _day_in_history_get_random_event();
+	if (!$event) {
+		return NULL;
+	}
+
+	drupal_add_js(drupal_get_path('module', 'day_in_history') . '/js/day_in_history.js');
+	drupal_add_css(drupal_get_path('module', 'day_in_history') . '/day_in_history.css');
+
+//	$event['bibid'] = $event['bc_id']; // TODO: change column of bc_id into bibid like the rest of the apps
+
+	$event_date = $event->getFormattedDate();
+//	$link_href = resource_complete_replace($event, 'link_href');
+//	$img_src = resource_complete_replace($event, 'img_src');
+
+	// hold button
+//	$hold_button_html = '';
+//	if (module_exists('patron_login')) {
+//		$hold_button_html = patron_login_hold_button($event);
+//	}
+
+	$author_html = '';
+	if (isset($event['author'])) {
+		$author_html = "<div class='dihAuthor'>By: {$event['author']}</div>";
+	}
+
+	// link to the catalogue will be handled by the search bar for now. weird, but we need it. :S
+	$search_url = variable_get('hf_search_url', '');
+	$link_href = $search_url . "?" . $event['isbn'];
+
+	$block['subject'] = 'This Day in History';
+	$block['content'] = <<<HEREDOC
+<div class="dihItem">
+	<div class="dihDesc">
+		<div class="dihDescTitle"><a class="dihDescDetailsToggle show" title="Show Description" href="javascript:void(0)"><strong>$event_date</strong> : {$event['event_title']}</a></div>
+		<div class="dihDescDetails ui-helper-hidden"><!-- Rod to remove ui-helper-hidden -->{$event['description']}</div>
+	</div>
+	<div class="dihImg"><a href="$link_href" target="_blank" data-cover-isbn="{$event['isbn']}" rel="external" title="View Details"><img style="border:none;" alt="{$event['title']}" /></a></div>
+	<div class="dihDetails">
+		<div class="dihTitle"><a href="$link_href" target="_blank" rel="external">{$event['title']}</a></div>
+		{$author_html}
+	</div>
+</div>
+HEREDOC
+	;
+
+	return $block;
+}
+
+/**
+ * Querystring Load functions
+ */
+function day_in_history_event_load($event_id) {
+  return new day_in_history_event($event_id);
+}
+
+//
+// -- Private functions
+//
+
+/**
+ * Private: Get random event
+ */
+function _day_in_history_get_random_event() {
+  $sql = "SELECT event_id FROM {day_in_history_events} WHERE day = :day AND month = :month";
+  $result = db_query($sql, array(':day'=>date('d'), ':month'=>date('m')));
+  if ($result) {
+    $event_ids = array();
+    foreach ($result as $row) {
+      $event_ids[] = $row->event_id;
+    }
+
+    if (empty($event_ids)) {
+      return NULL;
+    }
+
+    $event_id = $event_ids[array_rand($event_ids)]; // pick a random event for that day
+
+    return day_in_history_event_load($event_id);
+  }
+  else {
+    return NULL;
+  }
+}
+
+/**
+ * Private: Halts execution of code
+ */
+function _day_in_history_die($line, $function, $file) {
+  die("Death in $function, line $line in $file.");
+}
+
+// vim: ts=2 sw=2 et filetype=php foldmethod=expr foldexpr=getline(v\:lnum)=~'^function\ '?'>1'\:(getline(v\:lnum-1)=~'^}'?'0'\:'=')

@@ -1,0 +1,160 @@
+<?php
+/**
+ * Implementation of hook_block_info().
+ */
+function hf_rating_block_info() {
+	$blocks = array();
+	$blocks['hf_rating'] = array(
+		'info' => t('Rating Block'),
+		'cache' => DRUPAL_NO_CACHE,
+	);
+
+	return $blocks;
+}
+
+/**
+ * Implementation of hook_preprocess_block().
+ * used to apply extra classes to blocks
+ */
+function hf_rating_preprocess_block(&$vars) {
+  if ($vars['block_html_id'] == 'block-hf-rating') {
+	$vars['classes_array'][] = 'stacks-rating';
+  }
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function hf_rating_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'hf_rating':
+      $block['subject'] = '';
+      $block['content'] = drupal_get_form('hf_rating_form');
+      break;
+  }
+
+  return $block;
+}
+
+function hf_rating_form($form, &$form_state) {
+  $isbnNum = $_GET['isbn'];
+
+  $user = $GLOBALS['user'];
+  $uid = $user->uid;
+
+  $rating = 0;
+  $rCounter = 0;
+  $rquery = db_select('stacks_rating', 'r');
+  $rquery->fields('r', array('rate'));
+  $rquery->condition('r.iid',$isbnNum,'=');
+  $rresult = $rquery->execute();
+  while($rrecord = $rresult->fetchAssoc()) {
+    if (is_numeric($rrecord["rate"])) {
+      $rating = $rating + $rrecord["rate"];
+      $rCounter++;
+    }
+  }
+  if ($rating > 0) {
+    $rating = $rating / $rCounter;
+  }
+
+  if (($rating == 5)) {
+    // 5 stars
+    $default_rating = 4;
+  } elseif (($rating >= 4) && ($rating < 5)) {
+    // 4 stars
+    $default_rating = 3;
+  } elseif (($rating >= 3) && ($rating < 4)) {
+    // 3 stars
+    $default_rating = 2;
+  } elseif (($rating >= 2) && ($rating < 3)) {
+    // 2 stars
+    $default_rating = 1;
+  } elseif (($rating > 0) && ($rating < 2)) {
+    // 1 star
+    $default_rating = 0;
+  } else {
+    $default_rating = '';
+  }
+
+  $form = array(
+    '#theme_wrappers' => array('form'),
+  );
+
+  $superstars = array(0 => '&nbsp;', 1 => '&nbsp;', 2 => '&nbsp;', 3 => '&nbsp;', 4 => '&nbsp;');
+
+  $form['starrating'] = array(
+    '#type' => 'fieldset',
+    '#title' => '',
+    '#attributes' => array('class' => array('starrating')),
+    '#theme_wrappers' => array('fieldset'),
+  );
+
+  if ($default_rating > 0) {
+    $form['starrating']['superstars'] = array(
+      '#type' => 'radios',
+      '#title' => '',
+      '#default_value' => $default_rating,
+      '#options' => $superstars,
+      '#theme_wrappers' => array(),
+    );
+  } else {
+    $form['starrating']['superstars'] = array(
+      '#type' => 'radios',
+      '#title' => '',
+      '#options' => $superstars,
+      '#theme_wrappers' => array(),
+    );
+  }
+
+
+  if (!empty($uid)) {
+    $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => 'Rate this item',
+      '#attributes' => array('class' => array('btn-request'))
+    );
+  }
+
+  return $form;
+}
+
+function hf_rating_form_alter(&$form, &$form_state, $form_id) {
+  $form['starrating']['superstars']['#theme_wrappers'] = array();
+  $form['starrating']['superstars'][0]['#theme_wrappers'] = array();
+  $form['starrating']['superstars'][1]['#theme_wrappers'] = array();
+  $form['starrating']['superstars'][2]['#theme_wrappers'] = array();
+  $form['starrating']['superstars'][3]['#theme_wrappers'] = array();
+  $form['starrating']['superstars'][4]['#theme_wrappers'] = array();
+}
+
+// save the rating
+function hf_rating_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+  $isbnNum = $_GET['isbn'];
+  $user = $GLOBALS['user'];
+  $uid = $user->uid;
+
+	if (!empty($values['superstars'])) {
+    $rating = $values['superstars'] + 1;
+		db_insert('stacks_rating')
+			->fields(array(
+				'rate' => $rating,
+				'iid' => $isbnNum,
+				'uid' => $uid,
+				'timestamp' => REQUEST_TIME,
+			))
+			->execute();
+	}
+}
+
+function hf_rating_theme($existing, $type, $theme, $path) {
+  $items['hf_rating_form'] = array(
+    'render element' => 'form',
+    'template' => 'hf_rating',
+    'path' => drupal_get_path('module', 'hf_rating') . '',
+  );
+
+  return $items;
+}

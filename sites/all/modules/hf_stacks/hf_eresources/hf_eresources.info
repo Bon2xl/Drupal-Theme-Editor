@@ -1,0 +1,8 @@
+name = Stacks eResources
+description = Provides theme files and tweaks for authentication with library databases.
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-1.0
+
+
+scripts[] = js/hf_eresources.js

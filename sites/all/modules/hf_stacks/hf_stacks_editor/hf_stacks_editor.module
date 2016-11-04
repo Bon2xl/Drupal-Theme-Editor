@@ -1,0 +1,17 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function hf_stacks_editor_menu() {
+  $items = array();
+  $items['editor'] = array(
+    'title' => t('Stacks Configuration'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('hf_stacks_edit'),
+    'access arguments' => array('administer stacks config'),
+    'type' => MENU_CALLBACK,
+    'file' => 'hf_stacks_editor.admin.inc'
+  );
+  return $items;
+}

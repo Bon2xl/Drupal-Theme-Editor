@@ -1,0 +1,23 @@
+<div class="coverflow">
+	<div class="view-resource-list">
+		<div class="view-content">
+			{{#each this}}
+				<div class="views-row row-{{@index}}">
+					<div class="views-field views-field-field-isbn views-field-field-isbn">
+						<a href="{{field_hard_link}}">
+							<span ><img src="http://www.syndetics.com/index.aspx?type=hw7&amp;client=sils&amp;isbn={{field_isbn}}/MC.GIF&amp;=$upc"></span>
+						</a>
+					</div>
+					<div class="views-field views-field-nothing">
+						<div class="field-content">
+							<a class="btn-placehold js-holdbutton">Place Hold</a>	
+						</div>
+					</div>
+				</div>
+			{{/each}}			
+		</div>
+	</div>
+</div>
+
+
+

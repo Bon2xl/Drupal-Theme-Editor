@@ -1,0 +1,226 @@
+/**********************************************
+General // from caltech dev
+***********************************************/
+body.theme-caltech {
+  font-family: 'Vaud', Arial, sans-serif;
+}
+.theme-caltech button {
+  font-family: 'Vaud', Arial, sans-serif;
+}
+.theme-caltech h1,
+.theme-caltech h2,
+.theme-caltech h3,
+.theme-caltech h4,
+.theme-caltech h5,
+.theme-caltech h6 {
+  font-family: 'KievitSlabMedium', Georgia, serif;
+}
+.theme-caltech a.normal-text {
+  color: rgb(68, 68, 68);
+}
+.theme-caltech a.normal-text:active,
+.theme-caltech a.normal-text:focus,
+.theme-caltech a.normal-text:hover {
+  border-bottom: 1px dotted;
+}
+.theme-caltech .item-list a.active {
+  color: rgb(255, 114, 12);
+}
+.theme-caltech .not-front .main-content > div > .content {
+  margin-bottom: 0.9375rem;
+}
+
+/**********************************************
+Location Bar // from caltech dev
+***********************************************/
+/**
+ * The Location Bar is enabled in the theme, but completely hidden here so that
+ * the modal window code is still available for the links from the view we are
+ * using to replace it. It is much easier to style two blocks that are both in
+ * the Top Header region than the Location Bar and a Top Header region.
+ */
+.theme-caltech .location-bar {
+  display: none;
+}
+
+/**********************************************
+Location Modal // from caltech dev
+***********************************************/
+.theme-caltech #modal-all-locations .email {
+  display: none;
+}
+
+/**********************************************
+Search // from caltech dev
+***********************************************/
+.theme-caltech #search .block-hf-stacks-search {
+  background-color: #00afab;
+}
+.theme-caltech #search .block-hf-stacks-search .selectWrapper {
+  display: none;
+}
+.theme-caltech #search .block-hf-stacks-search #searchBox {
+  margin-bottom: 0;
+}
+.theme-caltech #search .block-hf-stacks-search #searchSubmit {
+  margin-bottom: 0;
+}
+
+/**********************************************
+Search Resources // from caltech dev
+***********************************************/
+.theme-caltech .view-home-search-resources ul {
+  font-size: larger;
+  padding-top: 1.25rem;
+}
+
+/**********************************************
+Home Panel
+***********************************************/
+.theme-caltech .panels-flexible-region .pane-block {
+  margin-bottom: 0;
+}
+.theme-caltech .panel-flexible.home .panels-flexible-row {
+  margin-bottom: 3.25rem;
+}
+.theme-caltech .panel-flexible.home .panels-flexible-region {
+  margin: 0;
+}
+.theme-caltech .panel-flexible.home .panels-flexible-region-inside {
+  padding-left: 0;
+  padding-right: 0;
+}
+.theme-caltech .backgrounded {
+  background-color: #c8c8c8;
+  float: left;
+  margin: 0;
+  max-width: none;
+  width: auto;
+}
+.theme-caltech .backgrounded .panels-flexible-region-inside {
+  background-color: white;
+  margin: 0.8125rem;
+}
+.theme-caltech .backgrounded .blk-title {
+  animation: none;
+  margin: 0;
+  padding: 0.8125rem;
+}
+.theme-caltech .backgrounded .blk-title::after {
+  content: none;
+}
+.theme-caltech .backgrounded .panel-pane {
+  margin: 0;
+  padding: 0.8125rem;
+}
+@media only screen and (min-width: 40.0625em) { /* min-width 641px, medium screens */
+  .theme-caltech .panel-flexible.home .panels-flexible-region-inside {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  .theme-caltech .panel-flexible.home .panels-flexible-region-inside-first {
+    padding-left: 0;
+  }
+  .theme-caltech .panel-flexible.home .panels-flexible-region-inside-last {
+    padding-right: 0;
+  }
+  .theme-caltech .panel-flexible.home .backgrounded .panels-flexible-row-inside {
+    display: flex;
+  }
+  .theme-caltech .panel-flexible.home .backgrounded .panels-flexible-region {
+    display: flex;
+  }
+  .theme-caltech .panel-flexible.home .backgrounded .panels-flexible-region-inside {
+    padding: 0;
+    flex: 1;
+  }
+}
+.theme-caltech .panel-flexible.home .block-border .blk-title {
+  border: 1px solid rgb(200, 200, 200);
+  margin: 0;
+  padding: 0.813rem;
+}
+.theme-caltech .panel-flexible.home .block-border .blk-title::after {
+  content: none;
+}
+.theme-caltech .panel-flexible.home .block-border .panel-pane {
+  border: 1px solid rgb(200, 200, 200);
+  border-top: none;
+}
+.theme-caltech .panel-flexible.home .block-border .panel-pane {
+  padding: 0.813rem;
+}
+.theme-caltech .panel-flexible.home .pane-menu .menu {
+  margin: 0;
+}
+.theme-caltech .panel-flexible.home .pane-menu .leaf {
+  font-size: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/**********************************************
+Quick Links // from caltech dev
+***********************************************/
+.theme-caltech .view-quick-links {
+  line-height: 1.6;
+}
+.theme-caltech .view-quick-links .views-field.link-icon img {
+  width: 16px;
+}
+
+/**********************************************
+Services // from caltech dev
+***********************************************/
+@media only screen and (min-width: 64.0625em) { /* min-width 1025px, large screens */
+  .theme-caltech .view-home-services li {
+    padding-bottom: 0;
+  }
+}
+
+/**********************************************
+CaltechAUTHORS \\ from caltech dev
+***********************************************/
+.theme-caltech .pane-caltechlibrary-customizations-caltechauthors .article:not(:nth-child(-n+2)) {
+  display: none;
+}
+.theme-caltech .pane-caltechlibrary-customizations-caltechauthors .article:nth-child(2) {
+  margin-bottom: 0;
+}
+.theme-caltech .pane-caltechlibrary-customizations-caltechauthors .article > a:last-of-type {
+  display: none;
+}
+
+/**********************************************
+LOCATIONS & HOURS \\ from caltech dev
+***********************************************/
+.theme-caltech .view-hours-locations .attachment {
+  margin: 0 -0.9375rem;
+  max-width: none;
+  overflow: auto;
+  padding-bottom: 1.875rem;
+  width: auto;
+}
+.theme-caltech .view-hours-locations .attachment .view-content .item-list ul {
+  margin: 0.9375rem;
+  padding: 0 0 0.9375rem 0;
+}
+.theme-caltech .view-hours-locations .view-content > .row {
+  padding-bottom: 1.875rem;
+}
+@media only screen and (min-width: 40.0625em) { /* min-width 641px, medium screens */
+  .theme-caltech .view-hours-locations .attachment {
+    padding-bottom: 3.25rem;
+  }
+  .theme-caltech .view-hours-locations .view-content > .row {
+    padding-bottom: 3.25rem;
+  }
+}
+
+/**********************************************
+SOFTWARE \\ from caltech dev
+***********************************************/
+.theme-caltech .view-software .view-header h2 {
+  display: none;
+}

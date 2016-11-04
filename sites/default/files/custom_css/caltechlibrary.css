@@ -1,0 +1,47 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * LOCATIONS & HOURS
+ */
+.theme-caltech .view-hours-locations .attachment {
+  margin: 0 -0.9375rem;
+  max-width: none;
+  overflow: auto;
+  padding-bottom: 1.875rem;
+  width: auto;
+}
+.theme-caltech .view-hours-locations .attachment .view-content .item-list ul {
+  margin: 0.9375rem;
+  padding: 0 0 0.9375rem 0;
+}
+.theme-caltech .view-hours-locations .view-content > .row {
+  padding-bottom: 1.875rem;
+}
+@media only screen and (min-width: 40.0625em) { /* min-width 641px, medium screens */
+  .theme-caltech .view-hours-locations .attachment {
+    padding-bottom: 3.25rem;
+  }
+  .theme-caltech .view-hours-locations .view-content > .row {
+    padding-bottom: 3.25rem;
+  }
+}
+
+/**
+ * SOFTWARE
+ */
+.theme-caltech .view-software .view-header h2 {
+  display: none;
+}

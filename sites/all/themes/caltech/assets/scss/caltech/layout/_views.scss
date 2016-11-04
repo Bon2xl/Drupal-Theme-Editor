@@ -1,0 +1,268 @@
+/**********************************************
+Views
+***********************************************/
+#block-views-news-block-1,
+.view-news,
+.page-upcoming-events .view-calendar,
+.view-reserves,
+.view-directory-listing,
+.view-research-guide,
+.view-upcoming-events {
+  $w: 16em;
+
+  .views-row {
+    @extend .clearfix;
+
+    border-radius: $bx-corner;
+    background: $view-bg;
+    border: $bx-border;
+    padding: $bx-padding;
+    margin-bottom: 1em;
+  }
+
+  // Views Fields
+  .views {
+    &-title, &-field-title {
+      font-size: 1.125rem;
+      line-height: 1.4;
+      margin-bottom: .625rem;
+      font-family: $font-two;
+
+      a {
+        font-weight: bold;
+      }
+    }
+
+    &-field-field-event-date, &-date {
+      font-size: .85em;
+      margin-bottom: 1em;
+      color: $view-date-clr;
+    }
+
+    &-label-body {
+      float: left;
+      margin-right: .31rem;
+      font-weight: 600;
+      font-size: .9rem;
+    }
+
+    &-field-body {
+      ul {
+        clear:both;
+        display:block;
+        margin-left: 1.6rem;
+      }
+    }
+
+    &-image,
+    &-field-field-picture {
+      display: none;
+      width: $w;
+      float: left;
+      padding-right: $bx-padding;
+
+      a {
+        display: block;
+        overflow: hidden;
+      }
+
+      img {
+        border-radius: $bx-corner;
+      }
+    }
+  }
+
+  @media #{$large-up} {
+    .views-row {
+      padding: $bx-padding;
+    }
+  }
+}
+
+/**********************************************
+Views Components
+***********************************************/
+// Inline your label
+.views {
+  &-lbl-inline {
+    .views-label {
+      float: left;
+      margin-right: .31rem;
+      font-weight: 600;
+    }
+  }
+
+  &-bx-radius img {
+    border-radius: $bx-corner;
+  }
+
+  &-small-details {
+    font-size: 0.85em;
+    margin-bottom: 1em;
+  }
+
+  &-mar-1 {
+    margin-bottom: .3em;
+  }
+
+  &-tbl-100 table {
+    width: 100%;
+  }
+}
+
+/**********************************************
+Directorty Listing Social Media
+***********************************************/
+.view-directory-listing {
+  .views-row {
+    .views-title {
+      @media #{$large-up} {
+        padding-top: 1em;
+        clear: both;
+      }
+    }
+  }
+
+  .views-field {
+    $w: 16px;
+    $h: $w;
+
+    &-field-facebook-link,
+    &-field-linkedin-link,
+    &-field-twitter-link {
+      display: inline-block;
+      font-size: 0;
+      text-indent: -2000px;
+      overflow: hidden;
+      margin-right: .31rem;
+
+      &,
+      a {
+        width: $w;
+        height: $h;
+      }
+
+      a {
+        display: block;
+      }
+    }
+
+    &-field-facebook-link a {
+      background-image: url("../img/icon_facebook.svg");
+    }
+
+    &-field-linkedin-link a {
+      background-image: url("../img/icon_linkedin.svg");
+    }
+
+    &-field-twitter-link a {
+      background-image: url("../img/icon_twitter.svg");
+    }
+
+    a {
+      width: $w;
+      height: $h;
+
+      &:hover {
+        opacity: .7;
+      }
+
+      img {
+        float: left;
+        margin-right: 2em;
+      }
+    }
+  }
+}
+
+
+/**********************************************
+Event date
+***********************************************/
+.page-upcoming-events .ev-custom-date, .node-event {
+  .day, .month br{
+    display: none;
+  }
+
+  .views-date, .field-name-field-event-date {
+    position: relative;
+    display: inline-block;
+  }
+
+  .btn-multi-date {
+    float: left;
+    cursor: pointer;
+    margin-right: 8px;
+
+    &:before, &:after {
+      font-family: fontAwesome;
+      display: inline-block;
+    }
+    &:after {
+      content: "\f133";
+      margin-left: 7.4px;
+      font-size: 12.4px;
+      position: relative;
+      top: -1px;
+    }
+  }
+
+  .date-repeat-rule {
+    margin-bottom: 9px;
+  }
+
+  .showMonth .month, .showMonth .field-items {
+    display: block!important;
+  }
+
+
+  .popup-enabled:after {
+    content: "\f0d7";
+    font-family: fontAwesome;
+    display: inline-block;
+    cursor: pointer;
+    visibility: visible;
+    height: auto;
+  }
+
+  .popup-enabled.showMonth:after {
+    transform: rotate(180deg);
+  }
+
+  .popup-enabled {
+    ::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 7px;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: rgba(0,0,0,.5);
+      -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+    }
+  }
+
+  .popup-enabled .month, .popup-enabled .field-items {
+    display: none;
+    background: white;
+    padding: 10px;
+    position: absolute;
+    left: -3px;
+    top: 20px;
+    box-shadow: 0 0 4px rgba(128, 128, 128, 0.34);
+    border-radius: 2px;
+    z-index: 2;
+    overflow-y: scroll;
+    max-height: 260px;
+
+    .date-display-range, .date-display-single {
+      display:block;
+      width: 264px;
+      border-bottom: 1px dotted rgba(128, 128, 128, 0.28);
+      padding:4px 0;
+    }
+
+    .date-display-range:last-chid, .date-display-single:last-chid {
+      border: none!important;
+    }
+  }
+}

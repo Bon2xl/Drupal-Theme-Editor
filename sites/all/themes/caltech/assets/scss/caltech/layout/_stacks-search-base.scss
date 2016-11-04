@@ -1,0 +1,280 @@
+.btn-request,
+.btn-del,
+.btn-wishlist,
+.btn-renew,
+.btn-cancel,
+.btn-reading-history {
+  border-radius: $bx-corner;
+  background: $src-placehold-bg;
+  padding: 0 1em;
+  display: inline-block;
+  color: white;
+  font-size: 1em;
+  padding: .625rem 1.25rem .6875rem;
+  font-size: .6875rem;
+  text-align: center;
+  line-height: normal;
+  white-space: nowrap;
+  font-weight: bold;
+  margin-right: .5em;
+  margin-bottom: 2em;
+
+  &:hover, &:active, &:focus {
+    color: white;
+    background: darken($src-placehold-bg, 5%);
+  }
+
+  //&:before {
+  //  $wh:16px;
+  //  width:$wh;
+  //  height:$wh;
+  //  content: "";
+  //  display:inline-block;
+  //  margin-right: 4px;
+  //  background-repeat: no-repeat;
+  //  background-position: left center;
+  //  position:relative;
+  //  top:3px;
+  //}
+  // @media #{$small-only}{
+  //  margin-bottom: 10px;
+  //  width: 100%;
+  //  display: block;
+  //}
+}
+
+//.btn-request {
+//  &:before {
+//    background-image: url(../img/icon_request_item.svg);
+//    background-size: 14px 14px;
+//  }
+//}
+//
+.btn-cancel {
+  background-color: rgba(240, 65, 36, 0.74);
+
+  //&:before {
+  //  background-image: url(../img/icon_remove.svg);
+  //  background-size: 12px 12px;
+  //}
+
+  &:hover {
+    background-color: rgba(240, 65, 36, 1);
+  }
+}
+//
+//.btn-wishlist {
+//  &:before {
+//    background-image: url(../img/icon_plus.svg);
+//    background-size: 12px 12px;
+//  }
+//
+//  &.added:before {
+//    background-image: url(../img/icon_minus.svg);
+//  }
+//
+
+&.added {
+  background-color: rgba(240, 65, 36, 0.74);
+
+  &:hover {
+    background-color: rgba(240, 65, 36, 1);
+  }
+}
+//}
+
+.lbl-author {
+
+  a {
+    color: grey;
+    text-decoration: underline;
+  }
+
+}
+
+
+.btn-read-online {
+  &:before {
+    content: "\f08e";
+    font-family: fontAwesome;
+    margin-right: 6px;
+  }
+}
+
+.btn-read-online, .bentoRead, .bentoHold  {
+  border-radius: $bx-corner;
+  background: $src-placehold-bg;
+  padding: 0 1em;
+  display: inline-block;
+  color: white;
+  font-size: 1em;
+  padding: .625rem 1.25rem .6875rem;
+  font-size: .6875rem;
+  text-align: center;
+  line-height: normal;
+  white-space: nowrap;
+  font-weight: bold;
+  margin-right: .5em;
+  margin-bottom: 2em;
+
+  &:hover, &:active, &:focus {
+    color: white;
+    background: darken($src-placehold-bg, 5%);
+  }
+}
+
+
+.btn-renew:before, .btn-reading-history:before {
+  display:none !important;
+  width:0 !important;
+}
+
+/**********************************************
+Wishlist
+***********************************************/
+.link-wishlist {
+  float:right;
+
+  @media #{$large-up}{
+    font-size:1rem;
+  }
+
+  @media screen and (max-width: 390px) {
+    float: none;
+    clear: both;
+    display: block;
+    padding-top: 9px;
+  }
+
+  @media #{$small-only}, #{$medium-only}{
+    font-size:.85rem;
+    margin-top: 1px;
+  }
+}
+
+/**********************************************
+Avail online and location
+***********************************************/
+.avail.icon-online, .avail.icon-location{
+  i {
+    width: 14px;
+    height: 14px;
+    margin: 0 2px 0 0;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 12px 12px;
+    position: relative;
+    top: 2px;
+  }
+}
+.avail.icon-online i{
+  background-image:url(../img/icon_online.svg);
+}
+.avail.icon-location i{
+  background-image:url(../img/icon_location.svg);
+}
+
+/**********************************************
+Social Media
+***********************************************/
+.soc-med{
+  padding-top:10px;
+  clear: both;
+  display: block;
+
+  .goodreads {
+    background: url(/sites/all/themes/hfstacks/assets/img/icon_goodreads.png) no-repeat center center;
+    width: 32px;
+    height: 32px;
+    display: none !important;
+    img {
+      display: block;
+    }
+  }
+}
+
+/**********************************************
+Save list and save searches
+***********************************************/
+.page-eds-savelist, .page-eds-savesearch {
+  .savesearch-view {
+    overflow: hidden;
+    margin-bottom: 20px;
+    ul {
+      background: white;
+      border-radius: $bx-corner;
+      border: $bx-border;
+      margin: 0 auto!important;
+    }
+
+    li {
+      list-style-type: none;
+      display: block;
+      padding: 6px 0 4px;
+      font-size: 0.75rem;
+      border-bottom: 1px solid #e0e0e0;
+      color:#f55555;
+      position: relative;
+
+      &:hover {
+        background: rgba(224, 224, 224, 0.4);
+      }
+    }
+
+    .saved-link {
+      font-size: .9rem;
+      padding-right: 30px;
+      display: inline-block;
+    }
+
+    .btn-savesearch {
+      border-radius: 50px;
+      color: white;
+      position: absolute;
+      right: 0;
+      top: 10px;
+      background: #f55555;
+      width: 17px;
+      height: 17px;
+      display: inline-block;
+      text-align: center;
+      font-size: 0.6rem;
+      font-family: sans-serif;
+      line-height: 18.4px;
+    }
+
+    @media #{$large-up} {
+      ul {
+        padding: 30px 30px !important;
+        width: 66.6666666667%;
+      }
+    }
+
+    @media #{$medium-only} {
+      ul {
+        padding: 30px 20px !important;
+        width: 90%;
+      }
+    }
+
+    @media #{$small-only} {
+      ul {
+        padding: 0 !important;
+        width: 100%;
+      }
+
+      li {
+        padding: 6px 10px 4px;
+        &:last-child {
+          border: none !important;
+        }
+      }
+
+      .btn-savesearch {
+        right: 10px;
+      }
+    }
+  }
+}
+

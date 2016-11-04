@@ -1,0 +1,1434 @@
+<?php
+/**
+ * STAC-1569
+ * 2016-10-05
+ * Create the permissions for Room Booking module
+ */
+function drush_stacks_updater_stac_1569($arg1 = NULL) {
+  // check if an argument was passed in and just print it out
+  if (isset($arg1)) {
+    drush_print($arg1);
+  }
+
+  //  (86, 'configure studyroom settings', 'studyroom'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'configure studyroom settings',
+      'module' => 'studyroom',
+    ))
+    ->execute();
+  //  (86, 'see past studyroom_availability', 'studyroom_availability'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'see past studyroom_availability',
+      'module' => 'studyroom_availability',
+    ))
+    ->execute();
+  //  (86, 'administer studyroom_closed', 'studyroom_closed'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'administer studyroom_closed',
+      'module' => 'studyroom_closed',
+    ))
+    ->execute();
+  //  (87, 'administer studyroom_closed', 'studyroom_closed'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'administer studyroom_closed',
+      'module' => 'studyroom_closed',
+    ))
+    ->execute();
+  //  (88, 'administer studyroom_closed', 'studyroom_closed'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'administer studyroom_closed',
+      'module' => 'studyroom_closed',
+    ))
+    ->execute();
+  //  (1, 'create user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 1,
+      'permission' => 'create user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (2, 'create user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 2,
+      'permission' => 'create user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (2, 'edit own user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 2,
+      'permission' => 'edit own user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (2, 'delete own user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 2,
+      'permission' => 'delete own user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'access reservations overview', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'access reservations overview',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'view user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'view user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'view admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'view admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'create user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'create user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'create admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'create admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'edit any user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'edit any user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'bypass studyroom_reservations access', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'bypass studyroom_reservations access',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'edit any admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'edit any admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'edit own admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'edit own admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'delete any user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'delete any user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'administer studyroom_reservation types', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'administer studyroom_reservation types',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'delete any admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'delete any admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'delete own admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'delete own admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'access reservations overview', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'access reservations overview',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'view user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'view user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'view admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'view admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'create admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'create admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'edit any user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'edit any user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'edit any admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'edit any admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'edit own admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'edit own admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'delete any user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'delete any user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'administer studyroom_reservation types', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'administer studyroom_reservation types',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'delete any admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'delete any admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (87, 'delete own admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'delete own admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (88, 'view user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'view user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (88, 'view admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'view admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (88, 'create admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'create admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+
+
+
+  //  (88, 'edit any user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'edit any user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (88, 'edit any admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'edit any admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (88, 'edit own admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'edit own admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (88, 'delete any user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'delete any user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (88, 'delete any admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'delete any admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (88, 'delete own admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'delete own admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (89, 'view user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 89,
+      'permission' => 'view user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (89, 'view admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 89,
+      'permission' => 'view admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (89, 'create admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 89,
+      'permission' => 'create admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (89, 'edit any user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 89,
+      'permission' => 'edit any user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (89, 'edit any admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 89,
+      'permission' => 'edit any admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (89, 'edit own admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 89,
+      'permission' => 'edit own admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (89, 'delete any user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 89,
+      'permission' => 'delete any user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (89, 'delete any admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 89,
+      'permission' => 'delete any admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (89, 'delete own admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 89,
+      'permission' => 'delete own admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (90, 'view user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 90,
+      'permission' => 'view user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (90, 'view admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 90,
+      'permission' => 'view admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (90, 'create admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 90,
+      'permission' => 'create admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (90, 'edit any user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 90,
+      'permission' => 'edit any user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (90, 'edit any admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 90,
+      'permission' => 'edit any admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (90, 'edit own admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 90,
+      'permission' => 'edit own admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (90, 'delete any user studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 90,
+      'permission' => 'delete any user studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (90, 'delete any admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 90,
+      'permission' => 'delete any admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (90, 'delete own admin studyroom_reservation', 'studyroom_reservation'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 90,
+      'permission' => 'delete own admin studyroom_reservation',
+      'module' => 'studyroom_reservation',
+    ))
+    ->execute();
+  //  (86, 'access spaces', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'access spaces',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (86, 'create main space', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'create main space',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (86, 'edit any main space', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'edit any main space',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (86, 'delete any main space', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'delete any main space',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (86, 'access spaces overview', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'access spaces overview',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (86, 'access unpublished spaces', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'access unpublished spaces',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (86, 'bypass studyroom_space access', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'bypass studyroom_space access',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (86, 'administer studyroom_space locations', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 86,
+      'permission' => 'administer studyroom_space locations',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (87, 'access spaces', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'access spaces',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (87, 'create main space', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'create main space',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (87, 'edit any main space', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'edit any main space',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (87, 'delete any main space', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'delete any main space',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (87, 'access unpublished spaces', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 87,
+      'permission' => 'access unpublished spaces',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (88, 'access spaces', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'access spaces',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (88, 'create main space', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'create main space',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (88, 'edit any main space', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'edit any main space',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (88, 'delete any main space', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'delete any main space',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (88, 'access unpublished spaces', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 88,
+      'permission' => 'access unpublished spaces',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (89, 'access spaces', 'studyroom_space'),
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 89,
+      'permission' => 'access spaces',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+  //  (90, 'access spaces', 'studyroom_space');
+  db_insert('role_permission')
+    ->fields(array(
+      'rid' => 90,
+      'permission' => 'access spaces',
+      'module' => 'studyroom_space',
+    ))
+    ->execute();
+
+  // log to the command line with an OK status
+  drush_log('Running stac-1569', 'ok');
+}
+
+/**
+ * CALTECH-0001
+ * 2016-10-14
+ * Add External URL field to Event content type.
+ */
+function drush_stacks_updater_caltech_0001($arg1 = NULL) {
+  // Check if an argument was passed in and just print it out.
+  if (isset($arg1)) {
+    drush_print($arg1);
+  }
+
+  // Create a Link field (External URL).
+  $field_name = 'field_event_url';
+  $field = field_info_field($field_name);
+  if(!$field){
+    $field = array(
+      'settings' => array(
+        'attributes' => array(
+          'target' => 'default',
+        ),
+        'title' => 'optional',
+        'title_maxlength' => 128,
+        'enable_tokens' => 1,
+        'display' => array(
+          'url_cutoff' => 80,
+        ),
+      ),
+      'field_name' => $field_name,
+      'type' => 'link_field',
+      'module' => 'link',
+      'active' => '1',
+      'cardinality' => '1',
+    );
+    field_create_field($field);
+
+    $instance = array(
+      'field_name' => 'field_event_url',
+      'entity_type' => 'node',
+      'bundle' => 'event',
+      'label' => t('External URL'),
+      'widget' => array('type' => 'link_field'),
+    );
+    field_create_instance($instance);
+  }
+
+  // Log to the command line with an OK status.
+  drush_log('Running CALTECH-0001', 'ok');
+}
+
+/**
+ * STAC-1501
+ * 2016-10-05
+ * Modify existing admin dashboard
+ */
+function drush_stacks_updater_stac_1501($arg1 = NULL) {
+  // check if an argument was passed in and just print it out
+  if (isset($arg1)) {
+    drush_print($arg1);
+  }
+
+  $name = 'ILS';
+  db_merge('stacks_tiles')
+    ->key(array('name' => $name))
+    ->fields(array(
+      'name' => 'Authentication',
+    ))
+    ->execute();
+
+  $name = 'SSO';
+  $description = '<p>Configure Single Sign-On</p>';
+  $plid = 6;
+  $tid = 726;
+  db_merge('stacks_tiles')
+    ->key(array('name' => $name))
+    ->fields(array(
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:89;s:2:"89";i:88;s:2:"88";i:90;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 45,
+      'path_url' => '#'
+    ))
+    ->execute();
+
+  $name = 'EBSCO';
+  $description = '<p>Configure EBSCO Settings</p>';
+  $plid = 6;
+  $tid = 733;
+
+  db_merge('stacks_tiles')
+    ->key(array('name' => $name))
+    ->fields(array(
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:89;s:2:"89";i:88;s:2:"88";i:90;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 46,
+      'path_url' => '#'
+    ))
+    ->execute();
+
+  $name = 'Similar Titles';
+  db_merge('stacks_tiles')
+    ->key(array('name' => $name))
+    ->fields(array(
+      'name' => 'Recommendations',
+    ))
+    ->execute();
+
+  $name = 'Stacks Configuration';
+  db_merge('stacks_tiles')
+    ->key(array('name' => $name))
+    ->fields(array(
+      'name' => 'Site Configuration',
+    ))
+    ->execute();
+
+  db_delete('field_config_instance')
+    ->condition('field_name', 'field_e_resource_url')
+    ->execute();
+
+  db_merge('field_config_instance')
+    ->key(array('field_name' => 'field_ezproxy_url'))
+    ->fields(array(
+      'data' => 'a:7:{s:5:"label";s:3:"URL";s:6:"widget";a:5:{s:6:"weight";s:1:"9";s:4:"type";s:14:"text_textfield";s:6:"module";s:4:"text";s:6:"active";i:1;s:8:"settings";a:1:{s:4:"size";s:2:"60";}}s:8:"settings";a:2:{s:15:"text_processing";s:1:"0";s:18:"user_register_form";b:0;}s:7:"display";a:1:{s:7:"default";a:5:{s:5:"label";s:5:"above";s:4:"type";s:12:"text_default";s:6:"weight";s:1:"4";s:8:"settings";a:1:{s:21:"field_formatter_class";s:0:"";}s:6:"module";s:4:"text";}}s:8:"required";i:0;s:11:"description";s:0:"";s:13:"default_value";N;}',
+    ))
+    ->execute();
+
+  // log to the command line with an OK status
+  drush_log('Running stac-1501', 'ok');
+}
+
+/**
+ * STAC-1446
+ * 2016-09-26
+ * Alter all phone fields to allow input of country code
+ */
+function drush_stacks_updater_stac_1446($arg1 = NULL) {
+  // check if an argument was passed in and just print it out
+  if (isset($arg1)) {
+    drush_print($arg1);
+  }
+
+  $phone_array = array(
+    'enable_default_country' => 1,
+    'default_country' => 'us',
+    'all_country_codes' => 1,
+    'country_codes' => array(
+      'hide_single_cc' => 0,
+      'country_selection' => array(
+        'af' => 0,
+        'al' => 0,
+        'dz' => 0,
+        'as' => 0,
+        'ad' => 0,
+        'ao' => 0,
+        'ai' => 0,
+        'ag' => 0,
+        'ar' => 0,
+        'am' => 0,
+        'aw' => 0,
+        'au' => 0,
+        'at' => 0,
+        'az' => 0,
+        'bs' => 0,
+        'bh' => 0,
+        'bd' => 0,
+        'bb' => 0,
+        'by' => 0,
+        'be' => 0,
+        'bz' => 0,
+        'bj' => 0,
+        'bm' => 0,
+        'bt' => 0,
+        'bo' => 0,
+        'ba' => 0,
+        'bw' => 0,
+        'br' => 0,
+        'io' => 0,
+        'vg' => 0,
+        'bn' => 0,
+        'bg' => 0,
+        'bf' => 0,
+        'bi' => 0,
+        'kh' => 0,
+        'cm' => 0,
+        'ca' => 0,
+        'cv' => 0,
+        'ky' => 0,
+        'cf' => 0,
+        'td' => 0,
+        'cl' => 0,
+        'cn' => 0,
+        'cx' => 0,
+        'cc' => 0,
+        'co' => 0,
+        'km' => 0,
+        'cd' => 0,
+        'cg' => 0,
+        'ck' => 0,
+        'cr' => 0,
+        'hr' => 0,
+        'cu' => 0,
+        'cy' => 0,
+        'cz' => 0,
+        'dk' => 0,
+        'dj' => 0,
+        'dm' => 0,
+        'do' => 0,
+        'tp' => 0,
+        'ec' => 0,
+        'eg' => 0,
+        'sv' => 0,
+        'gq' => 0,
+        'er' => 0,
+        'ee' => 0,
+        'et' => 0,
+        'fk' => 0,
+        'fo' => 0,
+        'fj' => 0,
+        'fi' => 0,
+        'fr' => 0,
+        'gf' => 0,
+        'pf' => 0,
+        'ga' => 0,
+        'gm' => 0,
+        'ge' => 0,
+        'de' => 0,
+        'gh' => 0,
+        'gi' => 0,
+        'gr' => 0,
+        'gl' => 0,
+        'gd' => 0,
+        'gp' => 0,
+        'gu' => 0,
+        'gt' => 0,
+        'gn' => 0,
+        'gw' => 0,
+        'gy' => 0,
+        'ht' => 0,
+        'hn' => 0,
+        'hk' => 0,
+        'hu' => 0,
+        'is' => 0,
+        'in' => 0,
+        'id' => 0,
+        'ir' => 0,
+        'iq' => 0,
+        'ie' => 0,
+        'il' => 0,
+        'it' => 0,
+        'ci' => 0,
+        'jm' => 0,
+        'jp' => 0,
+        'jo' => 0,
+        'kz' => 0,
+        'ke' => 0,
+        'ki' => 0,
+        'kw' => 0,
+        'kg' => 0,
+        'la' => 0,
+        'lv' => 0,
+        'lb' => 0,
+        'ls' => 0,
+        'lr' => 0,
+        'ly' => 0,
+        'li' => 0,
+        'lt' => 0,
+        'lu' => 0,
+        'mo' => 0,
+        'mk' => 0,
+        'mg' => 0,
+        'mw' => 0,
+        'my' => 0,
+        'mv' => 0,
+        'ml' => 0,
+        'mt' => 0,
+        'mh' => 0,
+        'mq' => 0,
+        'mr' => 0,
+        'mu' => 0,
+        'yt' => 0,
+        'mx' => 0,
+        'fm' => 0,
+        'md' => 0,
+        'mc' => 0,
+        'mn' => 0,
+        'me' => 0,
+        'ms' => 0,
+        'ma' => 0,
+        'mz' => 0,
+        'mm' => 0,
+        'na' => 0,
+        'nr' => 0,
+        'np' => 0,
+        'nl' => 0,
+        'an' => 0,
+        'nc' => 0,
+        'nz' => 0,
+        'ni' => 0,
+        'ne' => 0,
+        'ng' => 0,
+        'nu' => 0,
+        'nf' => 0,
+        'kp' => 0,
+        'mp' => 0,
+        'no' => 0,
+        'om' => 0,
+        'pk' => 0,
+        'pw' => 0,
+        'ps' => 0,
+        'pa' => 0,
+        'pg' => 0,
+        'py' => 0,
+        'pe' => 0,
+        'ph' => 0,
+        'pl' => 0,
+        'pt' => 0,
+        'pr' => 0,
+        'qa' => 0,
+        'ro' => 0,
+        'ru' => 0,
+        'rw' => 0,
+        'sh' => 0,
+        'kn' => 0,
+        'lc' => 0,
+        'pm' => 0,
+        'vc' => 0,
+        'ws' => 0,
+        'sm' => 0,
+        'st' => 0,
+        'sa' => 0,
+        'sn' => 0,
+        'rs' => 0,
+        'sc' => 0,
+        'sl' => 0,
+        'sg' => 0,
+        'sk' => 0,
+        'si' => 0,
+        'sb' => 0,
+        'so' => 0,
+        'za' => 0,
+        'kr' => 0,
+        'ss' => 0,
+        'es' => 0,
+        'lk' => 0,
+        'sd' => 0,
+        'sr' => 0,
+        'sz' => 0,
+        'se' => 0,
+        'ch' => 0,
+        'sy' => 0,
+        'tw' => 0,
+        'tj' => 0,
+        'tz' => 0,
+        'th' => 0,
+        'tg' => 0,
+        'tk' => 0,
+        'to' => 0,
+        'tt' => 0,
+        'tn' => 0,
+        'tr' => 0,
+        'tm' => 0,
+        'tc' => 0,
+        'tv' => 0,
+        'vi' => 0,
+        'ug' => 0,
+        'ua' => 0,
+        'ae' => 0,
+        'gb' => 0,
+        'us' => 0,
+        'uy' => 0,
+        'uz' => 0,
+        'vu' => 0,
+        'va' => 0,
+        've' => 0,
+        'vn' => 0,
+        'wf' => 0,
+        'ye' => 0,
+        'zm' => 0,
+        'zw' => 0),
+    ),
+    'country_code_position' => 'before',
+    'enable_country_level_validation' => 'enable_extension',
+    'user_register_form' => 0
+  );
+
+  $entity_type = 'node';
+  $field_name = 'field_branch_fax';
+  $bundle_name = 'library_branch';
+  $instance_info = field_info_instance($entity_type, $field_name, $bundle_name);
+  $instance_info['settings'] = $phone_array;
+  field_update_instance($instance_info);
+
+  $entity_type = 'node';
+  $field_name = 'field_branch_phone';
+  $bundle_name = 'library_branch';
+  $instance_info = field_info_instance($entity_type, $field_name, $bundle_name);
+  $instance_info['settings'] = $phone_array;
+  field_update_instance($instance_info);
+
+  $entity_type = 'field_collection_item';
+  $field_name = 'field_branch_contact_phone';
+  $bundle_name = 'field_branch_contact';
+  $instance_info = field_info_instance($entity_type, $field_name, $bundle_name);
+  $instance_info['settings'] = $phone_array;
+  field_update_instance($instance_info);
+
+  $entity_type = 'node';
+  $field_name = 'field_phone_number_listing';
+  $bundle_name = 'directory_listing';
+  $instance_info = field_info_instance($entity_type, $field_name, $bundle_name);
+  $instance_info['settings'] = $phone_array;
+  field_update_instance($instance_info);
+
+  $entity_type = 'studyroom_reservation';
+  $field_name = 'field_reservation_contact_phone';
+  $bundle_name = 'user';
+  $instance_info = field_info_instance($entity_type, $field_name, $bundle_name);
+  $instance_info['settings'] = $phone_array;
+  field_update_instance($instance_info);
+
+  // log to the command line with an OK status
+  drush_log('Running stac-1446', 'ok');
+}
+
+
+
+/**
+ * STAC-1293
+ * 2016-09-09
+ * Adding in a Room Booking item into the main menu
+ */
+function drush_stacks_updater_stac_1293($arg1 = NULL) {
+  // check if an argument was passed in and just print it out
+  if (isset($arg1)) {
+    drush_print($arg1);
+  }
+
+  $name = 'Room Bookings';
+  $menu = 'main-menu';
+  $path = 'roombooking';
+  $plid = 0;
+
+  db_merge('menu_links')
+    ->key(array('menu_name' => $menu, 'link_path' => $path))
+    ->fields(array(
+      'menu_name' => $menu,
+      'plid' => $plid,
+      'link_path' => $path,
+      'router_path' => $path,
+      'link_title' => $name,
+      'options' => 'a:2:{s:14:"roles_for_menu";a:2:{s:4:"show";a:0:{}s:4:"hide";a:0:{}}s:10:"attributes";a:1:{s:5:"title";s:0:"";}}',
+      'module' => 'menu',
+      'hidden' => 0,
+      'external' => 0,
+      'has_children' => 0,
+      'expanded' => 0,
+      'weight' => -48,
+      'depth' => 1,
+      'customized' => 1,
+      'p1' => 0,
+      'p2' => 0,
+      'p3' => 0,
+      'p4' => 0,
+      'p5' => 0,
+      'p6' => 0,
+      'p7' => 0,
+      'p8' => 0,
+      'p9' => 0,
+      'updated' => 0
+    ))
+    ->execute();
+
+  // log to the command line with an OK status
+  drush_log('Running stac-1293', 'ok');
+}
+
+/**
+ * STAC-1292
+ * 2016-09-09
+ * Adding in the Room Booking tiles into the dashboard
+ */
+function drush_stacks_updater_stac_1292($arg1 = NULL) {
+  // check if an argument was passed in and just print it out
+  if (isset($arg1)) {
+    drush_print($arg1);
+  }
+
+  $name = 'Room Bookings';
+  $description = '<p>Manage rooms, groups, categories and the reservations themselves</p>';
+  $plid = 0;
+  $tid = 725;
+
+  $last_id = db_insert('stacks_tiles')
+    ->fields(array(
+      'name' => $name,
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:88;s:2:"88";i:90;i:0;i:89;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 43,
+      'path_url' => '/admin/roombooking'
+    ))
+    ->execute();
+
+  $name = 'Groups';
+  $description = '<p>Manage groups</p>';
+  $plid = $last_id;
+  $tid = 733;
+
+  db_insert('stacks_tiles')
+    ->fields(array(
+      'name' => $name,
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:88;s:2:"88";i:90;i:0;i:89;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 44,
+      'path_url' => '/admin/roombooking/groups'
+    ))
+    ->execute();
+
+  $name = 'Categories';
+  $description = '<p>Manage categories</p>';
+  $plid = $last_id;
+  $tid = 743;
+
+  db_insert('stacks_tiles')
+    ->fields(array(
+      'name' => $name,
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:88;s:2:"88";i:90;i:0;i:89;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 45,
+      'path_url' => '/admin/structure/taxonomy/space_category'
+    ))
+    ->execute();
+
+  $name = 'Rooms';
+  $description = '<p>Manage rooms</p>';
+  $plid = $last_id;
+  $tid = 734;
+
+  db_insert('stacks_tiles')
+    ->fields(array(
+      'name' => $name,
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:88;s:2:"88";i:90;i:0;i:89;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 46,
+      'path_url' => '/admin/roombooking/room'
+    ))
+    ->execute();
+
+  $name = 'Closed Dates';
+  $description = '<p>Manage closed reservation dates</p>';
+  $plid = $last_id;
+  $tid = 725;
+
+  db_insert('stacks_tiles')
+    ->fields(array(
+      'name' => $name,
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:88;s:2:"88";i:90;i:0;i:89;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 47,
+      'path_url' => '/admin/roombooking/closed'
+    ))
+    ->execute();
+
+  $name = 'Email';
+  $description = '<p>Manage email templates</p>';
+  $plid = $last_id;
+  $tid = 736;
+
+  db_insert('stacks_tiles')
+    ->fields(array(
+      'name' => $name,
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:88;s:2:"88";i:90;i:0;i:89;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 48,
+      'path_url' => '/admin/roombooking/email'
+    ))
+    ->execute();
+
+  $name = 'Bookings';
+  $description = '<p>Manage reservations</p>';
+  $plid = $last_id;
+  $tid = 728;
+
+  db_insert('stacks_tiles')
+    ->fields(array(
+      'name' => $name,
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:88;s:2:"88";i:90;i:0;i:89;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 49,
+      'path_url' => '/admin/roombooking/reservation'
+    ))
+    ->execute();
+
+  // log to the command line with an OK status
+  drush_log('Running stac-1292', 'ok');
+}
+
+/**
+ * STAC-1258
+ * 2016-08-25
+ * Add new fields to directory listing content type & modify the label of an existing field
+ */
+function drush_stacks_updater_stac_1258($arg1 = NULL) {
+  // check if an argument was passed in and just print it out
+  if (isset($arg1)) {
+    drush_print($arg1);
+  }
+
+  $type = node_type_load('directory_listing');
+
+  // create a taxonomy field (department)
+  $field_name = 'field_directory_department';
+  $field = field_info_field($field_name);
+  if(!$field){
+    $field = array(
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'department',
+            'parent' => '0',
+          ),
+        ),
+      ),
+      'field_name' => $field_name,
+      'type' => 'taxonomy_term_reference',
+      'module' => 'taxonomy',
+      'active' => '1',
+      'cardinality' => '1',
+    );
+    field_create_field($field);
+
+    $instance = array(
+      'field_name' => 'field_directory_department',
+      'entity_type' => 'node',
+      'bundle' => 'directory_listing',
+      'label' => t('Department'),
+      'widget' => array('type' => 'options_select'),
+    );
+    field_create_instance($instance);
+  }
+
+  // create a text field (location)
+  $field_name = 'field_directory_location';
+  $field = field_info_field($field_name);
+  if(!$field){
+    $field = array(
+      'field_name' => $field_name,
+      'type' => 'text',
+      'entity_types' => array('node'),
+    );
+    field_create_field($field);
+
+    $instance = array(
+      'field_name' => 'field_directory_location',
+      'entity_type' => 'node',
+      'bundle' => 'directory_listing',
+      'label' => t('Location'),
+      'widget' => array('type' => 'text_textfield'),
+    );
+    field_create_instance($instance);
+  }
+
+  // update label on job title field
+  $instance = field_info_instance('node', 'field_job_title_listing', 'directory_listing');
+  $instance['label'] = 'Job Title';
+  field_update_instance($instance);
+
+  // log to the command line with an OK status
+  drush_log('Running stac-1258', 'ok');
+}
+
+/**
+ * STAC-1113
+ * 2016-08-22
+ * Adding in re-captcha to all current web forms
+ */
+function drush_stacks_updater_stac_1113($arg1 = NULL) {
+  // check if an argument was passed in and just print it out
+  if (isset($arg1)) {
+    drush_print($arg1);
+  }
+
+  $form_id = 'webform_client_form_34';
+  $module = 'recaptcha';
+  $type = 'reCAPTCHA';
+
+  db_merge('captcha_points')
+    ->key(array('form_id' => $form_id))
+    ->fields(array(
+      'module' => $module,
+      'captcha_type' => $type
+    ))
+    ->execute();
+
+  // log to the command line with an OK status
+  drush_log('Running stac-1113', 'ok');
+}
+
+/**
+ * STAC-1058
+ * 2016-08-23
+ * Adding in the RSS Feeds tile into the dashboard
+ */
+function drush_stacks_updater_stac_1058($arg1 = NULL) {
+  // check if an argument was passed in and just print it out
+  if (isset($arg1)) {
+    drush_print($arg1);
+  }
+
+  $name = 'RSS Feeds';
+  $description = '<p>Configure RSS Feeds</p>';
+  $plid = 0;
+  $tid = 746;
+
+  db_merge('stacks_tiles')
+    ->key(array('name' => $name))
+    ->fields(array(
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:89;s:2:"89";i:88;s:2:"88";i:90;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 43,
+      'path_url' => '/admin/rss-feeds'
+    ))
+    ->execute();
+
+  /*
+  $name = 'RSS Items';
+  $description = '<p>Configure RSS Items</p>';
+  $plid = 0;
+  $tid = 746;
+
+  db_merge('stacks_tiles')
+    ->key(array('name' => $name))
+    ->fields(array(
+      'description' => $description,
+      'plid' => $plid,
+      'tid' => $tid,
+      'user_role' => 'a:5:{i:87;s:2:"87";i:89;s:2:"89";i:88;s:2:"88";i:90;i:0;i:86;s:2:"86";}',
+      'uid' => 1,
+      'weight' => 44,
+      'path_url' => '/admin/content/rss-items'
+    ))
+    ->execute();
+  */
+
+  // log to the command line with an OK status
+  drush_log('Running stac-1058', 'ok');
+}

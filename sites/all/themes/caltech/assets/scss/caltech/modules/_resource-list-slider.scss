@@ -1,0 +1,95 @@
+/**********************************************
+Resource List Slider
+***********************************************/
+.resource-list-slider {
+  background: $resource-slider-bg;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  height:90px;
+  @include grid-column($columns:12, $collapse:false);
+
+  .content {
+    border-radius: $bx-corner;
+    background: $resource-slider-inner-bg;
+    padding: .25em;
+    border: $bx-border;
+    box-shadow: $bx-shadow;
+  }
+
+  .views-row {
+    border-radius: $bx-corner;
+    background: $resource-slider-row-bg;
+    border: 1px solid $resource-slider-row-border-clr;
+    margin-left: .2em;
+    margin-right: .2em;
+    margin-bottom: 0;
+    padding: .45rem;
+    height: 4em;
+    outline: none;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .entity-field-collection-item,
+  .views-label-title {
+    display: none;
+  }
+
+
+  .views-title {
+    float: left;
+  }
+
+
+
+  .field-content {
+    font-size: 0.9em;
+    font-weight: bold;
+    color:$resource-slider-title;
+  }
+
+  .img {
+    border-radius: $bx-corner;
+    width: 3.13rem;
+    height: 3.13rem;
+    display: block;
+    margin-right: .63rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    float: left;
+  }
+
+  .open-modal {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  // Slider
+  .slick-slider {
+    margin: 0 .9em;
+  }
+
+  .slick-list {
+    margin: 0 1.56rem;
+    height: 64px;
+  }
+
+  .slick-dots {
+    display: none!important;
+  }
+  
+  // Slider button
+  @include slider-next-prev(22px, 0, 0, white);
+}
+
+
+// Animate on load
+.cssanimations .resource-list-slider {
+  @include load-animate();
+}

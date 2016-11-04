@@ -1,0 +1,33 @@
+/**********************************************
+Toggle mobile
+***********************************************/
+.toggle-mobile {
+  position: absolute;
+  left: 1.59rem;
+  top: 30px;
+  z-index: 1;
+  transition: opacity .1s ease-in, transform .1s ease-in;
+  width: 37px;
+  height: 32px;
+  background: url(../img/btn-open-mobile.svg) no-repeat center center;
+  text-indent: -2000px;
+
+  &:hover {
+    opacity: 1;
+    transform: translate(0, -2px);
+  }
+
+  @media #{$small-only}, #{$medium-only} {
+    display: block;
+  }
+
+  @media #{$medium-only} {
+    top: 16px;
+    left: 1.69rem;
+  }
+
+  @media #{$small-only} {
+    top: 16px; 
+    left: 0.89rem;
+  }
+}

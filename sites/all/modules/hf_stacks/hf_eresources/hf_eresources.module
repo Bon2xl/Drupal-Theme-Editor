@@ -1,0 +1,38 @@
+<?php
+
+// Implements hook_views_api()
+function hf_eresources_views_api() {
+	return array(
+		"version" => "3.0",
+		'template path' => drupal_get_path('module', 'hf_eresources') . '/templates',
+	);
+}
+
+/**
+ * Implements hook_menu()
+ *
+ * @return array
+ */
+function hf_eresources_menu() {
+	$items = array();
+	$items['admin/config/stacks/e-resources'] = array(
+		'title' => 'E-Resources',
+		'description' => 'Configures E-Resources.',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('hf_eresources_config'),
+		'access arguments' => array('access content'),
+		'file' => 'hf_eresources.admin.inc'
+	);
+	return $items;
+}
+
+drupal_add_css(
+  '.col1 {float:left; clear:both;}.col2 {float:left; margin-left:10px;}.col3 {float:left; margin-top:38px; margin-left:10px;}.two-col {clear:both;}.field_add {clear:both;}.field_remove {clear:both;}',
+  array(
+    'group' => CSS_THEME,
+    'type' => 'inline',
+    'media' => 'screen',
+    'preprocess' => FALSE,
+    'weight' => '9999',
+  )
+);

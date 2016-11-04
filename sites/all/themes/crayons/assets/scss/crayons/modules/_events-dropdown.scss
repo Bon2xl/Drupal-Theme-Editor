@@ -1,0 +1,98 @@
+/**********************************************
+Event date and dropdown
+***********************************************/
+.page-upcoming-events .ev-custom-date, .node-event {
+  .day, .month br{
+    display: none;
+  }
+
+  .views-date, .field-name-field-event-date {
+    position: relative;
+    display: inline-block;
+    @include set-delay();
+  }
+
+  .btn-multi-date {
+    float: left;
+    cursor: pointer;
+    margin-right: 8px;
+    color: #444;
+
+    &:before, &:after {
+      font-family: fontAwesome;
+      display: inline-block;
+    }
+    &:after {
+      content: "\f133";
+      margin-left: 7.4px;
+      font-size: 12.4px;
+      position: relative;
+      top: -1px;
+    }
+  }
+
+  .date-repeat-rule {
+    margin-bottom: 9px;
+  }
+
+  .showMonth .month, .showMonth .field-items {
+    display: block!important;
+  }
+
+  .popup-enabled {
+    ::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 7px;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: rgba(0,0,0,.5);
+      -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+    }
+  }
+
+
+  .popup-enabled:after {
+    content: "\f0d7";
+    font-family: fontAwesome;
+    display: inline-block;
+    cursor: pointer;
+    visibility: visible;
+    height: auto;
+  }
+
+  .popup-enabled.showMonth:after {
+    transform: rotate(180deg);
+  }
+
+  .popup-enabled .month, .popup-enabled .field-items {
+    display: none;
+    overflow-y: scroll;
+    background: white;
+    padding: 10px;
+    position: absolute;
+    left: -3px;
+    top: 20px;
+    box-shadow: 0 0 4px rgba(128, 128, 128, 0.34);
+    border-radius: 2px;
+    z-index: 2;
+    max-height: 260px;
+
+    .date-display-range, .date-display-single {
+      display:block;
+      width: 278px;
+      border-bottom: 1px dotted rgba(128, 128, 128, 0.28);
+      padding:4px 0;
+    }
+
+    .date-display-range:last-chid, .date-display-single:last-chid {
+      border: none!important;
+    }
+
+    @media #{$small-only}, #{$medium-only}{
+      & {
+        left: -38px;
+      }
+    }
+  }
+}

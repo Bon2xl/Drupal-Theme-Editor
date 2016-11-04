@@ -1,0 +1,12 @@
+/**********************************************
+Alert Messages
+***********************************************/
+.l-messages {
+  a{ 
+    color: $alt-msg-link;
+
+    &:hover {
+      color: lighten($alt-msg-link, 10%);
+    }
+  }
+}

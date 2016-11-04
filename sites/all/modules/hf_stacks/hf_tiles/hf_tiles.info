@@ -1,0 +1,11 @@
+name = Stacks Tiles
+description = Admin interface for choosing and creating new dashboard tiles.
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-1.0
+
+;Styles
+stylesheets[all][] = css/hf_tiles.css
+
+;Scripts
+scripts[] = js/hf_tiles.js

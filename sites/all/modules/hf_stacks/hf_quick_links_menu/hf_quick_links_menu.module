@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * Implementation of hook_block_info().
+ */
+function hf_quick_links_menu_block_info() {
+	$blocks = array();
+	$blocks['hf_quick_links_menu_blocks'] = array(
+		'info' => t('Quick Link Menu Blocks'),
+		'cache' => DRUPAL_NO_CACHE,
+	);
+
+	return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function hf_quick_links_menu_block_view($delta='') {
+  $block = array();
+  switch($delta) {
+	case 'hf_quick_links_menu_blocks' :
+		module_load_include('tpl.inc', 'hf_quick_links_menu', 'templates/hf_quick_links_menu');
+	  	$block['content'] = hf_quick_links_menu_callback();
+	 break;
+  }
+
+  return $block;
+}

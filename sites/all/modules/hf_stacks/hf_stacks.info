@@ -1,0 +1,5 @@
+name = Stacks Base
+description = Provides basic HF Stacks configuration options
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-1.0

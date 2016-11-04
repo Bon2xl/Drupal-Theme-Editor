@@ -1,0 +1,73 @@
+/*****************************************
+IE 10 below
+*****************************************/
+.ie9, .ie10 {
+  // Mini Slider
+  .mini-slider {
+    .img-wrapper {
+      float:left;
+    }
+    .ttl {
+      position: relative;
+      top: 10px;
+    }
+  }
+
+  // Resource list slider
+  .resource-list-slider .views-field.views-field-title {
+    padding-top:10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  
+
+  // Top Menu
+  #header .main-nav .content .menu-block-wrapper > ul > li.expanded > ul {
+    top:1.2rem;
+  }
+
+  // gTranslate
+  #top-header .gTranslate {
+    option {
+      color: #444444 !important;
+    }
+  }
+}
+
+/*****************************************
+IE 9
+*****************************************/
+.ie9 {
+  .site-brand {
+    position: relative;
+    top: 20px;
+  }
+}
+
+
+/*****************************************
+IE 10
+*****************************************/
+.ie10 {
+  .site-brand {
+    margin-top: 10px;
+  }
+}
+
+/*****************************************
+IE
+*****************************************/
+.ie {
+  &.page-search .search-advanced.collapsed legend{
+    margin-top: -10px !important;
+  }
+
+  #content-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

@@ -1,0 +1,11 @@
+#patron-login-modal {
+
+  .form-submit {
+		@extend %form-submit-button;
+  }
+}
+
+.link-staff-login{
+	margin-left: .63rem;
+	font-size: .85em;
+}

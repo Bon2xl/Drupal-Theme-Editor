@@ -1,0 +1,57 @@
+/*****************************************
+Coverflow inside modal
+*****************************************/
+#stacks-modal {
+  .coverflow {
+    margin-bottom: 0;
+    @include slider-next-prev(35px, -4px, -4px);
+
+    .slick-prev, .slick-next {
+      top: 32.6%;
+      opacity:1;
+      transition: all .1s ease-in;
+      background-color: white;
+      border-radius: 50px;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .content {
+    height: 250px;
+    animation: load-slider 2s normal;
+    margin-bottom: 50px;
+
+    @keyframes load-slider {
+      0% {
+        opacity: 0;
+      }
+
+      60% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+
+  > h2 {
+    margin-bottom: 24px;
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 2px;
+
+    &:after {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 30%;
+      margin: 16px auto 0;
+      border-bottom: 1px solid #dedede;
+    }
+  }
+}

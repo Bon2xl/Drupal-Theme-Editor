@@ -1,0 +1,65 @@
+/**********************************************
+Basic Search
+***********************************************/
+#top-header {
+    padding-top: 50px;
+
+  @media only screen and (min-width: 1024px) {
+    padding-right: 4%;
+  }
+
+  @media only screen and (min-width: 1400px) {
+    padding-right: 3%;
+  }
+
+  @media only screen and (min-width: 1700px) {
+    padding-right: 2%;
+  }
+
+  .top-menu {
+    & > h2 {
+      display: none;
+    }
+
+    .content {
+
+      li {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+
+        a {
+          font-family: $header-font-family;
+          padding: 0 .5rem;
+          font-size: .8rem;
+          color: $top-link-clr;
+          height: 1.69rem;
+          line-height: 1.69rem;
+          letter-spacing: .0625em;
+          float: left;
+          opacity: .7;
+          transition: opacity 200ms ease, transform 200ms ease;
+
+          // hack to fix safari font weight
+          .safari10 &,
+          .safari9 & {
+            opacity: 1;
+          }
+
+          &:hover {
+            opacity: 1;
+            top: -5px;
+            transform: translate(0, -2px);
+          }
+        }
+      }
+    }
+
+    @media #{$medium-only}, #{$small-only} {
+
+      &.hideThis {
+        display: none;
+      }
+    }
+  }
+}

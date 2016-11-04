@@ -1,0 +1,238 @@
+/**********************************************
+Basic Search
+***********************************************/
+.basic-search {
+  margin-bottom: 1.4em;
+
+  .form-item,
+  .form-actions {
+    float: left;
+    margin: 0;
+
+    input {
+      height: 1.75rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .form-item input {
+    font-size: .875rem;
+  }
+
+  .form-actions input {
+    padding-top: 0;
+    padding-bottom: 0;
+    @extend %form-submit-button;
+  }
+}
+
+#top-header .basic-search {
+
+  @media #{$small-only} {
+
+    .contextual-links-wrapper {
+      display: none !important;
+    }
+
+    .content {
+      border-radius: $search-rd;
+      box-shadow: $bx-shadow;
+      display:none;
+      background-color: $search-btn-bg;
+      overflow: hidden;
+      position: absolute;
+      right: 0;
+      top: -$search-rd;
+      padding: $search-pd $search-pd $search-pd 2.25rem;
+      z-index: 1;
+      width: 20.69rem;
+      transition: all .3s ease-out;
+
+      &.show {
+        display: block !important;
+        transition: all .3s ease-out;
+      }
+
+      .form-text {
+        width: 13.56rem;
+      }
+    }
+
+    .btn-close {
+      border-radius: $bx-corner;
+      left: $search-pd;
+      top: $search-pd;
+      display: block;
+      height: 1.69rem;
+      width: 1.69rem;
+      position: absolute;
+      color: $search-btn-bg;
+      text-align: center;
+      background: $search-bg url("../img/icon_close.svg") no-repeat center;
+      background-size: .69rem .69rem;
+    }
+
+    .magnifier-link {
+      $wh: 1.75rem;
+
+      cursor: pointer;
+      width: $wh;
+      height: $wh;
+      display: block;
+      background: url("../img/icon_glass.svg") no-repeat center;
+      background-size: $wh $wh;
+
+      &.active {
+        opacity: .8;
+      }
+    }
+  }
+}
+
+// eds search btn
+input[disabled]#searchSubmit {
+  background: $src-btn-disabled !important;
+  cursor: not-allowed !important;
+}
+
+
+
+/**********************************************
+Basic Search Results Page
+***********************************************/
+.page-search-node {
+
+  // #content-wrapper .section-wrapper {
+  //   background: transparent;
+  // }
+
+  form.search-form {
+    // @include grid-row();
+
+    & > div {
+      @include grid-row($behavior: collapse);
+    }
+
+    .form-wrapper {
+      @include grid-row($behavior: collapse);
+
+      .form-item-keys {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        @media #{$medium-up} {
+          @include grid-column(8);
+        }
+        @media #{$large-up} {
+          @include grid-column(10);
+        }
+      }
+
+      #edit-submit {
+        @include grid-column(12);
+        @include button($padding: 0);
+
+        @media #{$medium-up} {
+          @include grid-column(4);
+        }
+        @media #{$large-up} {
+          @include grid-column(2);
+        }
+      }
+
+      #edit-keys,
+      #edit-submit,
+      fieldset.search-advanced {
+        line-height: 1.75em;
+        height: 42px;
+      }
+
+      label[for="edit-keys"] {
+        display: none;
+      }
+    }
+
+    input.form-submit {
+      @extend .btn-request;
+      border: none;
+      border-radius: $bx-corner;
+    }
+
+    fieldset.search-advanced:not(.collapsed) {
+      box-shadow: $bx-shadow;
+      border-radius: $bx-corner;
+      border: $bx-border;
+      padding: $bx-padding;
+      margin-bottom: 1.25rem;
+      background: $main-gradient-fallback;
+      background: $main-gradient;
+      position: relative;
+
+      @media #{$large-up} {
+        @include grid-column(12);
+      }
+
+      .criterion {
+        @include grid-column(12);
+        margin-right: 0;
+
+        @media #{$large-up} {
+          @include grid-column(6);
+        }
+
+        .form-checkbox {
+          margin-bottom: 0;
+        }
+
+        #edit-type {
+          @include grid-row();
+        }
+
+        .form-type-checkbox {
+
+          @media #{$small-only} {
+            padding-left: 0;
+          }
+
+          @media #{$medium-up} {
+            @include grid-column(6);
+          }
+        }
+      }
+
+      legend {
+        // text-align: right;
+      }
+
+      @media #{$small-only} {
+        .action {
+          display: block;
+          width: 100%;
+
+          input.form-submit {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  ol.search-results {
+    margin-left: 0;
+  }
+
+  li.search-result {
+    box-shadow: $bx-shadow;
+    border-radius: $bx-corner;
+    border: $bx-border;
+    padding: $bx-padding;
+    margin-bottom: 1.25rem;
+    background: $main-gradient-fallback;
+    background: $main-gradient;
+    position: relative;
+  }
+
+  .search-snippet-info {
+    padding-left: 0;
+  }
+}

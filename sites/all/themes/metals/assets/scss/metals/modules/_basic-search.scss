@@ -1,0 +1,52 @@
+/**********************************************
+Basic Search
+***********************************************/
+#header .basic-search {
+  position: absolute;
+  right: 205px;
+  top: 43px;
+  width: 210px;
+  display: none;
+
+  .form-item,
+  .form-actions {
+    float: left;
+    margin: 0;
+
+    input {
+      height: 1.75rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .form-item { width: 129px; }
+  .form-item input {
+    font-size: .875rem;
+    color:white;
+    background: none;
+    border-color: #B5BCC7;
+    
+    &:hover, &:focus {
+      border: 1px solid white;
+    }
+  }
+
+  .form-actions { width: 70px; }
+  .form-actions input {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left:-1px;
+    background-color: rgb(96, 99, 101);
+    color: white;
+    @extend %form-submit-button;
+    border-radius: 0;
+    border: 1px solid #B5BCC7;
+    transition:opacity .1s ease-in;
+    opacity:.6;
+
+    &:hover {
+      opacity:1;
+      border-color:white;
+    }
+  }
+}

@@ -1,0 +1,173 @@
+/**********************************************
+Bento
+***********************************************/
+.bnt-container {
+	.bnt-inner {
+	  margin-bottom: 25px;
+	}
+
+	.bnt-item {
+    @extend .bg-box;
+  	
+	  border: none;
+    padding: 0.813rem;
+	}
+
+	.bnt-ttl {
+	  position: relative;
+	  width: 100%;
+	  display: block;
+	  h2 {
+	  	padding-left: .25em;
+		  padding-right: .25em;
+		  margin-top: .5em !important;
+		  padding-bottom: .25em;
+	  	@extend %title-a;
+	  }
+	}
+
+	.bnt-result-item {
+		padding-bottom:13px;
+		margin-bottom: 13px;
+
+		&:not(:last-child) {
+			border-bottom: 1px solid #d6d6d6;
+		}
+
+		> p:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+    h5 {
+      margin-bottom: 0.5rem;
+    }
+
+
+    @media only screen and (min-width: 64.0625em) {
+      .large-2 {
+        width: 11.666667%;
+      }
+
+      .large-8 {
+        padding-left: 0;
+        width: 71.666667%;
+      }
+
+      .columns + .columns:last-child {
+        float: left;
+      }
+
+    }
+
+    @media only screen and (max-width: 1520px) {
+      .large-8 {
+        width: 64.666667%;
+      }
+    }
+
+    @media only screen and (max-width: 1060px) {
+      .small-3.medium-3.large-2.columns.text-center {
+        clear: both;
+        width: 100%;
+      }
+    }
+
+    .cover {
+
+      img {
+        //float: left;
+        //margin-right: 10px;
+        max-height: 80px;
+      }
+    }
+
+    .columns + .columns:last-child {
+      float: left;
+    }
+
+    .button {
+      //float: right;
+      //margin-top: -10px;
+    }
+
+    .btn-read-online, .bentoRead, .bentoHold {
+      margin-bottom: .75em;
+      padding: .5rem .75rem .5rem;
+      width: 98px;
+    }
+
+
+  .authors, .summary {
+		font-size: 0.85rem;
+  	  color: grey;
+	}
+	.bnt-see-more {
+		margin-top: 13px;
+	  border-top: 1px solid #d6d6d6;
+	  display: block;
+	  font-size: 0.9rem;
+	  padding-top: 10px;
+
+  	&:after {
+  		display: inline-block;
+  		content: "\f101";
+  		font-size: 1rem;
+  		margin-left: 5px;
+  		font-family: FontAwesome;
+  	}
+	}
+
+	.bnt-no-result p{
+		color: #3e5e6b;
+		@include alert($bg: #a0d3e8, $radius: true);
+      background-color: white;
+      border-color: grey;
+      color: #4f4f4f;
+		margin-bottom: 0;
+	}
+
+	.ajax-loader {
+	  width: 100%;
+	  text-align: center;
+	  font-size: 12px;
+
+	  img {
+	  	width: 20px;
+	  }
+	}
+
+	@media #{$medium-up} {
+		.bnt-ttl h2 {
+	    
+	  }
+	}
+
+	@media #{$large-up}{
+		.bnt-ttl h2 {
+			
+		}
+	}
+
+	@media #{$medium-only}{
+		.bnt-ttl h2 {
+		  
+  	}
+	}
+
+	@media #{$small-only} {
+		.bnt-ttl h2 {
+			
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+

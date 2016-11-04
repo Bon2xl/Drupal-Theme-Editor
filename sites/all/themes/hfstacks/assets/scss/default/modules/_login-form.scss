@@ -1,0 +1,34 @@
+#user-login,
+#user-pass {
+  @include grid-column($columns:7, $center:true);
+
+  &#user-login {
+
+    .form-text {
+      margin-bottom: 0;
+    }
+
+    .description {
+      font-size: .85em;
+      font-style: italic;
+      color: $lf-desc-clr;
+    }
+  }
+
+  input[type='submit'] {
+    @extend %form-submit-button;
+  }
+}
+
+// backend form build module overrides
+#form-builder-fields {
+  ul.form-builder-fields {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  li.form-builder-palette-element {
+    white-space: nowrap;
+    width: 120px;
+  }
+}

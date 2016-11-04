@@ -1,0 +1,221 @@
+/**********************************************
+Big Slider
+***********************************************/
+.big-slider {
+  $htRow: 450px;
+  $brdr: 40px;
+  $htOuter: $htRow + ($brdr * 2);
+  @include grid-column(12);
+  height: $htOuter;
+
+  .inner-content {
+    position: relative;
+    @include shadow();
+    background: $main-gradient-fallback;
+    height: $htOuter;
+  }
+
+  .img-link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+  }
+
+  .slick-arrow {
+    display: none;
+  }
+
+  .views-row {
+    position: relative;
+    width: 100%;
+    height: $htRow;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  img {
+    display: none;
+  }
+
+  // In before content
+  .panel-display & {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    float: none;
+  }
+
+  .slick-slider {
+    border: $brdr solid white;
+  }
+
+  .blk-title {
+    display: none;
+  }
+
+  .views-field {
+    &-field-body {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      color: white;
+      background: rgba(0, 0, 0, 0.38);
+      padding: $bx-padding;
+      border-bottom-left-radius: $bx-corner;
+      border-bottom-right-radius: $bx-corner;
+
+      p {
+        color: white;
+        margin-bottom: 0;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Next and Previous`
+  @include slider-next-prev(52px, 0, 0);
+
+  .slick-prev, .slick-next {
+    opacity:.6;
+
+    &:before {
+      color: white;
+    }
+  }
+
+  .slick-prev:hover, .slick-next:hover {
+    opacity:1;
+  }
+
+  @media #{$large-up}, #{$medium-only}{
+    & {
+      margin-bottom: 48px;
+    }
+  }
+
+  @media #{$small-only}, #{$medium-only}{
+    height: 382px;
+    .inner-content {
+      height: 382px;
+    }
+    .slick-slider {
+      border-width: 26px;
+    }
+  }
+
+  @media #{$small-only}{
+    margin: 0 0 10px!important;
+    .slick-slider {
+      border-width: 15px;
+    }
+
+    .views-row {
+      height: 200px;
+    }
+
+    &, .inner-content {
+      height: 231px;
+    }
+
+    .slick-prev, .slick-next {
+      top: 50%;
+    }
+    .views-field-field-body {
+      position:relative;
+      padding: 0.65rem 1.25rem;
+      p{
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+
+/**********************************************
+Slick Dots
+***********************************************/
+.big-slider .slick-dots {
+  background:#063237;
+  margin: 0 auto 0  -34px;
+  width: auto;
+  height: 28px;
+  padding: 0;
+  left: 50%;
+  display:inline-block !important;
+  bottom: -12px;
+  border-radius: 5px;
+
+  button {
+    z-index: 9;
+    font-size: 1px;
+  }
+
+  button:before {
+    font-size: 10px;
+    color: white;
+    opacity: 1;
+  }
+
+  li {
+    margin: 0;
+  }
+  // round corner left and right
+  li:first-child:before, li:last-child:after {
+    width: 20px;
+    height: 31px;
+    content: "";
+    display: block;
+    position: absolute;
+    top: -7px;
+  }
+
+  li:first-child:before {
+    left: -14px;
+    background: url("../img/headlines/paper-black-headings_left_round.png") no-repeat;
+    background-position: right top;
+    background-size: contain;
+  }
+
+  li:last-child:after {
+    right: -14px;
+    background: url("../img/headlines/paper-black-headings_right_round.png") no-repeat;
+    background-size: contain;
+    bottom: -9px;
+  }
+  // end round corner left and right
+  // top grunge
+  &:before {
+    background: url("../img/headlines/paper-black-headings.png") no-repeat right top;
+    top:-10px;
+    background-size: 255px;
+  }
+
+  &:after {
+    background: url("../img/headlines/paper-black-headings-flipped.png") no-repeat left bottom;
+    bottom: -10px;
+    z-index: 1;
+    background-size: 255px;
+  }
+  // end top grunge
+  .slick-active button:before {
+    color: $third-clr;
+  }
+
+  &:after, &:before {
+    position: absolute;
+    left:0;
+    right:0;
+    height: 20px;
+    content: "";
+  }
+
+  @media #{$small-only}{
+    bottom: -5px;
+  }
+}

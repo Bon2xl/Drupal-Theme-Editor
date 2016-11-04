@@ -1,0 +1,441 @@
+/**********************************************
+Body
+***********************************************/
+a {
+  color: $base-link-clr;
+  &:hover, &:active, &:focus {
+    color: scale-color($base-link-clr, $lightness: -10%);
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 0.3px;
+}
+
+/**********************************************
+Main Background
+***********************************************/
+.main-background {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -2;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-attachment: fixed;
+
+  .mobile & {
+    background-attachment: scroll !important;
+  }
+
+  .page-media-browser &{
+    display:none!important ;
+  }
+
+  .background_fadeout_enable & {
+    position: absolute !important;
+    background-attachment: fixed !important;
+  }
+}
+
+/**********************************************
+Gradient Background
+***********************************************/
+.background_fadeout_enable .main-gradient {
+  background-attachment: scroll;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+
+  .mobile & {
+    background-attachment: scroll !important;
+  }
+
+  .page-media-browser &{
+    display:none!important;
+  }
+}
+
+/**********************************************
+Breadcrumbs
+***********************************************/
+#breadcrumb {
+  margin:0;
+}
+
+/**********************************************
+Table
+***********************************************/
+table {
+  background: $base-tbl-bg;
+
+  thead tr th {
+    border-bottom-width: 1px;
+    font-weight: 600;
+    color: $base-tbl-hr-clr;
+  }
+
+  tr.odd {
+    background-color: $base-tbl-tr-odd-bg;
+  }
+
+  tr td {
+    font-size: .8rem;
+  }
+}
+
+/**********************************************
+Full Width
+***********************************************/
+.full-width {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: initial;
+}
+
+/**********************************************
+Top Header
+***********************************************/
+#top-header {
+  @media #{$small-only}, #{$medium-only} {
+    display: none;
+  }
+
+  .section {
+    box-shadow: $bx-shadow;
+    background: $top-header-bg;
+    padding: .5em .9375rem;
+    height: 2.8125rem;
+    border-bottom-right-radius: .25em;
+    border-bottom-left-radius: .25em;
+  }
+}
+
+/**********************************************
+Header
+***********************************************/
+#header {
+  margin-bottom: 20px;
+  .section {
+    box-shadow: $bx-shadow;
+    background: $main-gradient-fallback;
+    background: $header-bg;
+  }
+
+  @media #{$large-up} {
+    .section {
+      // height: 7rem;
+      border-radius: $bx-corner;
+    }
+  }
+
+  @media #{$small-only}, #{$medium-only} {
+
+    .section {
+      overflow: hidden;
+    }
+
+    .large-12 {
+      padding: 0;
+    }
+  }
+
+  @media #{$small-only} {
+
+    .section {
+      height: auto;
+    }
+  }
+}
+
+/**********************************************
+Modal
+***********************************************/
+#stacks-modal h2 {
+  text-align: center;
+  margin-bottom: 1.25rem;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $primary-clr;
+}
+
+/**********************************************
+Main Wrapper not front page
+***********************************************/
+#content-wrapper .section-wrapper {
+  border-radius: $bx-corner;
+  padding: 1.25rem;
+
+  .not-front & {
+    background: $main-wrapper-bg;
+
+    .main-content {
+
+      .content {
+        > h2,  > h3 {
+          margin-top: 1em;
+          border-bottom: 1px solid $base-hd-border-clr;
+          padding-bottom: .25em;
+          margin-bottom: .5em;
+        }
+
+        ul {
+          padding-top: 1em;
+          margin-left: 2rem;
+        }
+      }
+    }
+  }
+
+  .page-homepage &, .page-eds &{
+    padding: 0;
+  }
+
+  .page-eds-wishlist &{
+    padding: 1.25rem !important;
+  }
+
+  // modules views / nest columns
+  body.page-databases &{
+    .main-content > div > .content {
+      @media #{$large-up}{
+        @include grid-row(nest);
+      }
+    }
+  }
+
+
+  body.page-news &, body.page-directorylisting & {
+    .main-content > div > .content {
+      @include grid-row(nest);
+    }
+  }
+
+
+  @media #{$small-up}{
+    body.not-front & {
+      margin-bottom: 1em;
+    }
+  }
+
+  @media #{$small-only} {
+    body.page-multisearch & {
+      padding: 0;
+      background: none;
+    }
+  }
+}
+
+.page-eds:not(.page-eds-wishlist) #content-wrapper .section-wrapper  {
+  background: none;
+}
+
+// Mobile padding
+#content-wrapper > .large-12.columns {
+  @media #{$small-only}{
+    padding-left:0;
+    padding-right:0;
+  }
+}
+
+
+/**********************************************
+Page title
+***********************************************/
+.page-title {
+  margin-top: .5em !important;
+  padding-bottom: .25em;
+  word-break: break-word;
+}
+
+/**********************************************
+Tabs
+***********************************************/
+.page-user {
+  ul.primary li.active a {
+    border-bottom: none;
+    background-color: transparent;
+  }
+}
+.tabs .tabs {
+  margin-bottom: 1em !important ;
+  border-bottom: 1px solid $base-tabs-border-clr !important;
+  padding: 0;
+
+  li {
+    float: left;
+    margin-left: -1px;
+    // margin-bottom: -1px;
+  }
+
+  li.active a{
+    border-color:#ddd!important;
+  }
+
+  a {
+    margin-right: 0;
+    font-size: 0.85em;
+    padding: .31rem .63rem;
+    float: left;
+    background-color: $base-tabs-link-bg;
+    border-color: $base-tabs-link-border-clr;
+  }
+}
+
+/**********************************************
+Sharethis-buttons
+***********************************************/
+.sharethis-buttons {
+  border-top: 1px solid $base-sharethis-border-clr;
+  padding-top: 1em;
+  clear: both;
+  display: block;
+  margin-top: 1em;
+}
+
+/**********************************************
+Panels
+***********************************************/
+.panels-ipe-button-container .panels-ipe-change-layout {
+  display: none;
+}
+
+.section-wrapper .panel-panel {
+  @media #{$small-only}, #{$medium-only}{
+    .front & {
+      width:100% !important;
+      float:none !important;
+
+      .inside {
+        margin: 0;
+      }
+    }
+  }
+
+  @media #{$small-only}{
+    .not-front & {
+      width:100% !important;
+      float:none !important;
+
+      .inside {
+        margin: 0;
+      }
+    }
+  }
+}
+
+/**********************************************
+layout II
+***********************************************/
+.page-layout-b {
+  .panel-e-resources {
+    border-radius: $bx-corner;
+    box-shadow: $bx-shadow;
+    border: $bx-border;
+    padding: $bx-padding;
+    background: $bx-background;
+    margin-bottom: 1em;
+  }
+
+  .coverflow .views-row {
+    width: 105px;
+  }
+
+  .pane-title {
+    margin-top: 0 !important;
+    padding-top: .2em;
+  }
+
+  .eresource-title {
+    border: none !important;
+  }
+}
+
+/**********************************************
+Page Filter
+***********************************************/
+.page-filter .main-content .content{
+  @extend .bg-box;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/**********************************************
+Bg wrapper
+***********************************************/
+.bg-wrapper {
+  box-shadow: $bx-shadow;
+  background: $main-gradient-fallback;
+  background: $header-bg;
+  border-radius: $bx-corner;
+  border: $bx-border;
+  padding: $bx-padding;
+}
+
+/**********************************************
+Slider Arrow
+***********************************************/
+.slick-prev, .slick-next {
+  width: 30px;
+  height: 30px;
+
+}
+
+/**********************************************
+// Top Title / Coverflow / Days in history
+***********************************************/
+.coverflow.top-title, .days-in-history.top-title {
+  .content, .pane-content {
+
+    @media #{$large-up}{
+      min-height: 316px;
+    }
+  }
+}
+
+/**********************************************
+Admin Toolbar / Admin Menu
+***********************************************/
+#admin-menu {
+ .dropdown {
+    font-size: 0.7rem;
+  }
+}
+
+/**********************************************
+Pager
+***********************************************/
+.item-list .pager {
+  &, li {
+    margin: 0 !important;
+  }
+}
+
+/**********************************************
+Node block
+***********************************************/
+.block-nodeblock {
+  @include grid-column($columns:12, $collapse:true);
+}
+
+
+/**********************************************
+Alert Boxes
+***********************************************/
+.page-upcoming-events .alert-box {
+  color: #2f7f9e;
+}

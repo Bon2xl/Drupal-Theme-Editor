@@ -1,0 +1,45 @@
+/**********************************************
+News items
+***********************************************/
+
+// individual news items
+.news-items {
+
+  aside {
+    font-size: $paragraph-font-size;
+
+    @media #{$small-only} {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.news-item-image {
+  img {
+    width: 100%;
+  }
+}
+.news-item-details {
+  span {
+    display: block;
+  }
+}
+.news-item-date {
+  &::before {
+    content: '\f133';
+    font-family: 'fontAwesome';
+    margin-right: .5rem;
+  }
+}
+.news-item-author {
+  &::before {
+    content: '\f007';
+    font-family: 'fontAwesome';
+    margin-right: .5rem;
+  }
+}
+
+
+.news-item-content {}
+.news-item-share {}
+.news-item-comments {}

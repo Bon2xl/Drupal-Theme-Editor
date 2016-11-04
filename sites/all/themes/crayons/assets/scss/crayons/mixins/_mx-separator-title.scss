@@ -1,0 +1,16 @@
+/*****************************************
+Seperator title
+*****************************************/
+@mixin seperator-title($psuedo:true, $bgSize:103px, $w:100%, $h:33px) {
+  width: $w;
+  height: $h;
+  background: url("../img/cta-hr.svg") no-repeat center center;
+  display: block;
+  clear: both;
+  text-align: center;
+  background-size:$bgSize;
+
+  @if($psuedo) {
+    content: '';
+  }
+}

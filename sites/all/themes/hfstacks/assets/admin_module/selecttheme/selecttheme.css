@@ -1,0 +1,186 @@
+.form-item-color-palette .field-prefix {
+  position: relative; }
+
+#edit-color-palette {
+  display: none; }
+
+.dropdown-a {
+  background: url("img/select-arrow.svg") no-repeat right 50% #fff;
+  min-height: 16px;
+  display: inline-block;
+  padding: 5px 7px;
+  border: 1px solid #ddd;
+  color: #333;
+  vertical-align: baseline;
+  outline: 2px solid transparent;
+  transition: all, 0.1s;
+  padding-right: 71.4px;
+  font-size: 0.7rem;
+  cursor: pointer; }
+
+.dropdown-b {
+  background: white;
+  display: none;
+  position: absolute;
+  padding: 6px 3px;
+  left: 0;
+  top: 23px;
+  z-index: 2;
+  border: 1px solid #D2D2D2;
+  width: 251px; }
+  .dropdown-b ul {
+    padding: 0;
+    margin: 0 !important; }
+    .dropdown-b ul li:last-child {
+      border-bottom: none; }
+  .dropdown-b li {
+    cursor: pointer !important;
+    list-style-type: none;
+    padding: 5px 10px;
+    border-bottom: 1px dotted #ECECEC; }
+  .dropdown-b li:hover {
+    background: rgba(202, 202, 202, 0.31); }
+  .dropdown-b.active {
+    display: block; }
+  .dropdown-b li.active {
+    background: rgba(202, 202, 202, 0.2); }
+
+.dropdown-b .prim, .dropdown-b .secnd {
+  position: relative;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  float: left;
+  top: 2px; }
+.dropdown-b .secnd {
+  margin-right: 10px; }
+.dropdown-b .default .prim {
+  background: #69bd45; }
+.dropdown-b .default .secnd {
+  background: #45a5bd; }
+.dropdown-b .default_no_radius .prim {
+  background: #69bd45; }
+.dropdown-b .default_no_radius .secnd {
+  background: #45a5bd; }
+.dropdown-b .midnight_moon .prim {
+  background: #c00038; }
+.dropdown-b .midnight_moon .secnd {
+  background: #474c62; }
+.dropdown-b .midnight_moon_no_radius .prim {
+  background: #c00038; }
+.dropdown-b .midnight_moon_no_radius .secnd {
+  background: #474c62; }
+.dropdown-b .spring_breeze .prim {
+  background: #e39101; }
+.dropdown-b .spring_breeze .secnd {
+  background: #00c182; }
+.dropdown-b .spring_breeze_no_radius .prim {
+  background: #e39101; }
+.dropdown-b .spring_breeze_no_radius .secnd {
+  background: #00c182; }
+.dropdown-b .cool_steel .prim {
+  background: #7800bc; }
+.dropdown-b .cool_steel .secnd {
+  background: #2480c9; }
+.dropdown-b .cool_steel_no_radius .prim {
+  background: #7800bc; }
+.dropdown-b .cool_steel_no_radius .secnd {
+  background: #2480c9; }
+.dropdown-b .autumn_mist .prim {
+  background: #df6112; }
+.dropdown-b .autumn_mist .secnd {
+  background: #f1c503; }
+.dropdown-b .back_to_school .prim {
+  background: #FB6C1E; }
+.dropdown-b .back_to_school .secnd {
+  background: #E9702E; }
+.dropdown-b .bare_essentials .prim {
+  background: #74C45C; }
+.dropdown-b .bare_essentials .secnd {
+  background: #599b44; }
+.dropdown-b .classy_casual .prim {
+  background: #E74C3C; }
+.dropdown-b .classy_casual .secnd {
+  background: #D45447; }
+.dropdown-b .calm_concrete .prim {
+  background: #c2a282; }
+.dropdown-b .calm_concrete .secnd {
+  background: #a48e81; }
+.dropdown-b .catarina .prim {
+  background: #5A6B78; }
+.dropdown-b .catarina .secnd {
+  background: #2D3840; }
+.dropdown-b .dragon_fire .prim {
+  background: #fd9451; }
+.dropdown-b .dragon_fire .secnd {
+  background: #cf474c; }
+.dropdown-b .drift_wood .prim {
+  background: #afa995; }
+.dropdown-b .drift_wood .secnd {
+  background: #789696; }
+.dropdown-b .great_white .prim {
+  background: #87c0bf; }
+.dropdown-b .great_white .secnd {
+  background: #6e7275; }
+.dropdown-b .lady_business .prim {
+  background: #69cfe5; }
+.dropdown-b .lady_business .secnd {
+  background: #f28fb8; }
+.dropdown-b .mountain_sunset .prim {
+  background: #7e4a78; }
+.dropdown-b .mountain_sunset .secnd {
+  background: #f68182; }
+.dropdown-b .night_frost .prim {
+  background: #000a10; }
+.dropdown-b .night_frost .secnd {
+  background: #82a7a9; }
+.dropdown-b .summer_lawn .prim {
+  background: #84b528; }
+.dropdown-b .summer_lawn .secnd {
+  background: #96a516; }
+.dropdown-b .sweet_sugar .prim {
+  background: #e97eaa; }
+.dropdown-b .sweet_sugar .secnd {
+  background: #57eae7; }
+.dropdown-b .time_travel .prim {
+  background: #6da083; }
+.dropdown-b .time_travel .secnd {
+  background: #586355; }
+.dropdown-b .the_reef .prim {
+  background: #3379f0; }
+.dropdown-b .the_reef .secnd {
+  background: #ffea1a; }
+.dropdown-b .tropical_swell .prim {
+  background: #26aeca; }
+.dropdown-b .tropical_swell .secnd {
+  background: #1f79a8; }
+.dropdown-b .urban_skyline .prim {
+  background: #b5baa7; }
+.dropdown-b .urban_skyline .secnd {
+  background: #845146; }
+.dropdown-b .metals .prim {
+  background: #b24643; }
+.dropdown-b .metals .secnd {
+  background: #32312c; }
+.dropdown-b .gold .prim {
+  background: #D4AE37; }
+.dropdown-b .gold .secnd {
+  background: #443F2E; }
+.dropdown-b .silver .prim {
+  background: #929292; }
+.dropdown-b .silver .secnd {
+  background: #4E4E4E; }
+.dropdown-b .bronze .prim {
+  background: #CD8032; }
+.dropdown-b .bronze .secnd {
+  background: #5B391E; }
+.dropdown-b .steel .prim {
+  background: #5E7C88; }
+.dropdown-b .steel .secnd {
+  background: #363F45; }
+.dropdown-b .nickel .prim {
+  background: #9B9690; }
+.dropdown-b .nickel .secnd {
+  background: #827d76; }
+
+/*# sourceMappingURL=selecttheme.css.map */

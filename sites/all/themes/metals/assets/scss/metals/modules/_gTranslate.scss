@@ -1,0 +1,84 @@
+/**********************************************
+Google Translate
+***********************************************/
+.gTranslate {
+  & > h2 {
+    display: none;
+  }
+
+  @media #{$large-up}{
+    & {
+      width: 166px;
+    }
+    // Top Header
+    #top-header & {
+      position: absolute;
+      right: 131px;
+      top: 22px;
+
+      select {
+        font-family: $header-font-family;
+        background:url(../img/icon_arrow-down-hover.svg) no-repeat right 5px center;
+        background-size: 16px 16px;
+        letter-spacing: .05em;
+        cursor: pointer;
+        color:#c1c0bf;
+
+        &:hover {
+          color: rgba(255,255,255,.5);
+        }
+      }
+
+      select {
+        padding: 0 0.83rem;
+        margin: 0 !important;
+        height: 38px;
+        font-size: 12px;
+        outline: none;
+        line-height: 38px;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  @media #{$medium-only}, #{$small-only}{
+    // Top Header
+    #top-header & {
+      position: absolute;
+      right: 51px;
+      top: 23px;
+      outline: none;
+
+      &:hover {
+        opacity: .8;
+      }
+
+     &:before {
+      content:"\f11d";
+      font-family: FontAwesome;
+      width: 20px;
+      height: 20px;
+      display: block;
+      color: white;
+      position: relative;
+      top: -4px;
+      left: 4px;
+      outline: none;
+    }
+
+    select {
+      cursor: pointer;
+      text-indent: -2000px;
+      background: transparent;
+      width:20px;
+      height:20px;
+      top: -23px;
+      margin-bottom: 0 !important;
+      position: relative;
+      z-index: 9;
+      border: none;
+      outline: none;
+    }
+    }
+  }
+}

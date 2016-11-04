@@ -1,0 +1,458 @@
+/**********************************************
+Tabs Wrapper
+***********************************************/
+#tabs-wrapper {
+  position: relative;
+  margin-left: $bx-padding;
+  margin-right: $bx-padding;
+  z-index: 0;
+
+  &::after {
+    // Use to position gradient width only 4 different color
+    background: $secondary-clr;
+    position: absolute;
+    content: "";
+    z-index: 2;
+    left:0;
+    top:23px;
+    right:0;
+    height:48px;
+    @media #{$large-up}{
+      background: linear-gradient(to right,   $third-clr 0%,$third-clr 25%,$fourth-clr 25%, $fourth-clr 50%,$fifth-clr 50%, $fifth-clr 75%, $sixth-clr 75%, $sixth-clr 100%);
+      background: -moz-linear-gradient(left,   $third-clr 0%,$third-clr 25%,$fourth-clr 25%, $fourth-clr 50%,$fifth-clr 50%, $fifth-clr 75%, $sixth-clr 75%, $sixth-clr 100%);
+      background: -webkit-linear-gradient(left, $third-clr 0%,$third-clr 25%,$fourth-clr 25%, $fourth-clr 50%,$fifth-clr 50%, $fifth-clr 75%, $sixth-clr 75%, $sixth-clr 100%);
+    }
+
+    @media #{$medium-only}{
+      background: linear-gradient(to right,   $third-clr 0%,$third-clr 33.33333%,$fourth-clr 33.33333%, $fourth-clr 66.66666%,$sixth-clr 66.66666%, $sixth-clr 99.99999%);
+      background: -moz-linear-gradient(left,   $third-clr 0%,$third-clr 33.33333%,$fourth-clr 33.33333%, $fourth-clr 66.66666%,$sixth-clr 66.66666%, $sixth-clr 99.99999%);
+      background: -webkit-linear-gradient(left, $third-clr 0%,$third-clr 33.33333%,$fourth-clr 33.33333%, $fourth-clr 66.66666%,$sixth-clr 66.66666%, $sixth-clr 99.99999%);
+    }
+    @media #{$small-only}{
+      background: $secondary-clr;
+    }
+  }
+
+  .inner {
+    display: block;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    z-index: 3;
+
+    .slick-prev, .slick-next {
+      z-index: 4;
+      top: 33px;
+
+      &:before {
+        font-family: FontAwesome;
+      }
+
+      &:hover {
+        color: white;
+      }
+    }
+
+    .slick-next {
+      width: 40px;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+      background-color:$sixth-clr;
+
+      &:before {
+
+        content:"\f061" !important;
+      }
+    }
+
+    .slick-prev {
+      width: 40px;
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+      background-color:$third-clr;
+
+      &:before {
+
+        content:"\f060" !important;
+      }
+    }
+
+    .slick-disabled {
+      cursor: default !important;
+    }
+
+    .slick-dots {
+      display: none !important;
+    }
+
+    .slick-list {
+      overflow: hidden;
+    }
+  }
+
+  @media #{$medium-up}{
+    .slick-prev, .slick-next {
+      height: 58px;
+
+      &:before {
+        font-size: 14px;
+      }
+    }
+  }
+
+  @media #{$small-only}{
+    .slick-prev, .slick-next {
+      height: 21px;
+
+      &:before {
+        font-size: 11px;
+      }
+    }
+
+    .slick-next {
+      background-color: $third-clr !important;
+    }
+  }
+}
+
+/**********************************************
+Tabs Title
+***********************************************/
+#tabs-wrapper .slick-track {
+  .tabs-ttl {
+    color: #c7c7c7;
+    outline: none;
+    text-align: center;
+
+    span {
+      position: relative;
+      font-weight: 100;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:hover {
+      opacity: .7;
+    }
+
+    &.active span{
+      color: $secondary-clr;
+      font-weight: 500;
+    }
+  }
+
+  @media #{$medium-up}{
+    .tabs-ttl {
+      padding-right: 10px;
+      height: 50px;
+    }
+  }
+
+  @media #{$small-only}{
+    .tabs-ttl {
+      padding-left: 10px;
+      height: 44px;
+    }
+  }
+}
+
+/**********************************************
+Uni Tabs
+***********************************************/
+.uni-tabs {
+  @include grid-row();
+
+  overflow: hidden;
+  .view-content {
+    background: white;
+    z-index: 2;
+    position: relative;
+    border: 1px solid #DDDDDD;
+    @include shadow();
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  @media #{$medium-up}{
+    padding-left: 1.9375rem;
+    padding-right: 1.9375rem;
+
+    h2 {
+      margin-bottom: 37px;
+    }
+
+    .view-content {
+      margin: 0 28px;
+    }
+  }
+
+  @media #{$small-only}{
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+  }
+}
+
+/**********************************************
+Map
+***********************************************/
+.uni-tabs .uni-map {
+  display: none;
+}
+
+.map-wrapper {
+  background: white;
+}
+
+.uni-map-inline {
+  height: 350px;
+  &.hideMap {
+    opacity: 0;
+    position: absolute;
+    left: -20000px;
+    height: auto!important;
+  }
+}
+
+@media #{$large-up}{
+  .uni-map-inline {
+    width: 405px;
+    position: absolute;
+    right: 17px;
+    top: 17px;
+    z-index: 999;
+  }
+}
+
+@media #{$medium-only}, #{$small-only}{
+  .map-wrapper {
+    padding:0 20px 20px;
+  }
+
+  .uni-map-inline {
+    width: 100%;
+  }
+}
+
+/**********************************************
+Location branch
+***********************************************/
+.uni-tabs .view-branch-location {
+  float: none;
+  margin-bottom: 2.25em;
+
+  &, p, span {
+    color: grey;
+  }
+
+  &, p, span, a {
+    font-size:.85rem;
+  }
+
+  /************
+  Heading
+  ************/
+  h2 {
+    display: none;
+  }
+
+  /************
+  Branch Name
+  ************/
+  .branch-name {
+    display: none;
+  }
+
+  /************
+  Blocks and Views
+  ************/
+  .views-row {
+    @extend .clearfix;
+    background: white;
+  }
+
+  .views-row.active {
+    display: block !important;
+    z-index: 4;
+    position: relative;
+  }
+
+  .views-row:first-child {
+    display: block;
+  }
+
+  .views-row {
+    display: none !important;
+  }
+
+  .img-branch {
+    img {
+      border-radius: $bx-corner;
+      margin-bottom:20px;
+    }
+  }
+
+  .views-field-field-branch-image {
+    display: none;
+  }
+
+  /************
+  Sked
+  ************/
+  .sked {
+    overflow:hidden;
+
+    .col1, .col2 {
+      float: left;
+      margin-left: auto;
+      margin-right:10px;
+    }
+
+    .views-field-field-branch-notes {
+      clear:both;
+      overflow: hidden;
+      padding-top: 15px;
+      > .views-label, > .field-content {
+        float:left;
+      }
+    }
+  }
+
+  .sked .views-field {
+    clear: both;
+  }
+
+  .sked .views-field, .add-info .views-field{
+    overflow: hidden;
+    & > .views-label, & > .field-content {
+      display:inline-block;
+    }
+  }
+
+  /************
+  Add Info
+  ************/
+  .add-info .views-field-field-branch-location-notes {
+    clear:both;
+    padding-top: 10px;
+  }
+
+  @media #{$large-up}{
+    .sked, .add-info, .uni-map {
+      width: 50%;
+      float: left;
+      display: block;
+    }
+
+    .sked, .add-info {
+      padding-right: 30px;
+    }
+
+    .sked .views-field:not(.views-field-field-branch-notes){
+      & > .views-label, & > .field-content {
+        width: 49%;
+        float: left;
+      }
+
+      & > .field-content {
+        text-align: right;
+      }
+    }
+
+    .views-row {
+      min-height: 390px;
+      padding: 23px 424.713px 0.813rem 1.013rem !important;
+    }
+
+    .add-info .views-field:not(.views-field-field-branch-location-notes) {
+      & > .views-label {
+        width: 30%;
+      }
+      & > .field-content {
+        width: 70%;
+      }
+      & > .views-label, & > .field-content {
+        float: left;
+        overflow: hidden
+      }
+
+      & > .field-content {
+        text-align: right;
+      }
+    }
+  }
+
+  @media #{$medium-only}{
+    .views-row {
+      padding:   1.013rem;
+    }
+    .sked .views-field:not(.views-field-field-branch-notes) > .views-label{
+      width: 100px;
+      float: left;
+    }
+
+    .add-info .views-field:not(.views-field-field-branch-location-notes) > .views-label {
+      width: 100px;
+      float: left;
+    }
+  }
+
+  @media #{$small-only}{
+    .views-row {
+      padding: 11.6px 1.013rem 0.813rem;
+    }
+  }
+
+  @media #{$small-only}, #{$medium-only}{
+    .sked {
+      .col1, .col2 {
+        float: none;
+
+        .views-label {
+          font-weight: 600;
+        }
+      }
+    }
+    .views-field-field-branch-notes .views-label {
+      display: block !important;
+      float:none !important;
+    }
+  }
+}
+
+
+/**********************************************
+Uni Tabs / Single Location
+***********************************************/
+.uni-tabs.single-location {
+  > h2 {
+    margin-bottom: 0;
+  }
+  .tabs-ttl {
+    cursor: default;
+  }
+  .tabs-ttl span{
+    display: none !important;
+  }
+  .branch-name {
+    display: block !important;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #dddddd;
+    width: 95%;
+    padding-bottom: 11px;
+
+    .field-content {
+      font-size: 1.3rem;
+      color: $third-clr !important;
+      font-weight: 500;
+    }
+  }
+}
+

@@ -1,0 +1,211 @@
+.form-item-color-palette .field-prefix {
+	position: relative;
+}
+
+#edit-color-palette {
+	display: none;
+}
+
+.dropdown-a {
+	 background: url('img/select-arrow.svg') no-repeat right 50% #fff;
+	 min-height: 16px;
+	 display:inline-block;
+	 padding: 5px 7px;
+	 border: 1px solid #ddd;
+	 color: #333;
+	 vertical-align: baseline;
+	 outline: 2px solid transparent;
+	 transition: all, 0.1s;
+	 padding-right: 71.4px;
+	 font-size:0.7rem;
+	 cursor:pointer;
+ }
+
+.dropdown-b {
+	background:white;
+	display:none;
+	position:absolute;
+	padding: 6px 3px;
+	left: 0;
+	top: 23px;
+	z-index: 2;
+	border: 1px solid #D2D2D2;
+	width:251px;
+
+	ul {
+		padding:0;
+		margin:0 !important;
+
+		li:last-child {
+			border-bottom: none;
+		}
+
+	}
+
+	li {
+		cursor: pointer !important;
+		list-style-type: none;
+		padding:5px 10px;
+		border-bottom: 1px dotted #ECECEC;
+
+
+	}
+
+	li:hover {
+		background:rgba(202, 202, 202, 0.31);
+	}
+
+	&.active {
+		display:block;
+	}
+
+	li.active {
+		background:rgba(202, 202, 202, 0.2);
+	}
+}
+
+// Palette
+.dropdown-b {
+	.prim, .secnd{
+		position:relative;
+		display: inline-block;
+		width:15px;
+		height:15px;
+		float:left;
+	  top: 2px;
+	}
+	.secnd{
+		margin-right: 10px;
+	}
+	// Hfstacks theme
+	.default {
+		.prim { background: #69bd45; }
+		.secnd { background: #45a5bd; }
+	}
+	.default_no_radius {
+		.prim { background: #69bd45; }
+		.secnd { background: #45a5bd; }
+	}
+	.midnight_moon {
+		.prim { background: #c00038; }
+		.secnd { background: #474c62; }
+	}
+	.midnight_moon_no_radius  {
+		.prim { background: #c00038; }
+		.secnd { background: #474c62; }
+	}
+	.spring_breeze {
+		.prim { background: #e39101; }
+		.secnd { background: #00c182; }
+	}
+	.spring_breeze_no_radius {
+		.prim { background: #e39101; }
+		.secnd { background: #00c182; }
+	}
+	.cool_steel {
+		.prim { background: #7800bc; }
+		.secnd { background: #2480c9; }
+	}
+	.cool_steel_no_radius {
+		.prim { background: #7800bc; }
+		.secnd { background: #2480c9; }
+	}
+	// Catarina
+	.autumn_mist {
+		.prim { background: #df6112; }
+		.secnd { background: #f1c503; }
+	}
+	.back_to_school {
+		.prim { background: #FB6C1E; }
+		.secnd { background: #E9702E; }
+	}
+	.bare_essentials {
+		.prim { background: #74C45C; }
+		.secnd { background: #599b44; }
+	}
+	.classy_casual {
+		.prim { background: #E74C3C; }
+		.secnd { background: #D45447; }
+	}
+	.calm_concrete {
+		.prim { background: #c2a282; }
+		.secnd { background: #a48e81; }
+	}
+	.catarina { // Corporate Keener
+		.prim { background: #5A6B78; }
+		.secnd { background: #2D3840; }
+	}
+	.dragon_fire {
+		.prim { background: #fd9451; }
+		.secnd { background: #cf474c; }
+	}
+	.drift_wood {
+		.prim { background: #afa995; }
+		.secnd { background: #789696; }
+	}
+	.great_white {
+		.prim { background: #87c0bf; }
+		.secnd { background: #6e7275; }
+	}
+	.lady_business {
+		.prim { background: #69cfe5; }
+		.secnd { background: #f28fb8; }
+	}
+	.mountain_sunset {
+		.prim { background: #7e4a78; }
+		.secnd { background: #f68182; }
+	}
+	.night_frost {
+		.prim { background: #000a10; }
+		.secnd { background: #82a7a9; }
+	}
+	.summer_lawn {
+		.prim { background: #84b528; }
+		.secnd { background: #96a516; }
+	}
+	.sweet_sugar {
+		.prim { background: #e97eaa; }
+		.secnd { background: #57eae7; }
+	}
+	.time_travel {
+		.prim { background: #6da083; }
+		.secnd { background: #586355; }
+	}
+	.the_reef {
+		.prim { background: #3379f0; }
+		.secnd { background: #ffea1a; }
+	}
+	.tropical_swell {
+		.prim { background: #26aeca; }
+		.secnd { background: #1f79a8; }
+	}
+	.urban_skyline {
+		.prim { background: #b5baa7; }
+		.secnd { background: #845146; }
+	}
+	// Metals
+	.metals {
+		.prim { background: #b24643; }
+		.secnd { background: #32312c; }
+	}
+	.gold {
+		.prim { background: #D4AE37; }
+		.secnd { background: #443F2E; }
+	}
+	.silver {
+		.prim { background: #929292; }
+		.secnd { background: #4E4E4E; }
+	}
+	.bronze {
+		.prim { background: #CD8032; }
+		.secnd { background: #5B391E; }
+	}
+	.steel {
+		.prim { background: #5E7C88; }
+		.secnd { background: #363F45; }
+	}
+	.nickel {
+		.prim { background: #9B9690; }
+		.secnd { background: darken(#9B9690, 10%); }
+	}
+}

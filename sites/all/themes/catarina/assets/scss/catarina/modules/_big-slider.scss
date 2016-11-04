@@ -1,0 +1,116 @@
+/**********************************************
+Big Slider
+***********************************************/
+.big-slider {
+  @include grid-column(12);
+
+  @media #{$medium-up} {
+    padding-left: .9375rem !important;
+    padding-right: .9375rem !important;
+  }
+
+  .inner-content {
+    background: $main-gradient-fallback;
+    border-radius: $bx-corner;
+    border: $bx-border;
+    overflow: hidden;
+    max-height: 450px;
+  }
+
+  .views-row {
+    position: relative;
+    border-radius: $bx-corner;
+  }
+
+  .img-link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+  }
+
+  // In before content
+  .panel-display & {
+    padding-left: 0;
+    padding-right: 0;
+    float: none;
+  }
+
+  .blk-title {
+    display: none;
+  }
+
+  .views-field {
+    &-field-body {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, .38);
+      padding: $bx-padding;
+      border-bottom-left-radius: $bx-corner;
+      border-bottom-right-radius: $bx-corner;
+      color: $white;
+
+      p {
+        color: $white;
+        margin-bottom: 0;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Next and Previous
+  @include slider-next-prev(35px, 0, 0);
+
+  .slick-prev, .slick-next {
+    // opacity: .1;
+    transition: all .1s ease-in;
+    background-color: white;
+    border-radius: $bx-corner;
+
+    @media #{$small-only} {
+      top: 43% !important;
+    }
+  }
+  .slick-prev {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .slick-next {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .slick-prev:hover,
+  .slick-next:hover {
+    opacity: .6;
+  }
+
+  @media #{$large-up} {
+    margin: 25px 0 !important;
+  }
+
+  @media #{$small-only}, #{$medium-only} {
+    margin: 0 0 10px !important;
+  }
+
+  @media #{$small-only} {
+    .slick-prev, .slick-next {
+      top: 30%;
+    }
+
+    .views-field-field-body {
+      position: relative;
+      padding: 0.65rem 1.25rem;
+
+      p {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+/**********************************************
+Page Admin: Tabs and Links
+***********************************************/
+#tabs-and-link .section{
+  .tabs.secondary {
+    margin-top: -1em;
+    padding-top: 0;
+
+    li {
+      padding:0;
+      border-left:1px solid #ccc;
+    }
+
+    a {
+      min-width:100px;
+      text-align:center;
+    }
+
+    a.active {
+      border-bottom-width:0;
+      background:white;
+
+    }
+  }
+
+  .action-links {
+    margin: 0 1.1rem 7px 7px 7px;
+    overflow: hidden;
+
+    li {
+      float:left;
+      margin-right:5px;
+    }
+  }
+}

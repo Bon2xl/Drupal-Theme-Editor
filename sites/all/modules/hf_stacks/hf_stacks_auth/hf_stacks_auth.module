@@ -1,0 +1,538 @@
+<?php
+
+require_once('./' . drupal_get_path('module', 'hf_stacks_auth') . '/api/hf_stacks_auth.abstract.class.inc');
+require_once('./' . drupal_get_path('module', 'hf_stacks_auth') . '/api/hf_stacks_auth.iii.class.inc');
+require_once('./' . drupal_get_path('module', 'hf_stacks_auth') . '/api/hf_stacks_auth.polaris.class.inc');
+require_once('./' . drupal_get_path('module', 'hf_stacks_auth') . '/api/hf_stacks_auth.sirsi.class.inc');
+require_once('./' . drupal_get_path('module', 'hf_stacks_auth') . '/api/hf_stacks_auth.sip2.class.inc');
+
+/*
+ * Stacks Authentication Module
+ *
+ * Provides a configuration page on the backend for selecting the authentication service
+ * we use on the site.
+ *
+ * Implements a generic login block and account section.
+ * Authenticated patrons will generate a Drupal user with the name: patron_000000000000. This will be used by other
+ * modules to know the use is authenticated and can perform additional calls and sections. A role can also be used
+ * for identifying patrons.
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+function hf_stacks_auth_menu() {
+
+	$items['admin/config/stacks/auth'] = array(
+		'title' => 'Authentication',
+		'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('_hf_stacks_auth_form'),
+		'access arguments' => array('administer stacks config'),
+		'file' => 'hf_stacks_auth.admin.inc',
+	);
+
+	$items['my-account'] = array(
+		'title' => 'My Account',
+		'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+		'page callback' => 'hf_stacks_account_page',
+		'page arguments' => array('main'),
+		'access arguments' => array('access patron'),
+		'file' => 'hf_stacks_auth.account.inc',
+	);
+
+	$items['my-account/items'] = array(
+		'title' => 'Items',
+		'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+		'page callback' => 'hf_stacks_account_page',
+		'page arguments' => array('items'),
+		'access arguments' => array('access patron'),
+		'file' => 'hf_stacks_auth.account.inc',
+	);
+
+	$items['my-account/items/renew/%'] = array(
+		'title' => 'Items - Renew',
+		'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+		'page callback' => 'hf_stacks_account_page',
+		'page arguments' => array('items_renew', 3),
+		'access arguments' => array('access patron'),
+		'file' => 'hf_stacks_auth.account.inc',
+	);
+
+	$items['my-account/items/info/%'] = array(
+		'title' => 'Items - Info',
+		'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+		'page callback' => 'hf_stacks_account_page',
+		'page arguments' => array('items_info', 3),
+		'access callback' => TRUE,
+		'file' => 'hf_stacks_auth.account.inc',
+	);
+
+	$items['my-account/holds'] = array(
+		'title' => 'Requests',
+		'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+		'page callback' => 'hf_stacks_account_page',
+		'page arguments' => array('holds'),
+		'access arguments' => array('access patron'),
+		'file' => 'hf_stacks_auth.account.inc',
+	);
+
+  $items['my-account/hold/%'] = array(
+    'title' => 'Hold - Create',
+    'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+    'page callback' => 'hf_stacks_account_page',
+    'page arguments' => array('holds_create', ),
+    'access arguments' => array('access patron'),
+    'file' => 'hf_stacks_auth.account.inc',
+  );
+
+	$items['my-account/holds/cancel/%'] = array(
+		'title' => 'Requests - Cancel',
+		'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+		'page callback' => 'hf_stacks_account_page',
+		'page arguments' => array('holds_cancel', 3),
+		'access arguments' => array('access patron'),
+		'file' => 'hf_stacks_auth.account.inc',
+	);
+
+  $items['my-account/bib/%'] = array(
+    'title' => 'BibSearch',
+    'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+    'page callback' => 'hf_stacks_account_page',
+    'page arguments' => array('bib_search', ),
+    'access callback' => TRUE,
+    'file' => 'hf_stacks_auth.account.inc',
+  );
+
+	$items['my-account/bibinfo/%'] = array(
+		'title' => 'BibInfo',
+		'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+		'page callback' => 'hf_stacks_account_page',
+		'page arguments' => array('bib_info', ),
+		'access callback' => TRUE,
+		'file' => 'hf_stacks_auth.account.inc',
+	);
+
+	$items['my-account/read'] = array(
+		'title' => 'Reading History',
+		'description' => 'Selects and configure the authentication mechanism for Stack patrons',
+		'page callback' => 'hf_stacks_account_page',
+		'page arguments' => array('read'),
+		'access arguments' => array('access patron'),
+		'file' => 'hf_stacks_auth.account.inc',
+	);
+
+	return $items;
+}
+
+/**
+ * Implements hook_theme()
+ *
+ * Uses a different template depending on the authentication.
+ * This is to offer more flexibility.
+ *
+ * @return array
+ */
+function hf_stacks_auth_theme(){
+	return array(
+		'stacks-account-iii' => array(
+			// file name will be stacks-account.tpl.php
+			'template' => 'templates/stacks-account-iii',
+			'variables' => array()
+		),
+
+		'stacks-account-polaris' => array(
+			// file name will be stacks-account.tpl.php
+			'template' => 'templates/stacks-account-polaris',
+			'variables' => array()
+		),
+		'stacks-account-polaris-holds' => array(
+			// file name will be stacks-account-holds.tpl.php
+			'template' => 'templates/stacks-account-polaris-holds',
+			'variables' => array()
+		),
+		'stacks-account-polaris-holds-cancel' => array(
+			// file name will be stacks-account-polaris-holds-cancel.tpl.php
+			'template' => 'templates/stacks-account-polaris-holds-cancel',
+			'variables' => array()
+		),
+		'stacks-account-polaris-items' => array(
+			// file name will be stacks-account-polaris-items.tpl.php
+			'template' => 'templates/stacks-account-polaris-items',
+			'variables' => array()
+		),
+		'stacks-account-polaris-items-renew' => array(
+			// file name will be stacks-account-polaris-items-renew.tpl.php
+			'template' => 'templates/stacks-account-polaris-items-renew',
+			'variables' => array()
+		),
+		'stacks-account-polaris-read' => array(
+			// file name will be stacks-account-holds.tpl.php
+			'template' => 'templates/stacks-account-polaris-read',
+			'variables' => array()
+		),
+
+		'stacks-account-sirsi' => array(
+			// file name will be stacks-account.tpl.php
+			'template' => 'templates/stacks-account-sirsi',
+			'variables' => array()
+		),
+		'stacks-account-sirsi-holds' => array(
+			// file name will be stacks-account-holds.tpl.php
+			'template' => 'templates/stacks-account-sirsi-holds',
+			'variables' => array()
+		),
+		'stacks-account-sirsi-holds-cancel' => array(
+			// file name will be stacks-account-polaris-holds-cancel.tpl.php
+			'template' => 'templates/stacks-account-sirsi-holds-cancel',
+			'variables' => array()
+		),
+		'stacks-account-sirsi-items' => array(
+			// file name will be stacks-account-polaris-items.tpl.php
+			'template' => 'templates/stacks-account-sirsi-items',
+			'variables' => array()
+		),
+		'stacks-account-sirsi-items-renew' => array(
+			// file name will be stacks-account-polaris-items-renew.tpl.php
+			'template' => 'templates/stacks-account-sirsi-items-renew',
+			'variables' => array()
+		),
+		'stacks-account-sirsi-read' => array(
+			// file name will be stacks-account-holds.tpl.php
+			'template' => 'templates/stacks-account-sirsi-read',
+			'variables' => array()
+		),
+
+    'stacks-account-sip2' => array(
+        // file name will be stacks-account-sip2.tpl.php
+        'template' => 'templates/stacks-account-sip2',
+        'variables' => array()
+    )
+	);
+}
+
+
+/**
+ * @param $values
+ */
+function hf_stacks_auth_login($values) {
+
+	switch (variable_get('stacks_auth','')) {
+		case "polaris":
+			// authentication form
+			$auth_form = array(
+				'username' => 'patron_' . $values['barcode'],
+				'pass' => substr("e37-6@l.'/5q}V" . sha1($values['barcode']), 0, 32),
+				'barcode' => $values['barcode'],
+				'pin' => $values['pass']
+			);
+
+			$auth = new PolarisAuthentication();
+			$response = $auth->authenticate($values['barcode'], $values['pass']);
+
+			if ($response['validpatron']) {
+
+        $bibid = $values['bibid'];
+        if (!empty($bibid)) {
+          $hold = $auth->patronHoldsCreate($values['barcode'], $values['pass'], $response['patronid'], $bibid);
+          drupal_set_message(t("Hold Placed!"), 'status');
+        }
+
+        $_SESSION['barcode'] = $auth_form['barcode'];
+        $_SESSION['pass'] = $auth_form['pass'];
+				hf_stacks_create_or_login($auth_form, array(), $auth);
+			} else {
+				drupal_set_message('Wrong credentials', 'error');
+			}
+
+			//drupal_set_message(print_r($response,true));
+			break;
+
+		case "sirsi":
+			// authentication form
+			$auth_form = array(
+				'username' => 'patron_' . $values['barcode'],
+				'pass' => substr("e37-6@l.'/5q}V" . sha1($values['barcode']), 0, 32),
+				'barcode' => $values['barcode'],
+				'pin' => $values['pass']
+			);
+
+			$auth = new SirsiAuthentication();
+			$response = $auth->authenticate($values['barcode'], $values['pass']);
+
+			if ($response['patronid']) {
+
+        $bibid = $values['bibid'];
+        if (!empty($bibid)) {
+          $hold = $auth->patronHoldsCreate($values['barcode'], $values['pass'], $response['patronid'], $bibid);
+          drupal_set_message(t("Hold Placed!"), 'status');
+        }
+
+        $_SESSION['sirsi_token'] = $response['token'];
+        $_SESSION['sirsi_user'] = $response['patronid'];
+				hf_stacks_create_or_login($auth_form, array(), $auth);
+			} else {
+				drupal_set_message('Wrong credentials', 'error');
+			}
+
+			//drupal_set_message(print_r($response,true));
+			break;
+
+		// Authentication for III
+		case 'iii':
+			$auth_form = array(
+				'username' => 'patron_' . $values['barcode'],
+				'pass' => substr("e37-6@l.'/5q}V" . sha1($values['barcode']), 0, 32),
+				'barcode' => $values['barcode'],
+				'pin' => $values['pass']
+			);
+			$auth = new IIIAuthentication();
+			$response = $auth->authenticate($values['barcode'], $values['pass']);
+
+
+			if ($response['RETCOD'] === 0) {
+				hf_stacks_create_or_login($auth_form, array(), $auth);
+			} else if ($response['RETCOD'] == 1) {
+				drupal_set_message($response['ERRMSG'], 'error');
+				drupal_goto('<front>');
+			} else {
+				drupal_set_message('Cannot authenticate patron', 'error');
+				drupal_goto('<front>');
+			}
+			break;
+
+    // Authentication for SIP2
+    case 'sip2':
+        $auth_form = array(
+            'username' => 'patron_' . $values['barcode'],
+            'pass' => substr("e37-6@l.'/5q}V" . sha1($values['barcode']), 0, 32),
+            'barcode' => $values['barcode'],
+            'pin' => $values['pass']
+        );
+
+        // Create Sip2 object.
+        $mysip = new SIP2Authentication();
+
+        // Populate the object with form settings.
+        $mysip->hostname = variable_get('stacks_auth_sip2_host');
+        $mysip->port = variable_get('stacks_auth_sip2_port');
+        $mysip->sip_login = variable_get('stacks_auth_sip2_username');
+        $mysip->sip_password = variable_get('stacks_auth_sip2_password');
+
+        // Connect to SIP server.
+        $result = $mysip->sip2Connect();
+
+        // SC Login.
+        $login = $mysip->sip2MsgLogin($mysip->sip_login, $mysip->sip_password);
+        $result = $mysip->sip2ParseLoginResponse($mysip->sip2GetMessage($login));
+
+        // Send selfcheck status message.
+        $in = $mysip->sip2MsgScStatus();
+        $result = $mysip->sip2ParseAcsStatusResponse($mysip->sip2GetMessage($in));
+
+        // Use result to populate SIP2 setings.
+        if (isset($result['variable']['AO'][0])) {
+            $mysip->AO = $result['variable']['AO'][0]; /* set AO to value returned */
+        }
+        else {
+            $mysip->AO = "NOTINACSSTATUS";
+        }
+        if (isset($result['variable']['AN'][0])) {
+            $mysip->AN = $result['variable']['AN'][0]; /* set AN to value returned */
+        }
+
+        // Patron login.
+        $mysip->patron = $values['barcode'];
+        $mysip->patronpwd = $values['pass'];
+
+        // Load patron status into array.
+        $in = $mysip->sip2MsgPatronInformation('none');
+        $result = $mysip->sip2ParsePatronInfoResponse($mysip->sip2GetMessage($in));
+
+        // Were the name an pass correct?
+        if ((!empty($result['variable']['CQ'][0])) && (!empty($result['variable']['BL'][0]))) {
+            if (($result['variable']['CQ'][0] == 'Y') && ($result['variable']['BL'][0] == 'Y')) {
+                hf_stacks_create_or_login($auth_form, array(), $result);
+            }
+        }
+        else {
+            drupal_set_message('Cannot authenticate patron', 'error');
+            drupal_goto('<front>');
+        }
+
+        break;
+	}
+
+	// TODO: store the pin into something more secure.
+	// storing the pin in session.
+	$_SESSION['barcode'] = $values['pass'];
+	$_SESSION['pass'] = $values['barcode'];
+}
+
+
+/**
+ *
+ * Creates or logs a user into Drupal.
+ *
+ * @param $auth_form containing a barcode and pass of a sucessfully authenticated user
+ *        in a remote API.
+ * @param array $additional
+ * @return bool
+ */
+function hf_stacks_create_or_login($auth_form, $additional = array()) {
+
+	// does the user exist?
+	$result = db_query("SELECT 1 FROM {users} where name=:name", array(':name'=>$auth_form['username']));
+	if ($result->rowCount() > 0) {
+		$user_id = patron_user_authenticate_and_update_password($auth_form['username'], $auth_form['pass']);
+
+		if ($user_id) {
+			global $user;
+			$user = user_load($user_id);
+
+			user_login_finalize();
+			return true;
+		}
+		return false;
+	}
+
+	// user doesn't exist. We need to create one.
+	// getting additional info
+	switch (variable_get('stacks_auth','')) {
+		case "polaris":
+			$auth = new PolarisAuthentication();
+			$additional = $auth->patronBasicData($auth_form['barcode'], $auth_form['pin']);
+			break;
+		case "sirsi":
+			$auth = new SirsiAuthentication();
+			$additional = $auth->patronBasicData($auth_form['barcode'], $auth_form['pin']);
+			break;
+	}
+
+  // create new patron account
+  switch (variable_get('stacks_auth','')) {
+    case "polaris":
+      $auth_form['name'] = $auth_form['username'];
+      $user = user_save(null, array_merge($auth_form, array(
+        'status' => 1,
+        'mail' => $additional['emailaddress'],
+        'first_name' => $additional['namefirst'],
+        'last_name' => $additional['namelast'],
+        'patron_barcode' => $auth_form['barcode'],
+      )));
+      break;
+    case "sirsi":
+      $auth_form['name'] = $auth_form['username'];
+      $user = user_save(null, array_merge($auth_form, array(
+        'status' => 1,
+        'mail' => $additional['emailaddress'],
+        'first_name' => $additional['name'],
+        'last_name' => $additional['namelast'],
+        'patron_barcode' => $auth_form['barcode'],
+      )));
+      break;
+  }
+
+	// now we need to log the user in.
+	if ($user) {
+		// adding the role if the user is created.
+		$role_name = 'patron'; // The name of the role to add.
+		if ($role = user_role_load_by_name($role_name)) {
+			user_multiple_role_edit(array($user->uid), 'add_role', $role->rid);
+		}
+		/*
+		watchdog('patron_login', 'New patron %name created from a successful login.',
+			array('%name' => $additional['namelast']),
+			WATCHDOG_NOTICE,
+			l(t('edit'), 'user/' . $user->uid . '/edit')
+		);
+		*/
+		global $user;
+		$user_id = user_authenticate($auth_form['username'], $auth_form['pass']);
+		$user = user_load($user_id);
+
+		user_login_finalize();
+	}
+}
+
+/**
+ * Try to validate a patron user's login credentials locally.
+ * If the user's pssword has changed in the ILS update their creds in Stacks.
+ * This should only be used after an existing Stacks user has succefully logged into their ILS.
+ * @param $name
+ *   User name to authenticate.
+ * @param $password
+ *   A plain-text password, such as trimmed text from form values.
+ * @return
+ *   The user's uid on success, or FALSE on failure to authenticate.
+ */
+function patron_user_authenticate_and_update_password($name, $password) {
+  $uid = FALSE;
+  if (!empty($name) && !empty($password)) {
+    $account = user_load_by_name($name);
+    if ($account) {
+      // Allow alternate password hashing schemes.
+      require_once DRUPAL_ROOT . '/' . variable_get('password_inc', 'includes/password.inc');
+      if (user_check_password($password, $account)) {
+        // Successful authentication.
+        $uid = $account->uid;
+
+        // Update user to new password scheme if needed.
+        if (user_needs_new_hash($account)) {
+          user_save($account, array('pass' => $password));
+        }
+      }
+      else
+      {
+      	//Update their password with the new one from the ILS.
+          user_save($account, array('pass' => $password));
+          $uid = $account->uid;
+      }
+    }
+  }
+  return $uid;
+}
+
+
+/**
+ * function for building the bottom pagination bar of the search page.
+ */
+function hf_pagination_bar($array){
+	$limit = isset($_REQUEST['resultsperpage'])?$_REQUEST['resultsperpage']:20;
+	$page = isset($_REQUEST['page'])?$_REQUEST['page']:1;
+	$total = count($array);
+
+	$return_string = "<div class='filter-items row'><div class='row'>";
+	//Pager
+	$return_string .= "<ul class='pager-item'>";
+	$first_number = '';
+	if($total == 0){
+		$return_string .= "<li class='hit'>0 Results</li>";
+		$return_string .= "</div></div>";
+		return $return_string;
+	} else {
+		if($page > 1){
+			$first_number = ($page - 1) * $limit;
+			$return_string .= '<li class="prev"><a href="' . current_path() . '/' . ($page - 1) . '"><i class="eds-icon-prev"></i>Previous</a></li>';
+		} else {
+			$first_number = '1';
+			$return_string .= '<li class="prev first-nav disabled"><i class="eds-icon-prev"></i>Previous</li>';
+		}
+		$second_number = '';
+		if($page * $limit > $total){
+			$second_number = number_format($total);
+		} else {
+			$second_number = $page * $limit;
+		}
+		$pagination_middle = $first_number . '-' . $second_number . ' of <span class="hit-num">' . number_format($total) . '</span>';
+		$return_string .= "<li class='hit'>$pagination_middle</li>";
+		if(($page * $limit) >= $total){
+			$return_string .= '<li class="next disabled"><i class="eds-icon-next"></i>Next</li>';
+		} else {
+			$return_string .= '<li class="next"><a href="/' . current_path() . '/' . ($page + 1) . '"><i class="eds-icon-next"></i>Next</a></li>';
+		}
+		$return_string .= "</ul>";
+		$return_string .= "</div></div>";
+		return $return_string;
+	}
+}

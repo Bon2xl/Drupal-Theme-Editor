@@ -1,0 +1,11 @@
+name = Stacks Basic Search
+description = Stacks Basic Search
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-0.1
+
+;Styles
+stylesheets[all][] = css/hf_basic_search.css
+
+;Scripts
+scripts[] = js/hf_basic_search.js

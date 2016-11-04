@@ -1,0 +1,9 @@
+name = "Stacks Landing Pages"
+description = "Provides the ability to create and manage landing pages"
+core = 7.x
+php = 5.3
+package = HybridForge Stacks
+
+dependencies[] = panels
+dependencies[] = pathauto
+dependencies[] = hf_stacks

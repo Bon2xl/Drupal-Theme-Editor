@@ -1,0 +1,287 @@
+/************************************************
+Callouts
+************************************************/
+.cta-callout {
+  @include clearfix;
+
+  .field-content {
+    background: white;
+  }
+
+  @media #{$large-up}{
+    margin-bottom: 3.5rem !important;
+
+    .views-field {
+      float: left !important;
+    }
+
+    .views-field:before {
+      margin-right: 0.9rem;
+    }
+    .field-content {
+      padding: $padding-large;
+      @include shadow();
+    }
+
+    .inner-content {
+      @include grid-row($behavior: nest);
+    }
+  }
+
+  @media #{$medium-up}{
+    margin-bottom: $padding-large;
+
+    .field-content {
+      display: block;
+      @include border();
+    }
+
+    .views-field {
+      &:before {
+        @include bg-gradient($position:'right', $wh:3);
+      }
+    }
+  }
+
+  @media #{$medium-only}{
+    margin-bottom: 0.4rem;
+
+    .views-field {
+      //width:50%;
+
+      &:nth-child(3) {
+        clear:left;
+      }
+
+      @include grid-column($collapse: true);
+      margin-bottom: 30px;
+
+      &:last-child {
+        float:left;
+      }
+
+      &:nth-child(odd) {
+        padding-right: 0.4375rem;
+
+        &:before {
+          right: 0.4rem;
+        }
+      }
+      &:nth-child(even) {
+        padding-left: 0.4375rem;
+      }
+    }
+    .field-content {
+      overflow: hidden;
+      padding: $padding-large/2;
+      min-height: 185px;
+    }
+  }
+
+  @media #{$small-only} {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+
+    .views-field {
+      @include grid-column($columns:12, $collapse: true);
+      padding-bottom: 15px;
+      margin-bottom: 9px;
+      border: none;
+    }
+
+    .inner-content {
+      &:after {
+        @include bg-gradient($position:'bottom', $wh:3);
+      }
+    }
+  }
+}
+
+/************************************************
+Image holder
+************************************************/
+.cta-callout .imgHolder {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  // margin: 0 auto $padding-large ;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  // overflow: hidden; // hidden element here will eliminate any shadows
+
+  img {
+    width: 100%;
+    background-size: cover;
+  }
+
+  @media #{$large-up}{
+    margin-bottom: 31px;
+    border: $padding-medium solid $white; // can't use padding due to background image; outline acts as border
+    outline: $border-width $border-style $border-color;
+  }
+  @media #{$medium-up}{
+    margin-bottom: 20px;
+    background-image:none !important;
+  }
+
+  @media #{$medium-only}{
+    width:40%;
+    float: left;
+    margin-right: 10px;
+  }
+
+  @media #{$small-only} {
+    margin-bottom: 3px;
+    border: none;
+    padding-bottom: 30%; // must be same value as the width to maintain square image dimensions when going responsive
+    img { display: none; } // to hide image that's getting placed as bg image
+    a {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+/************************************************
+Callout title and description
+************************************************/
+.cta-callout  {
+  .cta-title {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    a {
+      color: $primary-clr;
+      white-space: nowrap;
+
+
+      &:hover {
+        opacity: .8;
+      }
+    }
+  }
+
+  .cta-description {
+    font-size: 0.85rem;
+    overflow: hidden;
+  }
+
+  @media #{$large-up} {
+    .cta-description {
+      height: 49px;
+      @include flexbox();
+    }
+  }
+
+
+
+  @media #{$medium-up} {
+    .cta-title {
+      text-align: center;
+      a {
+        &:after {
+          @include seperator-title();
+        }
+      }
+    }
+
+    .cta-description {
+      margin-top: 6px;
+    }
+  }
+
+  @media #{$medium-only} {
+    .cta-title {
+      text-align: left;
+      font-size: 1rem;
+      a:after {
+        background-size: 81px;
+        width:77px;
+      }
+    }
+
+    .cta-description {
+      max-height: 39px;
+      font-size: .80rem;
+    }
+  }
+
+  @media #{$small-only} {
+    .cta-title {
+      margin-bottom: -4px;
+      font-weight: 400;
+      a {
+        font-size: .9rem;
+        &:after {
+          width: 84px;
+        }
+      }
+    }
+
+    .cta-description {
+      margin:0 0 6px;
+      font-size: .8rem;
+    }
+  }
+}
+
+/************************************************
+Item list
+************************************************/
+.cta-callout .item-list{
+  padding-top: 10px;
+  overflow: hidden;
+  ul {
+    list-style: none;
+    margin:0;
+    padding:0;
+  }
+  li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+    font-size: 0.75rem;
+    margin: 0;
+    &, a {
+      color: $secondary-clr;
+    }
+    a{
+      width:100%;
+    }
+    &:before {
+      font-family: fontAwesome;
+      content:"\f0c1";
+      display:inline-block;
+      width:20px;
+      height:20px;
+    }
+  }
+}
+
+
+/************************************************
+Callouts on panels bottom column
+************************************************/
+.panel-col-bottom .cta-callout {
+  @media #{$small-only}{
+    overflow: hidden;
+    background-color: white;
+
+    .cta-title, .teaser-cont {
+      padding-left: 10px;
+      padding-right: 10px;
+      overflow: hidden;
+      display: block;
+    }
+  }
+}

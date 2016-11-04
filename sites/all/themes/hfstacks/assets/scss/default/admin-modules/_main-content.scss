@@ -1,0 +1,106 @@
+/**********************************************
+Page Admin: Main Content
+***********************************************/
+.page-admin,
+.page-node-add,
+.page-node-edit,
+.page-node-node-export,
+.page-node-workflow {
+  .main-content .content {
+    @extend .bg-box;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    // Table
+    .table-select-processed, table.sticky-enabled {
+      width: 100%;
+    }
+
+    // Exposed Filter
+    .exposed-filters {
+      .filters {
+        width: auto;
+      }
+
+      .form-item label {
+        width: 5em;
+        padding-right: 1em;
+        padding-top: 11px;
+      }
+
+      select {
+        width: 14em!important;
+      }
+    }
+
+    // Form Text
+    .field-type-text {
+      clear: both;
+    }
+
+    // Select
+    .form-select {
+      padding-right: 31px !important;
+      margin-bottom:0;
+    }
+
+    // Radio Button
+    .form-checkbox, .form-radio {
+      margin-bottom: 0;
+    }
+
+    // Submit
+    .form-submit, .browse, .button.edit {
+      @extend %form-submit-button;
+    }
+
+    // Description
+    .description {
+      color: grey;
+    }
+
+    // Telephone
+    .form-phone-number > div {
+      float:left;
+
+      &:first-child {
+        margin-right:20px;
+      }
+
+      select, .form-text {
+        margin-top:2px;
+      }
+    }
+
+    // Social Media
+    .group-social-media-listing .fieldset-wrapper > div {
+      width: auto;
+      height: auto;
+      text-indent: inherit;
+
+      .link-field-column{
+        margin-right: 2px;
+        width:auto;
+      }
+    }
+
+    // Form Type Media
+    .media-widget {
+      .preview {
+        display: block;
+      }
+
+      .browse {
+        float: left;
+        margin: 0;
+      }
+    }
+
+    @media #{$medium-up} {
+
+      .form-select, .form-text {
+        width: auto;
+      }
+    }
+  }
+}

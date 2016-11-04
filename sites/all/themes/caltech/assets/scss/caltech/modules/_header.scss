@@ -1,0 +1,101 @@
+/**********************************************
+Header
+***********************************************/
+.image-bg-enable  #header, .solid-bg-enable #header {
+  background: rgba(white, 0.97);
+  border-bottom: 4px solid $sixth-clr;
+
+  .header-row > .large-12 > .section {
+    background: rgba(white, .9);
+    overflow: hidden;
+    padding: 0 $bx-padding;
+  }
+
+  @media #{$medium-up}{
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+
+    .header-row > .large-12 > .section {
+      margin-top: 20px;
+      border-top: 1px solid $sixth-clr;
+      border-left: 1px solid $sixth-clr;
+      border-right: 1px solid $sixth-clr;
+    }
+  }
+  
+  @media #{$small-only}{
+    .header-row > .large-12 {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+/**********************************************
+Header // from caltech dev
+***********************************************/
+/**
+ * It seems that there is a bug in the theme. This fixes the mobile menu icon
+ * which was not clearing the Location Bar or Top Header region.
+ */
+.theme-caltech #header .header-row .section {
+  position: relative;
+}
+
+/**********************************************
+Top Header // from caltech dev
+***********************************************/
+.theme-caltech #top-header {
+  background: #76777b;
+  color: white;
+  display: block;
+  // overflow: hidden;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  width: 100%;
+
+  #block-stacks-topicons-stacks-topicons {
+    margin-top: 7px;
+
+    a {
+      font-size: .9em;
+    }
+  }
+}
+.theme-caltech #top-header .view-hours-today .views-field-hours {
+  padding-left: 0.375em;
+}
+
+/**
+ * Normally the .inline-list class would be added to the UL tags, but we cannot
+ * add those without theme functions. Instead all the styles from Foundation
+ * inline lists have been added here to the UL tags.
+ */
+.theme-caltech #top-header #block-menu-menu-top-menu ul {
+  list-style: none;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  margin-left: 0.9375rem;
+  margin-right: 0;
+  overflow: hidden;
+  padding: 0;
+}
+.theme-caltech #top-header #block-menu-menu-top-menu ul > li {
+  display: block;
+  float: left;
+  list-style: none;
+  padding-top: 1px;
+}
+.theme-caltech #top-header #block-menu-menu-top-menu .last {
+  padding-right: 0;
+}
+.theme-caltech #top-header a {
+  color: white;
+  font-size: 0.75rem;
+}
+.theme-caltech #top-header .libchat_online,
+.theme-caltech #top-header .libchat_offline {
+  border: 0 !important;
+  padding: 0 !important;
+  font-size: 0.75rem;
+}

@@ -1,0 +1,296 @@
+<?php
+/**
+ * Main module file of the Database Listing Module.
+ */
+
+/**
+ * implements hook_menu()
+ *
+ * @return array
+ */
+function hf_databases_menu() {
+  $items = array();
+  $items['databases'] = array(
+    'title' => t('Databases'),
+    'description'     => t('Databases'),
+    'menu_name' => 'main-menu',
+    'access callback' => TRUE,
+    'page callback' => 'hf_databases_main',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_theme()
+ */
+function hf_databases_theme(){
+  return array(
+    'databases_page' => array(
+      'template' => 'templates/hf-databases',
+      'variables' => array()
+    ),
+  );
+}
+
+
+/**
+ * @page Main Page of Databases
+ *  This function builds the content for the Databases Page. Queries the database for all
+ * nodes of the database listing type and returns the array to the tpl file.
+ */
+function hf_databases_main() {
+  // retrieve query string, if available.
+  $query_params = drupal_get_query_parameters();
+
+  // query to retrieve database listing nodes
+  $query = db_select('node', 'n');
+  $query->join('field_data_body', 'fdb', 'fdb.entity_id = n.nid');
+  $query->leftJoin('field_data_field_e_resource_category', 'erc', 'erc.entity_id = n.nid');
+  $query->leftJoin('taxonomy_term_data', 'ttd', 'ttd.tid = erc.field_e_resource_category_tid');
+  $query->join('field_data_field_ezproxy_url', 'ezurl', 'ezurl.entity_id = n.nid');
+  $query->leftJoin('field_data_field_logo', 'logo', 'logo.entity_id = ttd.tid');
+  $query->leftJoin('file_managed', 'file', 'file.fid = logo.field_logo_fid');
+  $query->fields('n', array('title', 'created', 'nid'));
+  $query->fields('ttd', array('name', 'tid'));
+  $query->fields('ezurl', array('field_ezproxy_url_value'));
+  $query->fields('file', array('uri'));
+  $query->fields('fdb', array('body_value'));
+  $query->condition('n.type', 'e_resource','=');
+
+  //Checks to see if there is a search query entered.
+  if(isset($query_params['search'])) {
+    // if there is a search query entered, query results with LIKE operator
+    $query->condition(db_or()->condition('body_value', '%' . $query_params['search'] . '%', 'LIKE')->condition('title', '%' . $query_params['search'] . '%', 'LIKE'));
+    $results = $query->extend('PagerDefault')->limit(10)->execute()->fetchAll();
+    $listing = $results;
+  } else {
+    // is there is a filter applied to title
+    if ($query_params['filter'] == 'title') {
+      // groups by database title letter
+      $results = $query->execute()->fetchAll();
+      // regroup array into associative array with the first letter of the database listing title # as the key
+      $listing = group_array_by_title($results);
+      if ($query_params['sort'] == 'asc' || $query_params['sort'] == 'none') {
+        // sort associative keys ASC
+        ksort($listing);
+      } else {
+        // sort associative keys DESC
+        krsort($listing);
+      }
+    } else {
+      if ($query_params['sort'] !== 'none') {
+        if($query_params['sort'] === 'asc') {
+          $query->orderBy('name', 'ASC');
+        } elseif ($query_params['sort'] === 'desc') {
+          $query->orderBy('name', 'DESC');
+        } else {
+          $query->orderBy('name', 'ASC');
+        }
+      } else {
+        $query->orderBy('created');
+      }
+
+      // return an indexed array of stdClass objects
+      $results = $query->execute()->fetchAll();
+
+      // default sort order
+      $listing = sort_array_by_category($results);
+    }
+  }
+
+  $output = theme('databases_page', array('vars' => $listing));
+  $output .= theme('pager');
+  return $output;
+}
+
+/**
+ * Sorts Array by Category Name
+ * @param $array (array) The array to be sorted by Category Name.
+ * @return array
+ */
+function sort_array_by_category($array = Array()) {
+  $sorted = array();
+
+  foreach ($array as $arrayObject) {
+    if(!isset($arrayObject->name)) {
+      $sorted['None'][] = $arrayObject;
+    } else {
+      $sorted[$arrayObject->name][] = $arrayObject;
+    }
+  }
+  return $sorted;
+}
+
+/**
+ * Sorts Array by Database Title group by First Letter
+ * @param $array (array) The array that is to be sorted by title.
+ * @return Array
+ */
+function group_array_by_title($array = Array()) {
+  $sorted = array();
+
+  foreach($array as $arrayObject) {
+    if(is_numeric($arrayObject->title[0])) {
+      $sorted['#'][] = $arrayObject;
+    } else {
+      if(empty($sorted[$arrayObject->title[0]])) {
+        $sorted[$arrayObject->title[0]][] = $arrayObject;
+      }
+      $sorted[$arrayObject->title[0]][] = $arrayObject;
+    }
+  }
+
+  return $sorted;
+}
+
+/**
+ * @form hf_databases_form_search
+ */
+function hf_databases_form_search($form, &$form_state) {
+  $query_params = drupal_get_query_parameters();
+  $form = array();
+
+  // filter
+  $form['search'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Search'),
+    '#default_value' => (isset($query_params['search'])) ? $query_params['search'] : '',
+  );
+
+  // submit button
+  $form['buttons']['search'] = array(
+    '#type' => 'submit',
+    '#value' => t('Search'),
+  );
+  return $form;
+}
+
+/**
+ * Implements drupal_form_search_submit
+ * @param $form
+ * @param $form_state
+ */
+function hf_databases_form_search_submit(&$form, &$form_state) {
+  $query = $form_state['values']['search'];
+
+  drupal_goto("databases", array('query' => array('search' => $query)));
+}
+
+/**
+ * @form hf_databases_form_filter
+ */
+function hf_databases_form_filter($form, &$form_state) {
+  $query_params = drupal_get_query_parameters();
+  $form = array();
+
+  //Filter
+  $form['filter'] = array(
+    '#type' => 'select',
+    '#title' => t('Filter'),
+    '#options' => [
+      'all' => t('All'),
+      'title' => t('Title'),
+      'category' => t('Category'),
+    ],
+    '#default_value' => (isset($query_params['filter'])) ? $query_params['filter'] : 'all',
+  );
+
+  //Sort
+  $form['sort'] = array(
+    '#type' => 'select',
+    '#title' => t('Sort Order'),
+    '#options' => array(
+        'none' => t('None'),
+        'asc' => t("Ascending"),
+        'desc' => t("Descending"),
+    ),
+    '#default_value' => (isset($query_params['sort'])) ? $query_params['sort'] : 'asc',
+  );
+
+  //Submit Button
+  $form['buttons']['filter'] = array(
+    '#type' => 'submit',
+    '#value' => t('Apply'),
+  );
+  return $form;
+}
+/**
+ * Implements drupal_form_submit
+ * @param $form
+ * @param $form_state
+ */
+function hf_databases_form_filter_submit(&$form, &$form_state) {
+  $selectedSort = $form_state['values']['sort'];
+  $selectedFilter = $form_state['values']['filter'];
+
+  drupal_goto("databases", array('query' => array('filter' => $selectedFilter, 'sort' => $selectedSort)));
+}
+
+/**
+ * This function returns a list of featured databases to the Database Page
+ * @return $return_string
+ */
+function hf_databases_featured_databases() {
+  $query = db_select('node', 'n');
+  $query->join('field_data_field_featured', 'featured', 'featured.entity_id = n.nid');
+  $query->join('field_data_field_ezproxy_url', 'ezproxy', 'ezproxy.entity_id = n.nid');
+  $query->fields('n', array('title', 'nid'));
+  $query->fields('ezproxy', array('field_ezproxy_url_value'));
+  $query->fields('featured', array('field_featured_value'));
+  $query->condition('field_featured_value', 1, '=');
+  $featured = $query->execute()->fetchAll();
+
+  $featureCounter = 0;
+
+  $return_string = 	'<div class="featured-database">';
+	$return_string .=	'<h3>Featured Databases</h3>';
+  $return_string .= '<ul>';
+  foreach($featured as $feature) {
+    $return_string .= '<li><a href="'. $feature->field_ezproxy_url_value . '">' . t($feature->title) . '</a></li>';
+    $featureCounter++;
+  }
+  $return_string .= '</div>';
+  $return_string .= '</ul>';
+
+  if ($featureCounter > 0) {
+    return $return_string;
+  } else {
+    return null;
+  }
+}
+
+/**
+ * This functions returns databases with images for the carousel on the databases page
+ * @return $return_string;
+ */
+function hf_databases_logo_slider_load() {
+  $return_string = '';
+  $query = db_select('node', 'n');
+  $query->join('field_data_field_e_resource_image', 'image', 'image.entity_id = n.nid');
+  $query->join('file_managed', 'file', 'file.fid = image.field_e_resource_image_fid');
+  $query->join('field_data_field_ezproxy_url', 'ezproxy', 'ezproxy.entity_id = n.nid');
+  $query->fields('ezproxy', array('field_ezproxy_url_value'));
+  $query->fields('n', array('nid'));
+  $query->fields('file', array('uri'));
+  $dbLogoUris = $query->execute()->fetchAll();
+
+  //dpm($dbLogoUris);
+  if(count($dbLogoUris) > 0) {
+    $return_string = '<div class="mini-slider">';
+    $return_string .= '<div class="inner-content">';
+    $return_string .= '<div class="slider-content">';
+    foreach($dbLogoUris as $url) {
+      $return_string .= '<div class="views-row">';
+      $return_string .= '<a class="img-link" href="'. $url->field_ezproxy_url_value . '"></a>';
+      $return_string .= '<img src="'. image_style_url('large',$url->uri) .'" class="logo"/>';
+      $return_string .= '</div>'; //End of views-row
+    }
+    $return_string .= '</div>'; //End of slider-content
+    $return_string .= '</div>'; //End of inner-content
+    $return_string .= '</div>'; //end of mini-slider
+  }
+
+  return $return_string;
+}

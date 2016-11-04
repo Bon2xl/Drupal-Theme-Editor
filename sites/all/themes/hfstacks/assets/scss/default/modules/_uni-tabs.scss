@@ -1,0 +1,282 @@
+/**********************************************
+Uni Tabs
+***********************************************/
+#tabs-wrapper {
+  position: relative;
+  margin: 1rem 1.56rem 0;
+}
+
+#tabs-wrapper .inner {
+  display: block;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+
+  .slick-arrow {
+    z-index: 1;
+
+    &::before,
+    &::after {
+      .homepage & {
+        color: $uni-tabs-clr !important;
+      }
+    }
+  }
+}
+
+.tabs-ttl {
+  outline: none;
+
+  span {
+    display: block;
+    border-radius: $bx-corner $bx-corner 0 0;
+    background-color: $uni-tabs-ttl-bg;
+    color: $uni-tabs-clr;
+    font-size: 1rem;
+    padding: 1rem .75rem;
+    margin: 0 2px;
+    outline: none;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+      color: $uni-tabs-clr;
+      background-color: $uni-tabs-ttl-hov-bg;
+    }
+  }
+}
+
+.tabs-ttl.slick-active.active span {
+  background-color: $uni-tabs-ttl-hov-bg !important;
+}
+
+/**********************************************
+Uni Tabs
+***********************************************/
+.uni-tabs {
+  overflow: hidden;
+  h2 {
+    display: none;
+  }
+
+  .view-content {
+    position: relative;
+    box-shadow: $bx-shadow;
+    background: $main-gradient-fallback;
+    background: $header-bg;
+    border-radius: $bx-corner;
+    border: $bx-border;
+    padding: $bx-padding;
+    overflow: hidden;
+  }
+}
+
+.uni-tabs .uni-map-inline {
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  height: 250px;
+  z-index: 4;
+
+  &.hideMap {
+    opacity: 0; 
+    left: -2000px;
+    position: absolute;
+  }
+
+  @media #{$large-up} { 
+    width: 40%;
+    position: absolute;
+    right: 23px;
+    top: 32px;
+  }
+  @media #{$medium-only}, #{$small-only} { 
+    width: 100%;
+    position: relative;
+  }
+}
+
+
+.view-branch-location {
+  @include grid-row();
+  @include grid-column(12);
+  float: none;
+  margin-bottom: 1.25em;
+
+  // Heading
+  h2 {
+    display: none;
+  }
+
+  // Branch Name
+  .branch-name {
+    padding: 0;
+    margin: 0 15px 15px;
+    display: block;
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: 1.25rem;
+    background: none;
+    cursor: default;
+    color: $uni-tabs-branch-clr !important;
+  }
+
+
+  // Blocks and Views
+  .views-row {
+    @extend .clearfix;
+  }
+
+  .views-row.active {
+    opacity: 1 !important;
+    z-index: 4;
+    position: relative!important;
+    left: auto!important;
+  }
+
+  .views-row:first-child {
+    display: block;
+  }
+
+  .views-row {
+    opacity: 0;
+    display: block;
+    position: absolute;
+    left: -100%;
+  }
+
+  // Contents
+  .img-branch {
+    @include grid-column(5);
+
+    img {
+      border-radius: $bx-corner;
+    }
+  }
+
+  .views-field {
+    display: block;
+    overflow: hidden;
+    padding-top: .3em;
+    list-style: none;
+    padding-bottom: .3em;
+
+    &-field-branch-notes p,
+    &-field-branch-location-notes p {
+      font-size: .85em !important;
+    }
+
+    &-field-branch-image,
+    &-field-branch-location-notes,
+    &-field-branch-notes,
+    &-title {
+      border: none;
+    }
+
+    .views-label,
+    .field-content {
+      font-size: .9em;
+      margin: 0;
+      float: left;
+    }
+
+    .views-label {
+      margin-right: 11px;
+      font-weight: 600;
+    }
+  }
+
+  .sked {
+
+    @media #{$large-up} {
+      @include grid-column(4);
+    }
+
+    .views-label {
+      width: 6.88rem;
+    }
+  }
+
+  .add-info {
+
+    .lbl,
+    .cont,
+    p,
+    a {
+      font-size: .9rem;
+      margin: 0;
+    }
+
+    .lbl,
+    a {
+      float:left;
+    }
+
+    .lbl {
+      margin-right: .69rem;
+      width: 4.38rem;
+    }
+
+    .item {
+      display: block;
+      overflow: hidden;
+      list-style: none;
+      border-bottom: 1px solid $uni-tabs-border-clr;
+      padding-top: .3em;
+      padding-bottom: .3em;
+    }
+
+    .cont {
+      clear: both;
+      display: block;
+    }
+
+    .field {
+      padding: .13rem 0;
+    }
+  }
+
+  .add-info {
+
+    @media #{$large-up} {
+      @include grid-column(3);
+    }
+  }
+}
+
+/**********************************************
+Uni Tabs / Single Location
+***********************************************/
+.uni-tabs.single-location {
+  > h2 {
+    margin-bottom: 0;
+  }
+  .tabs-ttl span{
+    display: none !important;
+  }
+  .branch-name {
+    display: block !important;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 11px;
+
+    .field-content {
+      font-size: 1.3rem;
+      color: $third-clr !important;
+      font-weight: 500;
+    }
+  }
+
+  @media #{$large-up}{
+    .branch-name {
+      width: 56%;
+    }
+  }
+
+  @media #{$medium-only}, #{$small-only}{
+    .branch-name {
+      width: 100%;
+    }
+  }
+}

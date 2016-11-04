@@ -1,0 +1,170 @@
+$admin-btn: #2196f3;
+$admin-btn-hover: #29b6f6;
+$admin-font-clr: #333;
+
+@import "normalize";
+// @import "admin/settings";
+$row-width: rem-calc(1600);
+
+@import "foundation";
+@import "admin/cards";
+
+#admin-menu-wrapper > ul {
+  li a{
+    font-size: 0.7rem !important;
+    padding: 0 9px 2px!important;
+  }
+
+  > li > a {
+    height: 20px !important;
+  }
+}
+
+
+// hide arrows on mobile devices
+body.page-admin-dashboard.mobile i.fi-arrows-out {
+  display: none;
+}
+
+
+// @import "admin/theme";
+body.page-admin-analytics #page,
+body.page-admin-dashboard #page,
+body.page-admin-integrations #page,
+body.page-admin-buildprogress #page {
+  // drag-able section
+  // [draggable="true"] {
+  //   a {}
+  // }
+
+  .ui-sortable-helper {
+    .panel {
+      box-shadow: 0 0 25px 5px rgba($admin-btn-hover, 0.25) !important;
+    }
+  }
+
+  i.fi-arrows-out {
+    position: absolute;
+    left: 1.125rem;
+    bottom: 1rem;
+    opacity: .5;
+    height: 14px;
+    width: 14px;
+    cursor: move !important;
+    background-image: url(../img/fi-arrows-out.svg);
+    background-size: cover;
+    transform: rotate(45deg);
+    ms-transform: rotate(45deg); // This Line did the trick for IE9
+    filter: none;
+
+    .flipped & {
+      display: none;
+    }
+  }
+
+  legend {
+    padding-right: 32px;
+
+    img {
+      height: 27px;
+      margin-right: .125rem;
+      vertical-align: top;
+    }
+  }
+
+  .fieldset-legend {
+    color: $admin-font-clr;
+    // copied from configuration page
+    line-height: 26px;
+    text-indent: 32px;
+    font-size: 23px;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  fieldset.card:not(.flipped):hover legend span {
+    // text-decoration: underline;
+    border-bottom: 1px solid black;
+  }
+
+  fieldset.card.flipped {
+    // background: transparent;
+    box-shadow: none;
+    margin: 0;
+    padding-top: 12px;
+
+    legend {
+      display: none;
+    }
+
+    .fi-arrows-out {
+      display: none;
+    }
+  }
+
+  // .button.help-btn {
+  //   display: none;
+  // }
+}
+
+// views modal buttons
+.page-admin {
+  // dashboard modals
+  #modalTitle {
+    img {
+      width: 30px;
+      margin-right: .5rem;
+      vertical-align: bottom;
+    }
+  }
+
+  .reveal-modal {
+    ul {
+      list-style-type:disc;
+    }
+    ol {
+      list-style-type:decimal;
+    }
+    ol ol {
+      list-style: upper-alpha;
+    }
+    ol ol ol {
+      list-style: lower-roman;
+    }
+    ol ol ol ol {
+      list-style: lower-alpha;
+    }
+  }
+
+  a.close-reveal-modal:hover { text-decoration: none; opacity: .8; }
+
+  .button.modal-btn {
+    float: right;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  a.button {
+    color: white !important;
+    background: #2196f3 !important;
+  }
+}
+
+span.modal-icons {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+
+  .stacks-icon {}
+  .stacks-drag {
+    background-image: url(../img/fi-arrows-out.svg);
+    filter: none;
+    background-size: cover;
+    transform: rotate(45deg);
+    height: 12px;
+    width: 12px;
+    display: inline-block;
+  }
+}

@@ -1,0 +1,6 @@
+name = iCal Import
+description = Imports calendar events from an iCal format
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-0.1
+dependencies[] = date

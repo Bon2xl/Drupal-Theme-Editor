@@ -1,0 +1,111 @@
+<?php
+
+/**
+ * Implementation of hook_views_api().
+ */
+function hf_library_info_views_api() {
+	return array(
+		'api' => 3.0,
+		'path' => drupal_get_path('module', 'hf_library_info') .'/includes'
+	);
+}
+
+
+/**
+ * Implements hook_menu().
+ */
+function hf_library_info_menu() {
+
+	$items = array();
+	$items['_library_info_ajax/%'] = array(
+		'description' => 'Library Info AJAX',
+		'page callback' => 'library_info_tabs_page',
+		'page arguments' => array(1),
+		'access arguments' => array('access content'),
+	);
+
+	return $items;
+}
+
+/**
+ * Implementation of hook_block_info().
+ */
+
+function hf_library_info_block_info() {
+	$blocks = array();
+	$blocks['hf_library_info'] = array(
+		'info' => t('Library Info'),
+		'cache' => DRUPAL_NO_CACHE,
+	);
+
+	return $blocks;
+}
+
+
+/**
+ * Implementation of hook_block_view().
+ */
+function hf_library_info_block_view($delta = '') {
+
+	if ($delta == 'hf_library_info') {
+		drupal_add_js(drupal_get_path('module', 'hf_library_info') . '/hf_library_info.js');
+		$result = new EntityFieldQuery();
+		$results = $result->entityCondition('entity_type', 'node')
+			->entityCondition('bundle', 'library_branch')
+			->execute();
+
+		$options = array('' => '- Select -');
+		foreach ($results['node'] as $node) {
+			$node = node_load($node->nid);
+			if (node_access('view', $node)) {
+				$options[$node->nid] = $node->title;
+			}
+		}
+
+		$form = array(
+			'select' => array(
+				'#id' => 'library-branch-select',
+				'#type' => 'select',
+				'#options' => $options
+			)
+		);
+
+
+		$block = array();
+		$block['subject'] = t('Library Info');
+		$block['content'] =
+			drupal_render($form) .
+			'<div id="library-info-tabs"></div>'; // Tabs holder
+		return $block;
+	}
+
+}
+
+/**
+ * Ajax callback that renders the library information in Foundation
+ * tabs.
+ *
+ * TODO: clean markup.
+ *
+ * @param $arg1
+ */
+function library_info_tabs_page($arg1) {
+	echo
+		'<ul class="tabs" data-tab>
+					<li class="tab-title active"><a href="#panel2-1">Hours</a></li>
+					<li class="tab-title"><a href="#panel2-2">Contact</a></li>
+					<li class="tab-title"><a href="#panel2-3">Location</a></li>
+				</ul>
+				<div class="tabs-content" id="">
+					<div class="content active" id="panel2-1">'
+		. views_embed_view('library_information', 'hours_block', $arg1),
+		'</div>
+		<div class="content" id="panel2-2">'
+		. views_embed_view('library_information', 'contact_block', $arg1),
+		'</div>
+		<div class="content" id="panel2-3">'
+		. views_embed_view('library_information', 'location_block', $arg1),
+	'</div>
+</div>';
+	exit;
+}

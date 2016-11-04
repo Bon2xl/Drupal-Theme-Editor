@@ -1,0 +1,343 @@
+<?php
+
+/**
+ *  implements hook_help().
+ */
+function hf_reviews_help($path, $arg) {
+	switch($path) {
+		case 'admin/help#hf_reviews':{
+			$ret_val = '<h3>' . t('About') . '</h3>';
+			$ret_val .= '<p>' . t('Retrieves the reviews for the item') . '</p>';
+			return $ret_val;
+			break;
+		}
+	}
+}
+
+
+/**
+ *  implements hook_permissions().
+ */
+function hf_reviews_permission(){
+	return array(
+		'administer book reviews' => array(
+			'title'         => t('Administer Reviews'),
+			'description'   => t('Preform administrative functions on reviews.'),
+		),
+	);
+}
+
+
+/**
+ * implements hook_menu()
+ */
+function hf_reviews_menu(){
+	$items = array();
+
+		//Admin configuration - Settings
+		$items['admin/config/stacks/reviews'] = array(
+			'title'             => 'Reviews',
+			'description'       => 'Manage reviews',
+			'access arguments'  => array('administer book reviews'),
+			'page callback'     => 'drupal_get_form',
+			'page arguments'    => array('hf_reviews_admin_settings_form'),
+		);
+
+	return $items;
+}
+
+
+/**
+ *  implements hook_form().
+ */
+function hf_reviews_admin_settings_form($node, &$form_state){
+	$form = array();
+
+	$form['overview'] = array(
+		'#markup' => t('Administer Reviews'),
+		'#prefix' => '<h2>',
+		'#suffix' => '</h2>',
+	);
+
+	// Baker & Taylor reviews api keys
+	$form['bakerandtaylor'] = array(
+		'#title' => t('Baker & Taylor API'),
+		// '#description' => t('Use Baker & Taylor API keys for book reviews'),
+		'#type' => 'fieldset',
+		'#collapsible' => TRUE,
+		'#collapsed'=> FALSE
+	);
+
+	/*
+	$form['bakerandtaylor']['hf_reviews_bakerandtaylor_apikey'] = array(
+		'#title'            => t('Your Baker & Taylor API Key'),
+		'#description'      => t('When filled out, the system will use Baker & Taylor for book reviews.'),
+		'#type'             => 'textfield',
+		'#default_value'    => variable_get('hf_reviews_bakerandtaylor_apikey', ''),
+	);
+	*/
+
+	$form['bakerandtaylor']['hf_reviews_bakerandtaylor_userID'] = array(
+		'#title'            => t('User ID'),
+		// '#description'      => t('The user ID is needed for making requests to the server.'),
+		'#type'             => 'textfield',
+		'#default_value'    => variable_get('hf_reviews_bakerandtaylor_userID', ''),
+	);
+
+	$form['bakerandtaylor']['hf_reviews_bakerandtaylor_password'] = array(
+		'#title'            => t('Password'),
+		// '#description'      => t('The password is needed for making requests to the server. (Passwords saved in the database are not shown here)'),
+		'#type'             => 'textfield',
+		'#default_value'    => variable_get('hf_reviews_bakerandtaylor_password', ''),
+	);
+
+  /*
+  if (!empty(variable_get('hf_reviews_bakerandtaylor_password', ''))) {
+    $form['bakerandtaylor']['hf_reviews_bakerandtaylor_password']['#attributes'] = array('placeholder' => '····················');
+  }
+  */
+
+
+	// Novelist reviews api keys
+	/*
+	$form['novelist'] = array(
+		'#title' => t('Novelist API'),
+		// '#description' => t('Use Baker & Taylor API keys for book reviews'),
+		'#type' => 'fieldset',
+		'#collapsible' => TRUE,
+		'#collapsed'=> FALSE
+	);
+
+	$form['novelist']['hf_reviews_novelist_userID'] = array(
+		'#title'            => t('User ID'),
+		'#type'             => 'textfield',
+		'#default_value'    => variable_get('hf_reviews_novelist_userID', ''),
+	);
+
+	$form['novelist']['hf_reviews_novelist_password'] = array(
+		'#title'            => t('Password'),
+		'#type'             => 'textfield',
+		'#default_value'    => variable_get('hf_reviews_novelist_password', ''),
+	);
+	*/
+
+	// Chili Fresh reviews api keys
+	$form['chilifresh'] = array(
+		'#title' => t('Chili Fresh API'),
+		// '#description' => t('Use Chili Fresh API keys for book reviews'),
+		'#type' => 'fieldset',
+		'#collapsible' => TRUE,
+		'#collapsed'=> FALSE
+	);
+
+	$form['chilifresh']['hf_reviews_chillifresh_apikey'] = array(
+		'#title'            => t('Your Chili Fresh API Key'),
+		// '#description'      => t('When filled out, the system will use Chili Fresh for book reviews.'),
+		'#type'             => 'textfield',
+		'#default_value'    => variable_get('hf_reviews_chillifresh_apikey', ''),
+	);
+
+  /*
+  if (!empty(variable_get('hf_reviews_chillifresh_apikey', ''))) {
+    $form['chilifresh']['hf_reviews_chillifresh_apikey']['#attributes'] = array('placeholder' => '····················');
+  }
+  */
+
+	$form['chilifresh']['hf_reviews_chillifresh_account_number'] = array(
+		'#title'            => t('Your Chili Fresh Account Number'),
+		// '#description'      => t('The account number is needed for making requests to the server.'),
+		'#type'             => 'textfield',
+		'#default_value'    => variable_get('hf_reviews_chillifresh_account_number', ''),
+	);
+
+	$form['submit'] = array(
+		'#type'     => 'submit',
+		'#value'    => 'Submit',
+	);
+	return $form;
+}
+
+
+/**
+ * validates HF Reviews settings
+ */
+function hf_reviews_admin_settings_form_validate($form,  &$form_state){
+	// Debugging
+	//dpm($form_state['values']);
+
+	// Regex for letters and numbers only.
+	$letters_numbers_only = '/^[a-zA-Z0-9]+$/';
+
+	// Regex for letters and numbers only.
+	$numbers_only = '/^[0-9]+$/';
+
+	// Grab the API key
+	$temp_apikey = $form_state['values']['hf_reviews_chillifresh_apikey'];
+
+	// Grab the account number
+	$temp_accountnumber = $form_state['values']['hf_reviews_chillifresh_account_number'];
+
+	// Validate the API Key
+	if (!empty($temp_apikey)) {
+		if(!preg_match($letters_numbers_only, $temp_apikey)){
+			form_set_error('hf_reviews_chillifresh_apikey', t('API Key must NOT contain any special characters.'));
+		}
+	}
+
+	// Validate the account number
+	if (!empty($temp_accountnumber)) {
+		if (!preg_match($numbers_only, $temp_accountnumber)) {
+			form_set_error('hf_reviews_chillifresh_account_number', t('The account number must only contain numbers.'));
+		}
+	}
+}
+
+
+/**
+ * submit the form
+ */
+function hf_reviews_admin_settings_form_submit($form, &$form_state){
+	// Rebuild the form.
+	$form_state['rebuild'] = TRUE;
+
+	// Save Chili Fresh vars.
+  if (!empty($form_state['values']['hf_reviews_chillifresh_apikey'])) {
+    variable_set('hf_reviews_chillifresh_apikey', $form_state['values']['hf_reviews_chillifresh_apikey']);
+  }
+	variable_set('hf_reviews_chillifresh_account_number', $form_state['values']['hf_reviews_chillifresh_account_number']);
+
+	// Save Baker & Taylor vars.
+	//variable_set('hf_reviews_bakerandtaylor_apikey', $form_state['values']['hf_reviews_bakerandtaylor_apikey']);
+	variable_set('hf_reviews_bakerandtaylor_userID', $form_state['values']['hf_reviews_bakerandtaylor_userID']);
+  if (!empty($form_state['values']['hf_reviews_bakerandtaylor_password'])) {
+    variable_set('hf_reviews_bakerandtaylor_password', $form_state['values']['hf_reviews_bakerandtaylor_password']);
+  }
+
+	// Save Novelist vars.
+	//variable_set('hf_reviews_novelist_userID', $form_state['values']['hf_reviews_novelist_userID']);
+	//variable_set('hf_reviews_novelist_password', $form_state['values']['hf_reviews_novelist_password']);
+
+	drupal_set_message('Review values saved.');
+}
+
+
+/**
+ * implements hook_block_info().
+ */
+function hf_reviews_block_info(){
+	$blocks = array();
+	$blocks['review'] = array(
+		'info' => t('HF Review'),
+	);
+	return $blocks;
+}
+
+
+/**
+ * implements hook_block_view().
+ */
+function hf_reviews_block_view($delta = ''){
+	$block = array();
+  $reviewString = '';
+
+	switch($delta) {
+		case 'review': {
+			//For CF
+			//$fetch_JSON = _getReviews('0545139708');
+
+			//For B&T
+			//$fetch_JSON = _getReviews('9780812993547');
+			$fetch_JSON = _getReviews($_GET['isbn']);
+			if (!empty($fetch_JSON)) {
+				$reviewString .= '<div class="book_reviews">';
+						$reviewString .= '<h2>Reviews</h2>';
+					foreach ($fetch_JSON as $review) {
+						if ($review['content'] != '') {
+							$reviewString .= '<div class="book-row">';
+								$reviewString .= '<h5>'.$review['title'].'</h5>';
+								$reviewString .= '<p>'.$review['content'].'</p>';
+							$reviewString .= '</div>';
+						}
+					}
+				$reviewString .= '</div>';
+
+				$block['content']    = $reviewString;
+				//$block['reviews']    = $reviewString;
+			}
+			break;
+		}
+	}
+
+	return $block;
+}
+
+
+/**
+ * implements hook_theme().
+ */
+function hf_reviews_theme($existing, $type, $theme, $path) {
+	return array(
+		'reviews' => array(
+			'variables' => array(),
+			'template'  => 'reviews',
+			'path'      => drupal_get_path('module', 'hf_reviews'),
+		),
+	);
+}
+
+
+/**
+ * API call to fetch reviews
+ *
+ * API End points:
+ * ChiliFresh      =  https://secure.chilifresh.com/api/reviews/?account=string&api_key=string&action=getReviews&isbn=0385177259
+ * Baker & Taylor   = http://contentcafe2.btol.com/contentcafe/contentcafe.asmx/XmlPost?userID=string&password=string&key=string&content=string HTTP/1.1
+ *
+ */
+function _getReviews($isbn)
+{
+	$Reviews = array();
+	$Count = 0;
+  $looper = '';
+
+	if(variable_get('hf_reviews_bakerandtaylor_userID')) {
+		$requesturl = file_get_contents('http://contentcafe2.btol.com/ContentCafe/ContentCafe.asmx/Single?userID='. variable_get('hf_reviews_bakerandtaylor_userID') .'&password='. variable_get('hf_reviews_bakerandtaylor_password') .'&content=ReviewDetail&key='.$isbn);
+
+		if (!empty($requesturl)) {
+			$request = new SimpleXMLElement($requesturl);
+
+      if ($request->RequestItems->RequestItem->ReviewItems->ReviewItem) {
+        $looper = $request->RequestItems->RequestItem->ReviewItems->ReviewItem;
+      }
+
+			if (!empty($looper)) {
+        foreach($looper as $obj){
+          $Reviews[$Count]['title'] = (string) $obj->Issue;
+          $Reviews[$Count]['content'] = (string) $obj->Review;
+          $Count++;
+        }
+      }
+		}
+	}
+
+	// get ChiliFresh reviews.
+	if(variable_get('hf_reviews_chillifresh_apikey')) {
+		//Make the call to the server
+		$response = file_get_contents("https://secure.chilifresh.com/api/reviews/json/?account=" . variable_get('hf_reviews_chillifresh_account_number') . "&action=getReviews&api_key=" . variable_get('hf_reviews_chillifresh_apikey') . "&isbn=" . $isbn);
+
+		//decode the JSON returned file
+		$decoded = json_decode($response);
+
+		//check the response
+		$chk_response = $decoded->response->response_code;
+		if($chk_response == 110) {
+			$JSON = $decoded->response->results->review;
+			foreach($JSON as $obj) {
+				$Reviews[$Count]['title'] = (string) $obj->review_title;
+				$Reviews[$Count]['content'] = (string) $obj->review_text;
+				$Count++;
+			}
+		}
+	}
+	return $Reviews;
+}

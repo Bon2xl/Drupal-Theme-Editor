@@ -1,0 +1,123 @@
+/**********************************************
+Big Slider
+***********************************************/
+.big-slider {
+  @include grid-column(12);
+
+  .inner-content {
+    background: white;
+    border-radius: $bx-corner;
+    border: $bx-border;
+    overflow: hidden;
+    max-height: 450px;
+  }
+
+  .views-row {
+    position: relative;
+    border-radius: $bx-corner;
+  }
+
+  // In before content
+  .panel-display & {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    float: none;
+  }
+
+  .blk-title {
+    display: none;
+  }
+
+  .img-link {
+    display: none;
+   }
+
+  .img-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .views-field {
+    &-field-body {
+      //@include set-delay(2s);
+      position: absolute;
+      left: 110px;
+      background: rgba(165, 165, 165, 0.79);
+      padding: 2.4rem 2.4rem 5.4rem;
+      border-bottom-left-radius: $bx-corner;
+      border-bottom-right-radius: $bx-corner;
+      color: white;
+      font-size: 1.2rem;
+      letter-spacing: 1.2px;
+      cursor: pointer;
+  
+      .no-flexbox &{
+        top: 120px;
+      }
+
+      p {
+        color: white;
+        margin-bottom: 0;
+        font-weight: 600;
+      }
+
+      &:hover {
+        &:before {
+          transition: all .1s ease-in;
+          background-color: lighten($secondary-clr, 10%);
+        }        
+      }
+
+      &:before {
+        content: "Learn more";
+        animation: showUp 2s linear;
+        position: absolute;
+        bottom: 1.8rem;
+        left: 2.5rem;
+        display: block;
+        background: $secondary-clr;
+        padding: 8px 13px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: white;
+        transition: all .1s ease-in;
+      }
+    }
+  }
+
+  // Next and Previous
+  @include slider-next-prev(42px, 0, 0, $primary-clr);
+
+  @media #{$large-up}{
+    margin: 10px 0 !important;
+    .views-field-field-body {
+      width: 610px;
+    }
+  }
+
+  @media #{$small-only}, #{$medium-only}{
+    margin: 0 0 10px!important;
+    .views-field-field-body {
+      right: 110px;
+    }
+  }
+
+  @media #{$small-only}{
+    @include slider-next-prev(30px, 0, 0, $primary-clr);
+
+    .slick-prev, .slick-next {
+      top: 48%;
+      background-color: transparent;
+    }
+    .views-field-field-body {
+      position:relative;
+      padding: 0.65rem 1.25rem;
+      p{
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}

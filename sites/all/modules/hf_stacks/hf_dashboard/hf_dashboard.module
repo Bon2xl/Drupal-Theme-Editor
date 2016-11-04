@@ -1,0 +1,1333 @@
+<?php
+
+// implements hook_menu()
+function hf_dashboard_menu() {
+  $menu = array();
+
+  $menu['admin/dashboard'] = array(
+    'title' => 'Dashboard',
+    'page callback' => 'hf_dashboard_display',
+    'access arguments' => array('view stacks dashboard'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $menu['admin/integrations'] = array(
+    'title' => 'Integrations',
+    'page callback' => 'hf_integrations_page',
+    'access arguments' => array('view stacks dashboard'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $menu['admin/analytics'] = array(
+    'title' => 'Analytics',
+    'page callback' => 'hf_analytics_page',
+    'access arguments' => array('view stacks dashboard'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $menu;
+}
+
+
+// Implements hook_theme()
+function hf_dashboard_theme(){
+  return array(
+    'hf_integrations' => array(
+      'template' => 'templates/hf_integrations',
+      'variables' => array()
+    ),
+    'hf_analytics' => array(
+      'template' => 'templates/hf_analytics',
+      'variables' => array()
+    )
+  );
+}
+
+
+// implements hook_block_info()
+function hf_dashboard_block_info() {
+  $blocks['hf_dashboard'] = array(
+    'info' => 'Stacks: Admin Dashboard',
+    'cache' => DRUPAL_NO_CACHE,
+    'region' => -1,
+  );
+  return $blocks;
+}
+
+// Implements hook_block_view()
+function hf_dashboard_block_view($delta = '') {
+
+  $block = array();
+
+  if ( $delta == 'hf_dashboard' ) {
+      $block['content'] = 'Test Block Content';
+  }
+
+  if (user_is_anonymous()) {
+    return false;
+  }
+
+  return $block;
+}
+
+function myPath() {
+  return drupal_get_path('module', 'hf_dashboard');
+}
+
+
+function hf_integrations_page(){
+  // grabbing the js, images and css from the dashboard module
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/jquery-ui.js');
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/foundation.min.js');
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/dashboard-sort.js');
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/app.js');
+  drupal_add_css(drupal_get_path('module', 'hf_dashboard').'/css/hf_dashboard.css');
+  return theme('hf_integrations', array('vars' => ''));
+}
+
+function hf_analytics_page(){
+  // grabbing the js, images and css from the dashboard module
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/jquery-ui.js');
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/foundation.min.js');
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/dashboard-sort.js');
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/app.js');
+  drupal_add_css(drupal_get_path('module', 'hf_dashboard').'/css/hf_dashboard.css');
+  return theme('hf_analytics', array('vars' => ''));
+}
+
+
+
+//function for displaying the admin dashboard
+function hf_dashboard_display() {
+  global $base_url;
+  $user_role = $GLOBALS['user']->roles;
+
+  $stacks_discovery_url = "http://help.stacksdiscovery.com/";
+
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/jquery-ui.js');
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/foundation.min.js');
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/dashboard-sort.js');
+  drupal_add_js(drupal_get_path('module', 'hf_dashboard').'/js/app.js');
+  drupal_add_css( drupal_get_path('module', 'hf_dashboard').'/css/hf_dashboard.css' );
+
+  $output = '<div class="stacks-dashboard">';
+  $output .= '';
+  $output .= '
+
+    <div class="dashboard">
+      <div class="row">
+        <div class="large-12 columns">
+          <div id="sortable">
+    ';
+
+// add website
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Add Websites -->
+      <!--
+      <div id="div_4" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/dashboard#">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-layout.svg" class="svg-color">
+                <span class="fieldset-legend">Add Websites</span>
+              </legend>
+              <div class="face front form-wrapper website"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Add Websites</h3>
+              <p>You will be able to add additional sites once your trial becomes production.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Add_Websites" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+                <li><a href="">visit link</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+      -->
+    ';
+  }
+
+// callouts
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Callouts -->
+      <div id="div_8" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/callouts">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-burst.svg" class="svg-color">
+                <span class="fieldset-legend">Callouts</span>
+              </legend>
+              <div class="face front form-wrapper callout"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Callouts</h3>
+              <p>Highlight major components of your site or appeal to cross sections of your patrons.</p>
+              <p>Example: <em>About, Events, Resources OR Kids, Adults, Seniors</em></p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Callouts2" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+                <!-- <li><a href="../admin/content/callouts" class="waves-effect waves-button waves-float waves-classic button link-btn">visit link</a></li> -->
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// database
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Database -->
+      <div id="div_18" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/database-listings">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-database.svg" class="svg-color">
+                <span class="fieldset-legend">Database Listings</span>
+              </legend>
+              <div class="face front form-wrapper database"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Database Listings</h3>
+              <p>Create an online index of external databases on your Stacks site.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Database_Listings" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+                <!-- <li><a href="../admin/content/database-listings" class="waves-effect waves-button waves-float waves-classic button link-btn">visit link</a></li> -->
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// directory listings
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Directory Listings -->
+      <div id="div_15" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/directory-listings">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-list-bullet.svg" class="svg-color">
+                <span class="fieldset-legend">Directory Listings</span>
+              </legend>
+              <div class="face front form-wrapper directory"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Directory Listings</h3>
+              <p>Create searchable directories of people, places, or resources.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Directory_Listings" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// easyforms
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- easyforms -->
+      <div id="div_14" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/easy-forms">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-clipboard-pencil.svg" class="svg-color">
+                <span class="fieldset-legend">EasyForms</span>
+              </legend>
+              <div class="face front form-wrapper easyforms"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>EasyForms</h3>
+              <p>Create surveys and polls with ease and manage your results.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#EasyForms" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// events management
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Events Management -->
+      <div id="div_10" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/events">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-calendar.svg" class="svg-color">
+                <span class="fieldset-legend">Events Management</span>
+              </legend>
+              <div class="face front form-wrapper events"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+            <h3>Events Management</h3>
+              <p>Manage all your events and program listings with online registration.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Events_Management" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// Integrations
+  $role_access = false;
+  $stacks_discovery_url = "http://help.stacksdiscovery.com/";
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Integrations -->
+      <div id="div_1" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/integrations">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-flag.svg" class="svg-color">
+                <span class="fieldset-legend">Integrations</span>
+              </legend>
+              <div class="face front form-wrapper build-progress"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Integrations</h3>
+              <p>Manage your Stacks integrations</p>
+              <ul class="list-columns clearfix">
+                <li>ILS</li>
+                <li>Search</li>
+                <li>Footer</li>
+                <li>Book jackets</li>
+                <li>Search</li>
+                <li>Book reviews</li>
+                <li>Whitelists</li>
+                <li>Google Places</li>
+                <li>NoveList Select</li>
+              </ul>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Integrations" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+                <!-- <li><a href="../admin/buildprogress" class="waves-effect waves-button waves-float waves-classic button link-btn">visit link</a></li> -->
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// locations & hours
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Locations & Hours -->
+      <div id="div_12" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/locations-and-hours">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-marker.svg" class="svg-color">
+                <span class="fieldset-legend">Locations &amp; Hours</span>
+              </legend>
+              <div class="face front form-wrapper location-hours"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Location &amp; Hours</h3>
+              <p>Set locations and hours for one or many locations, with optional Google Places integration, details and maps.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Locations" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+                <!-- <li><a href="../admin/content/locations-and-hours" class="waves-effect waves-button waves-float waves-classic button link-btn">visit link</a></li> -->
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// menus
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Menus -->
+      <div id="div_21" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/menus">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-indent-more.svg" class="svg-color">
+                <span class="fieldset-legend">Menus</span>
+              </legend>
+              <div class="face front form-wrapper menus"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Menus</h3>
+              <p>Customize menus and manage their contents.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Menus" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+                <!-- <li><a href="../admin/structure/menu" class="waves-effect waves-button waves-float waves-classic button link-btn">visit link</a></li> -->
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// my theme
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- My Theme -->
+      <div id="div_2" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/config/stacks/themes">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-paint-bucket.svg" class="svg-color">
+                <span class="fieldset-legend">My Theme</span>
+              </legend>
+              <div class="face front form-wrapper my-theme"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>My Theme</h3>
+              <p>Customize the look and feel of your Stacks site.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#My_Theme" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// news articles
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- News Articles -->
+      <div id="div_19" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/news-articles">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-rss.svg" class="svg-color">
+                <span class="fieldset-legend">News Articles</span>
+              </legend>
+              <div class="face front form-wrapper news-articles"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>News Articles</h3>
+              <p>Create news articles to inform your patrons of events, features, or other important information.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#News_Articles" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// research guides
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Research Guides -->
+      <div id="div_5" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/research-guides">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-page-doc.svg" class="svg-color">
+                <span class="fieldset-legend">Research Guides</span>
+              </legend>
+              <div class="face front form-wrapper research-guide"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Research Guides</h3>
+              <p>Create and manage brilliant responsive Guides & Tutorials with easy multi-media support and full WYSIWYGs.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Research_Guides" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// reserves
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Reserves -->
+      <div id="div_22" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/reserves-listings">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-page-filled.svg" class="svg-color">
+                <span class="fieldset-legend">Reserves</span>
+              </legend>
+              <div class="face front form-wrapper reserves"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Reserves</h3>
+              <p>Create and manage Reserves for library resources associated with a specific course, term, or instructor.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Reserves" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// resourceflows
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- ResourceFlows -->
+      <div id="div_13" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/resource-flows">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-book.svg" class="svg-color">
+                <span class="fieldset-legend">ResourceFlows</span>
+              </legend>
+              <div class="face front form-wrapper resourceflow"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>ResourceFlows</h3>
+              <p>Feature your reading lists with scrolling book jackets linked to catalog listings; patrons can place requests via ILS integration if enabled.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#ResourceFlows" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+                <!-- <li><a href="../admin/content/resource-flows" class="waves-effect waves-button waves-float waves-classic button link-btn">visit link</a></li> -->
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// sliders
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Sliders -->
+      <div id="div_20" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/sliders">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-projection-screen.svg" class="svg-color">
+                <span class="fieldset-legend">Sliders</span>
+              </legend>
+              <div class="face front form-wrapper sliders"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Sliders</h3>
+              <p>Display  a series of images with links in a slim horizontal carousel.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Sliders" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// social media
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Social Media -->
+      <div id="div_7" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/config/stacks/footer">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-share.svg" class="svg-color">
+                <span class="fieldset-legend">Social Media</span>
+              </legend>
+              <div class="face front form-wrapper social-media"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Social Media</h3>
+              <p>Easily integrate your favorite social media into your footer.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Social_Media" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// pages
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Pages -->
+      <div id="div_9" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/static-content">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-page.svg" class="svg-color">
+                <span class="fieldset-legend">Pages</span>
+              </legend>
+              <div class="face front form-wrapper pages"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Pages</h3>
+              <p>Create and manage responsive content pages with easy multi-media support and full WYSIWYGs.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Pages" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+  // landing pages
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Pages -->
+      <div id="div_9" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/landing-pages">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-page.svg" class="svg-color">
+                <span class="fieldset-legend">Landing Pages</span>
+              </legend>
+              <div class="face front form-wrapper pages"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Pages</h3>
+              <p>Create and manage landing pages that can each manage their own layouts and content with blocks.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Pages" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// taxonomies
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- Taxonomies -->
+      <div id="div_6" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/structure/taxonomy">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-pricetag-multiple.svg" class="svg-color">
+                <span class="fieldset-legend">Taxonomies</span>
+              </legend>
+              <div class="face front form-wrapper taxonomies"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>Taxonomies</h3>
+              <p>Create and manage vocabularies of keywords to classify content with, similar to tags or labels in other systems. Content tagged with these keywords can then be searched, sorted, or filtered by them.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#Taxonomies" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// this day in history
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+      if ($role == 'moderator') {
+        $role_access = true;
+      }
+      if ($role == 'editor') {
+        $role_access = true;
+      }
+      if ($role == 'contributor') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- This Day In History -->
+      <div id="div_17" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/content/days-in-history">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-clock.svg" class="svg-color">
+                <span class="fieldset-legend">This Day In History</span>
+              </legend>
+              <div class="face front form-wrapper day-in-history"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>This Day In History</h3>
+              <p>Create and manage a list of historical events that can be linked to relevant library resources via ILS integration.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#This_Day_in_History" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+// Users
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '
+      <!-- People -->
+      <div id="div_23" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/people">
+              <legend>
+                <img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-results-demographics.svg" class="svg-color">
+                <span class="fieldset-legend">People</span>
+              </legend>
+              <div class="face front form-wrapper people"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>People</h3>
+              <p>Create and manage user accounts including passwords, contact info, permissions, and automatic signups.</p>
+              <ul class="button-group">
+                <li><a href="'.$stacks_discovery_url.'#People" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    ';
+  }
+
+  //Analytics
+
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '   
+      <!-- Google Analytics -->
+        <div id="div_23" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+          <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+          <div class="flip">
+            <fieldset class="card">
+              <a href="../admin/analytics">
+                <legend>
+                  <img src="/sites/all/modules/hf_stacks/hf_dashboard/img/fi-graph-trend.svg" class="svg-color">
+                  <span class="fieldset-legend">Analytics</span>
+                </legend>
+                <div class="face front form-wrapper google-analytics"></div>
+              </a>
+
+              <i class="fi-arrows-out"></i>
+
+              <div class="face back">
+                <h3>Google Analytics</h3>
+                <p>Configure analytics integrations to obtain insight on your patrons and your site\'s performance.</p>
+                <ul class="button-group">
+                    <li><a href="'.$stacks_discovery_url.'" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+                </ul>
+                <a href="#" class="close-btn">&#215;</a>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+    ';
+  }
+
+  //My Websites (Multi-Domain)
+//If Domain Module exists and is enabled, show this tile.
+if(module_exists('domain')) {
+  $role_access = false;
+  if (!empty($user_role)) {
+    foreach ($user_role as $role) {
+      if ($role == 'super administrator') {
+        $role_access = true;
+      }
+      if ($role == 'administrator') {
+        $role_access = true;
+      }
+    }
+  }
+
+  if ($role_access == true) {
+    $output .= '   
+    <!-- Multi Domain -->
+      <div id="div_23" draggable="true" class="large-3 medium-6 small-12 columns sortees end ui-sortable-handle">
+        <a href="" class="flip-btn"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="svg-info"></a>
+        <div class="flip">
+          <fieldset class="card">
+            <a href="../admin/structure/domain">
+              <legend>
+                <img src="/sites/all/modules/hf_stacks/hf_dashboard/img/fi-graph-trend.svg" class="svg-color">
+                <span class="fieldset-legend">My Websites</span>
+              </legend>
+              <div class="face front form-wrapper google-analytics"></div>
+            </a>
+
+            <i class="fi-arrows-out"></i>
+
+            <div class="face back">
+              <h3>My Websites</h3>
+              <p>Manage and administer one or many related subdomains. Commonly used to manage many branch libraries within a region.</p>
+              <ul class="button-group">
+                  <li><a href="'.$stacks_discovery_url.'" class="waves-effect waves-button waves-float waves-classic button help-btn">Continue</a></li>
+              </ul>
+              <a href="#" class="close-btn">&#215;</a>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+  ';
+  }
+}
+
+
+// footer & modals
+  $output .= '
+         </div> <!-- /.#sortable -->
+      </div> <!-- /.12col -->
+    </div> <!-- /.row -->
+
+    <!-- Page load modal -->
+    <!-- parent div is only for easy code folding in text editor -->
+    <div>
+      <div id="firstModal" class="reveal-modal reveal-no-dismiss" data-reveal data-options="close_on_background_click:false; close_on_esc:false;" aria-labelledby="firstModalTitle" aria-hidden="true" role="dialog">
+        <div class="row">
+          <div class="columns small-12 medium-12">
+            <h1 style="text-align:center;display:block;font-weight:500;">Welcome to your Stack!</h1><hr><br>
+            <h2>The Dashboard</h2>
+            <p>All of Stacks main features and functions are conveniently located here. To access a feature, simply click on the corresponding tile. To see a description of the feature or to get more help, click on the <span class="modal-icons"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/question-icon.svg" class="stacks-icon"></span> button in the top-right corner of the tile.  If you’d like to customize the order of the tiles on the dashboard, click on the <span class="modal-icons"><i class="stacks-icon stacks-drag"></i></span> icon and drag the tile into its new location.</p>
+            <h2>Build</h2>
+            <p>Input your API credentials under <i>Integrations</i> to enable search capabilities and engage your patrons with <i>My Account</i>. Customize the look and feel of your site using <i>My Theme</i>.
+            Build the backbone of your website with responsive static content Pages with easy multi-media support and full WYSIWYGs.</p>
+            <h2>Create</h2>
+            <p>Engage your audience with a robust home page. Create and manage beautiful visual features including: Sliders of images with links; <i>Callouts</i> to important events or sections of the website; and <i>ResourceFlows</i>, scrolling book lists that patrons can request items from.</p>
+            <h2>Keep Going!</h2>
+            <p>Explore the Dashboard to add additional content including Research Guides, EasyForms, and Events. Use tools such as Directory Listings, Menus and Taxonomies to manage the content throughout your new website.</p>
+
+            <p>Time to get started! To begin building your website, click on the <span class="modal-icons"><img src="../sites/all/modules/hf_stacks/hf_dashboard/img/fi-arrows-out.svg" class="stacks-icon"></span> tile on the Dashboard.</p>
+          </div>
+          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+      </div>
+    </div>
+  ';
+
+  return $output;
+}

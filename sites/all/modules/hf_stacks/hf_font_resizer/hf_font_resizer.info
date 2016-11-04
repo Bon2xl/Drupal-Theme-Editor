@@ -1,0 +1,11 @@
+name = HF Font Resizer
+description = HF Font Resizer
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-0.1
+
+;Styles
+stylesheets[all][] = css/hf_font_resizer.css
+
+;Scripts
+scripts[] = js/hf_font_resizer.js

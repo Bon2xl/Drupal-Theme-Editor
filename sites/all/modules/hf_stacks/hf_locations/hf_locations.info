@@ -1,0 +1,11 @@
+name = Stacks Locations
+description = Stacks Locations
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-0.1
+
+;Styles
+stylesheets[all][] = css/hf_locations.css
+
+;Scripts
+; scripts[] = js/hf_locations.js

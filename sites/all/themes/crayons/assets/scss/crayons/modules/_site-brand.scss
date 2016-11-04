@@ -1,0 +1,96 @@
+// Site Brand
+.site-brand {
+  vertical-align: middle;
+  padding: 0 .94rem;
+  float: left;
+  display: flex;
+  align-items: center;
+  position:relative;
+  z-index: 2;
+
+  #logo,
+  #name-and-slogan {
+    display: inline-block;
+    padding: .5em;
+    float: left;
+    color: $logo-name-slogan-clr;
+  }
+
+  #name-and-slogan {
+    a {
+      color: $name-slogan-clr;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+  }
+
+  #site-name {
+    position: relative;
+    top: -.13rem;
+    font-weight: 600;
+  }
+
+  #site-slogan {
+    position: relative;
+    letter-spacing: 0.5px;
+    left: 2px;
+    font-size: 0.8rem;
+  }
+
+  @media #{$large-up} {
+    height: 7em;
+
+    #site-slogan {
+      top: -0.13rem;
+    }
+  }
+
+  @media #{$medium-up}{
+    #logo img {
+      max-height: 3.88rem;
+    }
+
+    #site-slogan {
+      top: -.33rem;
+    }
+  }
+
+  @media #{$small-only}, #{$medium-only}{
+    & {
+      padding: 0.54rem .94rem 0 0;
+    }
+  }
+
+  @media #{$small-only} {
+    top: 14px;
+    height: auto;
+    top: 9px;
+    padding: 0;
+
+    #name-and-slogan {
+      width: 13.56rem;
+
+      a {
+        font-size: 1.06rem;
+      }
+    }
+
+    #site-name {
+      margin-bottom:0;
+      line-height: 1.1;
+    }
+
+    #site-slogan {
+      font-size: .8em;
+      top: -0.33rem;
+    }
+
+    #logo {
+      padding:0 0 .5em;
+
+      img {
+        max-height: 2rem;
+      }
+    }
+  }
+}

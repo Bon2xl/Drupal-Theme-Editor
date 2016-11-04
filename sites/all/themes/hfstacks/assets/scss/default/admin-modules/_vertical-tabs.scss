@@ -1,0 +1,31 @@
+/*********************************************
+Page Admin: Vertical Tabs
+**********************************************/
+.page-admin, .page-node-edit, .page-node-workflow {
+  .main-content .content {
+    .vertical-tabs {
+      margin-left: 0;
+    }
+
+    // Tab List
+    .vertical-tabs-list {
+      padding-top: 0 !important;
+      margin-left: -1px !important;
+
+      strong {
+        font-size: .9rem;
+        color: #717171;
+      }
+
+      .summary {
+        font-size: .80rem;
+        color: #333;
+      }
+    }
+
+    // Tab Panes
+    .vertical-tabs-panes {
+      padding: 10px;
+    }
+  }
+}

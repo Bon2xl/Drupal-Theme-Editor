@@ -1,0 +1,230 @@
+// External Vendor
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,800,700,600,300);
+
+// Internal Vendor
+@import "default/functions";
+@import "default/settings";
+@import "foundation";
+
+// Gradient
+$main-gradient-fallback:    $white;
+$main-gradient:             linear-gradient(to top, rgba($white, .56) 0%, rgba(253, 253, 253, .56) 60%, rgba(237, 237, 237, .56) 98%, rgba(222, 222, 222, .56) 100%);
+
+// Colors
+$primary-clr:                   #c00038;
+$secondary-clr:                 #474c62;
+$third-clr:                     $black;
+$fourth-clr:                    $white;
+$fifth-clr:                     rgba($white, 0.75) $main-gradient;
+
+
+// Components
+$bx-background:                 $fifth-clr;
+$bx-shadow:                     0 9px 8px -10px rgba($black, 0.25);
+$bx-border:                     solid 1px rgba(216, 216, 216, 0.75);
+$bx-corner:                     0;
+$bx-padding:                    1.25rem;
+
+
+// Base
+$header-bg:                     $fifth-clr;
+$top-header-bg:                 rgba($black, 0.4) linear-gradient(to top, rgba($black, .01) 0%, transparent 85%);
+$base-link-clr:                 $primary-clr;
+$base-tbl-bg:                   rgba(245, 245, 245, 0.48);
+$base-tbl-hr-clr:               rgba(34, 34, 34, 0.81);
+$base-tbl-tr-odd-bg:            $white;
+$base-hd-border-clr:            #d8d8d8;
+$base-tabs-border-clr:          $base-hd-border-clr;
+$base-tabs-link-bg:             rgba(221, 221, 221, 0.28);
+$base-tabs-link-border-clr:     rgba(187, 187, 187, 0.34);
+$base-sharethis-border-clr:     $base-hd-border-clr;
+
+
+// Main Navigation
+$main-nav-arrow:                    rgba($white, 0.4) transparent transparent transparent;
+$main-nav-link-bg:                  $secondary-clr;
+$main-nav-link-color:               $white;
+$main-nav-link-hover-bg:            lighten($secondary-clr, 10%);
+$main-nav-link-hover-color:         $main-nav-link-color;
+$main-nav-link-active-bg:           $primary-clr;
+$main-nav-link-active-color:        primary;
+$main-nav-link-active-hover-bg:     darken($primary-clr, 3%);
+$main-nav-link-active-hover-color:  $white;
+$main-nav-border-clr:               rgba($black, .02);
+
+
+// Breadcrumbs
+$breadcrumbs-bg:            $fifth-clr;
+$breadcrumbs-first-clr:     lighten($third-clr, 40%);
+$breadcrumbs-active-clr:    $breadcrumbs-first-clr;
+
+
+// Main Wrapper
+$main-wrapper-bg:           $fifth-clr;
+
+
+// basic search
+$basic-search-bg:           $primary-clr;
+
+
+// stacks search
+$stacks-search-bg:          rgba($white, .85);
+
+
+// callout
+$cta-callout-block-bg:      $fifth-clr;
+$cta-title-link-clr:        $white;
+$cta-list-border-clr:       #eee;
+
+// tabs
+$uni-tabs-bg:               $cta-callout-block-bg;
+$uni-tabs-clr:              $white;
+$uni-tabs-ttl-bg:           $secondary-clr;
+$uni-tabs-ttl-hov-bg:       darken($secondary-clr, 5%);
+$uni-tabs-branch-clr:       #333;
+$uni-tabs-border-clr:       $cta-list-border-clr;
+
+.uni-tabs button.slick-arrow:before {
+	color: $primary-clr;
+}
+
+// resource slider
+$resource-slider-bg:        darken($fourth-clr, 5%);
+$resource-slider-inner-bg:  $fourth-clr;
+$resource-slider-row-bg:    $main-gradient;
+
+
+// site brand
+$name-slogan-clr:       $primary-clr;
+$logo-name-slogan-clr:  lighten($third-clr, 50%);
+
+
+// basic search
+$search-bg:       #fb7171;
+$search-btn-bg:   $white;
+$search-pd:       .31rem;
+$search-rd:       $search-pd;
+
+// calendar
+$cal-date-heading-color:  $primary-clr;
+$cal-border-clr:          #cacaca;
+$cal-date-single-bg-clr:  $white;
+$cal-date-bg-clr:         #dfdfdf;
+$cal-day-link-clr:        $primary-clr;
+$cal-view-bg-clr:         $primary-clr;
+$cal-view-clr:            $white;
+$cal-view-link-clr:       $white;
+$cal-today-border-clr:    $primary-clr;
+$cal-event-bg-clr:        $primary-clr;
+$cal-event-link-clr:      $white;
+
+
+// child submenu
+$child-mu-link-clr:       $primary-clr;
+$child-mu-border-clr:     #e6e6e6;
+$child-mu-link-hv-clr:    rgba($black, 0.025);
+
+
+// coverflow
+$cf-field-bg:             $primary-clr;
+$cf-field-link-clr:       $white;
+$cf-banner-shadow-clr:    scale-color($primary-clr, $lightness: -50%);
+
+// eds
+$eds-slick-clr:           $primary-clr;
+$eds-border-clr:          $hr-border-color;
+
+// footer
+$ft-border-clr:           rgba(157, 157, 157, .75);
+$ft-bg-clr:               rgba($white, .95);
+$ft-shadow-clr:           rgba($black, .01);
+
+// login-form
+$lf-desc-clr:             #afafaf;
+
+
+// mobile-nav
+$mob-nav-link-clr:      rgba($white, .99);
+$mob-nav-link-hov-clr:  lighten($primary-clr, 10%);
+
+
+// my-account
+$my-ac-arrow-clr:         #808080;
+$my-ac-bg-size:           .63rem;
+$my-ac-hd-border-clr:     $base-hd-border-clr;
+
+// node-guides here
+$node-guide-side-link-clr: white;
+$node-guide-side-link-bg: $secondary-clr;
+$node-guide-side-link-active-bg: lighten($secondary-clr, 10%);
+$node-guide-side-ttl-clr: $primary-clr;
+
+
+// node-guides
+$node-tabs-link-clr:      $primary-clr;
+$node-tabs-border-clr:    $child-mu-border-clr;
+$node-link-active-bg-clr: rgba($black, .025);
+// node
+$node-field-clr:          grey;
+$node-author-border-clr:  $child-mu-border-clr;
+$node-fieldset-bg-clr:    #f9f9f9;
+
+
+// search filter
+$src-heading-clr:         $white;
+$src-heading-bg-clr:      $secondary-clr;
+$src-link-clr:            $primary-clr;
+$src-link-border-clr:     #e6e6e6;
+$src-link-hover-bg:       $child-mu-link-hv-clr;
+$src-ul-bg:               $white;
+// search-results
+$src-item-link-clr:       $white;
+$src-item-link-bg:        $secondary-clr;
+$src-disabled-clr:        #c5c5c5;
+$src-keyword-bg:          #f6fbf4;
+$src-keyword-link-bg:     $primary-clr;
+$src-keyword-link-clr:    $white;
+$src-save-clr:            lighten($third-clr, 50%);
+$src-placehold-clr:       $white;
+$src-placehold-bg:        $primary-clr;
+// search-paging
+$pager-link-clr:          $white;
+$pager-link-bg:           $secondary-clr;
+$pager-disabled-clr:      $src-disabled-clr;
+// search
+$src-btn-bg:              $primary-clr;
+$src-btn-clr:             $white;
+$src-btn-border-clr:      $primary-clr;
+$src-btn-disabled:        $src-disabled-clr;
+
+
+// toggle-mobile
+$mob-icon-bg:             $primary-clr;
+$mob-icon-bg-hover:       darken($primary-clr, 10%);
+
+
+// toolbar
+$tool-bg:                 #434c52;
+
+
+// top menu
+$top-link-clr:            $white;
+
+
+// views-e-resources
+$view-e-heading-clr:      $primary-clr;
+$view-e-after-clr:        #4b4747;
+$view-e-border-clr:       #d6d6d6;
+$view-e-hov-bg:           rgba($white, .9);
+$view-e-item-bg:          #fdfdfd;
+$view-e-item-link-clr:    $primary-clr;
+
+
+// views
+$view-date-clr:           lighten($third-clr, 50%);
+
+// days in history
+$dih-bg: $white;
+
+// Main Configuration
+@import "default/main-config";

@@ -1,0 +1,57 @@
+
+#block-day_in_history-block {
+}
+.dihItem {
+    overflow: hidden;
+}
+.dihDesc {
+    border-bottom: 1px dotted #CCCCCC;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+}
+.dihDescTitle {
+}
+.dihDescDetails {
+    background-color: #EAEAEA;
+    border: 1px solid #DADADA;
+    clear: both;
+    display: none;
+    margin-top: 0.3em;
+    padding: 0.5em;
+}
+.dihImg {
+    background: url("../resource_complete/images/book-img-bg-yrl.png") no-repeat scroll center center transparent;
+    float: left;
+    min-height: 80px;
+    text-align: center;
+    width: 50%;
+}
+.dihImg img {
+    box-shadow: 0 1px 3px #222222;
+    max-width: 100px;
+}
+.dihDetails {
+    float: right;
+    padding-top: 10px;
+    text-align: left;
+    width: 48%;
+}
+.dihTitle {
+    font-weight: bold;
+}
+.dihAuthor {
+    color: #888888;
+    font-size: 0.9em;
+}
+.dihDescTitle a.dihDescDetailsToggle {
+   /*  color: inherit; */
+    display: block;
+    padding-right: 17px;
+    text-decoration: none;
+}
+a.dihDescDetailsToggle.show {
+    background: url("images/arrow_down.png") no-repeat scroll right 0 transparent;
+}
+a.dihDescDetailsToggle.hide {
+    background: url("images/arrow_up.png") no-repeat scroll right 0 transparent;
+}

@@ -1,0 +1,13 @@
+name = Stacks Dashboard
+description = Stacks Admin Dashboard
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-0.1
+
+;Styles
+;stylesheets[all][] = ../../../sites/all/themes/hfstacks/assets/hf_dashboard.css
+;stylesheets[all][] = css/hf_dashboard.css
+
+;Scripts
+; scripts moved into module
+; scripts[] = js/dashboard-sort.js

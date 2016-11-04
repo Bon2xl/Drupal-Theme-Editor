@@ -1,0 +1,90 @@
+/**********************************************
+Side Filter
+this style puts all your form in one wrapper
+***********************************************/
+.side-filter {
+  @extend .bg-box;
+  width: 100%;
+  background: $main-gradient-fallback;
+  background: $bx-background;
+
+  .views-exposed-widget {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .form-type-select {
+    margin-right: .19rem;
+  }
+
+  select {
+    margin-right: 0;
+  }
+
+  .form-submit {
+    @extend %form-submit-button;
+    margin-top: 0 !important;
+  }
+
+
+  // Specifics
+  .views-widget-filter-field_course_date_value select {
+    font-size: .8em;
+    margin-right: .63rem;
+  }
+
+  .form-type-date-select > div > div:last-child {
+    margin-right: 0;
+  }
+}
+
+/**********************************************
+Side Filter Events Filter
+***********************************************/
+.side-filter-ext {
+
+  .views-exposed-widget {
+    @extend .bg-box;
+    width: 100%;
+    background: $bx-background;
+  }
+
+  .bef-checkboxes {
+
+    input[type="checkbox"] {
+      margin-bottom: .5rem;
+    }
+  }
+
+  label.option {
+    font-weight: normal;
+  }
+
+  a.bef-toggle {
+    text-align: right;
+    float: right;
+    margin-top: -1.125rem;
+    font-size: .75rem;
+  }
+
+  .js-hide {
+    display: none !important;
+  }
+}
+
+/**********************************************
+Directory listing
+***********************************************/
+.page-directorylisting #hf-directories-form-filter, .page-databases .sidebar > form {
+  @extend .side-filter;
+
+  & > div > .form-item {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+}
+
+select.form-select {
+  @extend input[type="text"];
+}

@@ -1,0 +1,389 @@
+$transition: all 0.35s ease-in-out;
+
+.dashboard .panel {
+  // styles taken from adminimal theme
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .18);
+  background: #fff;
+  border-radius: 3px;
+  padding-top: 42px;
+  position: relative;
+  margin-bottom: 20px;
+  transition: $transition;
+}
+
+// .sortees.active {
+//   margin-bottom: 20px;
+// }
+
+.flip {
+  position: relative;
+  perspective: 800px;
+  height: 11rem;
+
+  .card {
+    background: #fff;
+    cursor: pointer;
+    height: 155px;
+    transform-style: preserve-3d;
+    transition: $transition;
+
+    .front {
+      position: absolute;
+      z-index: 1;
+
+      &:after {
+        content: '';
+        background-repeat: no-repeat;
+        background-position: 95% 0%;
+        background-size: 85px;
+        display: block;
+        height: 100%;
+        opacity: .1;
+      }
+    }
+
+    .back {
+      text-align: left;
+      transform: rotateY(-180deg);
+      cursor: auto;
+      padding-right: 1rem;
+
+      .help-btn {
+        // margin-bottom: 0;
+        // switch to variables once moved into admin dashboard
+        // position: absolute;
+        // bottom: 0;
+        // right: -1rem;
+        // font-size: .65rem;
+      }
+
+      ul.button-group {
+        position: absolute;
+        bottom: 0;
+        margin: 0;
+        padding: 0;
+        z-index: 1;
+
+        a { margin-bottom: 0; }
+      }
+
+      // use px for sizing
+      &, p, li, h1, h2, h3, h4, h5, h6 {
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+
+      ul.list-columns {
+        // margin: 0;
+        display: block;
+        width: 100%;
+      }
+
+      .list-columns li {
+        text-align: left;
+        width: 33.3333%;
+        float: left;
+        clear: right;
+        list-style-type: circle;
+        border: none;
+      }
+
+      /**
+        THIS HIDES THE BACK OF THE CARD TITLE, MIGHT NEED TO REMOVE
+      **/
+      h3 {
+        display: none;
+      }
+    }
+
+    &.flipped {
+      transform: rotateY(-180deg);
+      margin-bottom: 20px;
+    }
+
+    .face {
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      backface-visibility: hidden;
+    }
+  }
+}
+
+.flipped .face.back {
+  backface-visibility: initial;
+}
+
+.flip-btn,
+.close-btn {
+  position: absolute;
+  z-index: 3;
+}
+
+.flip-btn {
+  top: .75rem;
+  right: 1.75rem;
+
+  // SVG icon
+  img.svg-info {
+    max-height: 16px;
+    max-width: 16px;
+  }
+}
+
+.close-btn {
+  padding: 0 0 1rem 1rem;
+  top: 0;
+  right: 0;
+  max-height: 2rem;
+  position: absolute;
+  font-size: 1.5rem;
+
+  &:hover {
+    text-decoration: none;
+    color: $admin-btn-hover;
+  }
+}
+
+// overwrite dashboard styles
+
+.dashboard .cta .panel:hover {
+  opacity: 1;
+}
+
+a.close-reveal-modal {
+  text-decoration: none;
+}
+
+// extra styling
+.tutorial-link {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+}
+
+.page-admin-dashboard {
+  // a[data-reveal-id]:not([data-reveal-id="firstModal"]):not(.tutorial-link) {
+  a.link-btn,
+  a[data-reveal-id]:not(.tutorial-link) {
+    color: white !important;
+    background: $admin-btn;
+  }
+}
+
+// js activate flipped panel
+.dashboard {
+  .face {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .panel.active {
+    background: #fff;
+    z-index: 999; // 999 to go above bottom fixed bar
+    transform: scale(1.5);
+    transition: $transition;
+  }
+
+  .panel.active .flip .back p {
+    font-size: .65rem;
+  }
+}
+
+.btn-hide {
+  display: none;
+}
+
+// dashboard background icons
+.flip .card .front {
+  &.build-progress:after { background-image: url(../img/fi-flag.svg); }
+  &.website:after { background-image: url(../img/fi-layout.svg); }
+  &.callout:after { background-image: url(../img/fi-burst.svg); }
+  &.database:after { background-image: url(../img/fi-database.svg); }
+  &.directory:after { background-image: url(../img/fi-list-bullet.svg); }
+  &.easyforms:after { background-image: url(../img/fi-clipboard-pencil.svg); }
+  &.events:after { background-image: url(../img/fi-calendar.svg); }
+  &.how-do-i:after { background-image: url(../img/fi-info.svg); }
+  &.location-hours:after { background-image: url(../img/fi-marker.svg); }
+  &.dns:after { background-image: url(../img/fi-key.svg); }
+  &.menus:after { background-image: url(../img/fi-indent-more.svg); }
+  &.my-theme:after { background-image: url(../img/fi-paint-bucket.svg); }
+  &.news-articles:after { background-image: url(../img/fi-rss.svg); }
+  &.research-guide:after { background-image: url(../img/fi-page-doc.svg); }
+  &.reserves:after { background-image: url(../img/fi-page-filled.svg); }
+  &.resourceflow:after { background-image: url(../img/fi-book.svg); }
+  &.sliders:after { background-image: url(../img/fi-projection-screen.svg); }
+  &.social-media:after { background-image: url(../img/fi-share.svg); }
+  &.upgrades:after { background-image: url(../img/fi-lightbulb.svg); }
+  &.pages:after { background-image: url(../img/fi-page.svg); }
+  &.taxonomies:after { background-image: url(../img/fi-pricetag-multiple.svg); }
+  &.day-in-history:after { background-image: url(../img/fi-clock.svg); }
+  &.people:after { background-image: url(../img/fi-results-demographics.svg); }
+
+
+  // build progress page
+  &.ils:after { background-image: url(../img/fi-clipboard-notes.svg); }
+  &.eds:after { background-image: url(../img/fi-address-book.svg); }
+  &.book-jackets:after { background-image: url(../img/fi-photo.svg); }
+  &.reviews:after { background-image: url(../img/fi-book.svg); }
+  &.whitelist:after { background-image: url(../img/fi-check.svg); }
+  &.google-places:after { background-image: url(../img/fi-map.svg); }
+  &.novelist:after { background-image: url(../img/fi-list-bullet.svg); }
+  &.google-analytics:after { background-image: url(../img/fi-graph-trend.svg); }
+}
+
+// gradient over text of cards
+div.face.back {
+
+  &:after {
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    content: "";
+    background: linear-gradient(to top,
+       rgba(255,255,255, 1) 20%,
+       rgba(255,255,255, 0) 80%
+    );
+    pointer-events: none; /* so the text is still selectable */
+  }
+}
+
+
+
+
+
+
+// ie fixes
+$default-transition-duration: 350ms;
+$perspective: 800;
+
+.ie9 {
+  .card {
+    display: block;
+    position: relative;
+    z-index: 4;
+    width: 100%;
+    overflow: hidden;
+    // min-height: 100px;
+
+    .face.front,
+    .face.back {
+      backface-visibility: hidden;
+      transition: $transition;
+      display: block;
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      background-color: #fff;
+    }
+
+    .face.front {
+      transform: perspective($perspective) rotateY(0);
+      z-index: 2;
+    }
+
+    .face.back {
+      transform: rotateY(-180deg);
+      z-index: 1;
+    }
+
+    &.flipped {
+      i.fi-arrows-out { display: none; }
+      .face.front {
+        transform: rotateY(180deg);
+        transform: perspective($perspective) rotateY(180deg);
+      }
+      .face.back {
+        z-index: 3; //No transform fallback
+        transform: rotateY(0deg);
+        transform: perspective($perspective) rotateY(0deg);
+      }
+    }
+  }
+
+  img.svg-color { height: 27px; width: 27px; display: inline-block; }
+  a.close-btn { display: none; }
+
+  ul.button-group {
+    position: absolute;
+    top: 75px;
+    left: 5px;
+    z-index: 8;
+  }
+  a.button.help-btn {
+    z-index: 9;
+  }
+  .flip .card .front:after { background-image: none; }
+
+  a.flip-btn {
+    z-index: 999;
+
+    .active & {
+      display: none;
+    }
+
+    // hide crosshairs on background
+    .active i.fi-arrows-out{
+      display: none;
+    }
+
+    img.svg-info {
+      max-height: 16px;
+      max-width: 16px;
+      z-index: 9999;
+    }
+  }
+  i.fi-arrows-out {
+    z-index: 9999;
+    // max-height: 20px;
+    // max-width: 40px;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-size: initial;
+    background-clip: padding-box;
+    -ms-transform: rotate(45deg);
+
+    display: block;
+    background-size: 12px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+.ie10 {
+  a.flip-btn {
+    z-index: 1;
+
+    img.svg-info {
+      max-height: 16px;
+      max-width: 16px;
+    }
+  }
+
+  .card.flipped .face.back{
+    backface-visibility: visible;
+  }
+
+  .flip .card .front:after { background-image: none; }
+}
+
+// safari
+.safari {
+
+  fieldset.card.flipped {
+    // -webkit-backface-visibility: visible;
+    // height: 100%;
+    // width: 100%;
+    // z-index: 9999;
+    // position: absolute;
+    // display: block;
+    -webkit-transform: rotateY(180deg) perspective(800);
+  }
+}

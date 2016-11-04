@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * Implements hook_menu()
+ *
+ * @return mixed
+ */
+function hf_resource_list_menu() {
+	$items['admin/config/stacks/resource-list'] = array(
+		'title' => 'Book Jackets Configuration',
+		'description' => 'Settings for book jacket functionality',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('hf_resource_list_admin_form'),
+		'access arguments' => array('administer stacks config'),
+		'file' => 'hf_resource_list.admin.inc',
+	);
+	return $items;
+}
+
+// Implements hook_views_api()
+function hf_resource_list_views_api() {
+	return array(
+		"version" => "3.0",
+		'template path' => drupal_get_path('module', 'hf_resource_list') . '/templates',
+	);
+}
+
+function hf_resource_list_init() {
+	drupal_add_js(array('hf_resource_list_jquery' => variable_get('stacks_cover_jquery', '')), 'setting');
+	drupal_add_js(array('stacks_resource_list_syndetics_url' => variable_get('stacks_resource_list_syndetics_url', '')), 'setting');
+  drupal_add_js(array('stacks_resource_list_contentcafe_url' => variable_get('stacks_resource_list_contentcafe_url', '')), 'setting');
+	if (variable_get('stacks_cover_provider') == 'syndetics') {
+		drupal_add_js(drupal_get_path('module', 'hf_resource_list') . '/js/jacket_syndetics.js');
+	} elseif (variable_get('stacks_cover_provider') == 'contente_cafe') {
+		drupal_add_js(drupal_get_path('module', 'hf_resource_list') . '/js/jacket_contentcafe.js');
+  } elseif (variable_get('stacks_cover_provider') == 'chili_fresh') {
+    drupal_add_js(drupal_get_path('module', 'hf_resource_list') . '/js/jacket_chilifresh.js');
+  }
+}

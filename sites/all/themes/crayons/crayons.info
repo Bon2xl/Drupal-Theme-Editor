@@ -1,0 +1,30 @@
+name = Crayons
+description = Sub Theme of HFStacks
+package = Core
+version = 1.0
+core = 7.x
+engine = phptemplate
+base theme = hfstacks
+
+;Styles
+
+;Scripts
+scripts[] = assets/js/vendor/jquery.dotdotdot.min.js
+scripts[] = assets/js/crayons.js
+
+;New Regions
+regions[mobile_menu]		= 'Mobile Menu'
+regions[top_header]			= 'Top header'
+regions[header] 				= 'Header'
+regions[before_content] = 'Before Content'
+;regions[search]         = 'Search'
+regions[content] 				= 'Content'
+regions[after_content] 	= 'After Content'
+regions[sidebar_left] 	= 'Sidebar Left'
+regions[sidebar_right] 	= 'Sidebar Right'
+regions[sub_footer]			= 'Sub Footer'
+regions[footer] 				= 'Footer'
+
+;Default Settings
+settings[color_palette] = crayons
+settings[foundation_wide] = 0

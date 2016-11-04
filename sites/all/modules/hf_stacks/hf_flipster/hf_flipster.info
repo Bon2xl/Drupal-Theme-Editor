@@ -1,0 +1,5 @@
+name = Flipster Import
+description = Imports magazine listings from supplied URL and populates a Flipster Node
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-0.1

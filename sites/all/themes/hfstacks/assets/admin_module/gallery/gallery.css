@@ -1,0 +1,38 @@
+.form-item-background-image-gallery {
+  position: relative; }
+  .form-item-background-image-gallery input {
+    display: none; }
+  .form-item-background-image-gallery .gallery-images {
+    display: block;
+    clear: both;
+    overflow: auto;
+    margin-bottom: 10px; }
+    .form-item-background-image-gallery .gallery-images .item {
+      width: 100px;
+      height: 100px;
+      display: block;
+      float: left;
+      margin: 4px;
+      background-position: center center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      border: 2px solid white; }
+      .form-item-background-image-gallery .gallery-images .item.selected {
+        border-color: #2196F3;
+        box-shadow: 0 0 10px #2196F3; }
+  .form-item-background-image-gallery .description {
+    display: block;
+    clear: both; }
+
+body .form-item-background-image-gallery .button {
+  background-color: #D32F2F !important;
+  opacity: 0;
+  margin-bottom: 5px;
+  display: none;
+  position: absolute; }
+  body .form-item-background-image-gallery .button.active {
+    opacity: 1;
+    display: inline-block;
+    position: relative; }

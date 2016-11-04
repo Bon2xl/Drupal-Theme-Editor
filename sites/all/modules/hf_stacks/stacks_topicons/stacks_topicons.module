@@ -1,0 +1,52 @@
+<?php
+/**
+ * Implementation of hook_block_info().
+ */
+function stacks_topicons_block_info() {
+  $blocks = array();
+  $blocks['stacks_topicons'] = array(
+    'info' => t('Top Icons'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function stacks_topicons_block_view($delta = '') {
+  $stacks_topmenu_databases = variable_get('stacks_topmenu_databases');
+  $stacks_topmenu_calendar = variable_get('stacks_topmenu_calendar');
+  $stacks_topmenu_rooms = variable_get('stacks_topmenu_rooms');
+
+  $block = array();
+
+  $block_content = "";
+
+  if (!empty($stacks_topmenu_databases)) {
+    $block_content .= "<div class=\"top-icon-databases\">";
+      $block_content .= "<a href=\"/databases\" class='fa fa-database' title=\"Databases\"></a>&nbsp;";
+    $block_content .= "</div>";
+  }
+  if (!empty($stacks_topmenu_calendar)) {
+    $block_content .= "<div class=\"top-icon-calendar\">";
+      $block_content .= "<a href=\"/upcoming-events\" class='fa fa-calendar-o' title=\"Upcoming Events\"></a>&nbsp;";
+    $block_content .= "</div>";
+  }
+  if (!empty($stacks_topmenu_rooms)) {
+    $block_content .= "<div class=\"top-icon-roombooking\">";
+      $block_content .= "<a href=\"/roombooking\" class='fa fa-clock-o' title=\"Room Bookings\"></a>&nbsp;";
+    $block_content .= "</div>";
+  }
+
+  $block['content'] = $block_content;
+  $block['title'] = '<none>';
+
+  return $block;
+}
+
+
+
+
+

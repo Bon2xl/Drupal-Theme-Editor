@@ -1,0 +1,109 @@
+/*****************************************
+Base Components
+7*****************************************/
+%margin-a {
+  $mar: 25px;
+
+  margin-top: $mar;
+  margin-bottom: $mar;
+}
+
+%title-a {
+  margin-bottom: 24px;
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 2px;
+
+  &:after {
+    content: "";
+    display:block;
+    height:1px;
+    width:30%;
+    margin: 16px auto 0;
+    border-bottom: 1px solid #dedede;
+  }
+}
+
+// input submit buttons
+%form-submit-button {
+  line-height: 1.55rem;
+  color: $white;
+  border: none;
+  border-radius: $bx-corner;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.8rem;
+  margin-left: 2px;
+  background: $fourth-clr;
+
+  &:hover {
+    opacity: .9;
+  }
+}
+
+// Flex box
+@mixin flexbox($justifyContent:false){
+  .flexbox &{
+    display: flex;
+    align-items: center;
+
+    @if ($justifyContent) {
+      justify-content: center;
+    }
+  }
+
+  .no-flexbox {
+    vertical-align: middle;
+    display: table-cell;
+  }
+}
+
+// Fade in animation
+@mixin load-animate() {
+  animation: load-slider 1s normal;
+
+  @keyframes load-slider {
+    0%   { opacity: 0; }
+    40%  { opacity: 0; }
+    100% { opacity: 1; }
+  }
+}
+
+/**************************
+  move all this to separate files
+  - general settings (padding vars)
+  - mixins
+  - callouts
+**************************/
+@mixin border() {
+  border: $border-width $border-style $border-color;
+}
+
+@mixin shadow() {
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+
+    box-shadow: 0 0 $padding-large rgba($black, .4);
+    top: 90%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 100%;
+  }
+}
+
+/**************************
+Set delay to any element
+**************************/
+@mixin set-delay($delay:1s) {
+  animation: showUp $delay linear;
+  @keyframes showUp {
+    0%  { opacity: 0; }
+    95% { opacity: 0; }
+    100%{ opacity: 1; }
+  }
+}

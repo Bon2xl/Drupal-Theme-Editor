@@ -1,0 +1,8 @@
+name = Studyroom Hours
+description = Defines a weekday hours field type for use by Studyroom locations and spaces.
+package = Study Room
+core = 7.x
+
+dependencies[] = studyroom
+
+stylesheets[all][] = studyroom_hours.css

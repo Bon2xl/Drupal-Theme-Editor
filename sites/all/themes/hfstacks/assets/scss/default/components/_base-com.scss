@@ -1,0 +1,113 @@
+/*****************************************
+Base Components
+*****************************************/
+%margin-a {
+	$mar: 1em;
+  margin-top: $mar;
+  margin-bottom: $mar;
+}
+
+%title-a {
+	background: $secondary-clr;
+	border-radius: $bx-corner;
+	box-shadow: $bx-shadow;
+	color: white;
+	font-size: 1.4rem;
+	line-height: 1;
+	padding: .5em;
+}
+
+// input submit buttons
+%form-submit-button {
+  line-height: 1.55rem;
+  color: white;
+  background: $primary-clr;
+  border: none;
+  border-radius: $bx-corner;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.8rem;
+  margin-left: 2px;
+
+  &:hover {
+    opacity: .9;
+  }
+}
+
+// Slider next and previous
+// $size: size off arrow
+// $prevPos: previous arrow left position
+// $nextPos: next arrow right position
+// $color: black or white
+@mixin slider-next-prev($size, $prevPos, $nextPos, $color:black) {
+  .slick-slider {
+    margin-bottom:0;
+  }
+  .slick-prev,
+  .slick-next {
+    z-index: 1;
+    transition: transform .1s ease-in;
+    width: $size;
+    height: $size;
+    border: none !important;
+
+    &::after,
+    &::before {
+      display: none;
+    }
+  }
+
+  .slick-prev {
+    left: $prevPos;
+    background: url("../img/icon-arrow-left-#{$color}.svg") no-repeat center center;
+    background-size: $size;
+    
+    .ie9 & {
+      img {
+        display: block;
+      }
+    }
+
+    &:hover {
+      transform: translate(-2px, 0);
+    }
+  }
+
+  .slick-next {
+    right: $nextPos;
+    background: url("../img/icon-arrow-right-#{$color}.svg") no-repeat center center;
+    background-size: $size;
+    
+    .ie9 & {
+      img {
+        display: block;
+      }
+    }
+
+    &:hover {
+      transform: translate(2px, 0);
+    }
+  }
+}
+
+// Fade in animation 
+@mixin load-animate() {
+  animation: load-slider 1s normal;
+
+  @keyframes load-slider {
+    0%   { opacity: 0; }
+    40%  { opacity: 0; }
+    100% { opacity: 1; }
+  }
+}
+
+
+// Set delay to any element
+@mixin set-delay($delay:1s) {
+  animation: showUp $delay linear;
+  @keyframes showUp {
+    0%  { opacity: 0; }
+    95% { opacity: 0; }
+    100%{ opacity: 1; }
+  }
+
+}

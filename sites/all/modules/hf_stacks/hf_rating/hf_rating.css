@@ -1,0 +1,63 @@
+#stacks-request {
+    display:none;
+}
+
+/* star ratings  */
+.starrating .form-item-superstars {
+    border: none;
+    float: left;
+    margin:0;
+    text-align: center;
+}
+
+.starrating {
+    text-align: center !important;
+    padding-left: 10px;
+}
+
+.starrating .fieldset-wrapper .form-item-superstars .stars > input { display: none; }
+.starrating .fieldset-wrapper .form-item-superstars .stars > label:before {
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+    margin:0;
+}
+
+.starrating .fieldset-wrapper .form-item-superstars .stars > input[type="radio"] + label {
+    margin-right: 0;
+}
+
+.starrating .fieldset-wrapper .form-item-superstars .stars > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.starrating .fieldset-wrapper .form-item-superstars .stars {
+    margin-right:30px;
+}
+
+.starrating .fieldset-wrapper .form-item-superstars .stars > label {
+    color: #ddd;
+    float: right;
+}
+
+.starrating .fieldset-wrapper .form-item-superstars .stars input[type="checkbox"] + label, .starrating .fieldset-wrapper .form-item-superstars .stars input[type="radio"] + label {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.starrating .fieldset-wrapper .form-item-superstars .stars > input:checked ~ label, /* show gold star when clicked */
+.starrating .fieldset-wrapper .form-item-superstars .stars:not(:checked) > label:hover, /* hover current star */
+.starrating .fieldset-wrapper .form-item-superstars .stars:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.starrating .fieldset-wrapper .form-item-superstars .stars > input:checked + label:hover, /* hover current star when changing rating */
+.starrating .fieldset-wrapper .form-item-superstars .stars > input:checked ~ label:hover,
+.starrating .fieldset-wrapper .form-item-superstars .stars > label:hover ~ input:checked ~ label, /* lighten current selection */
+.starrating .fieldset-wrapper .form-item-superstars .stars > input:checked ~ label:hover ~ label { color: #FFED85;  }
+
+.starrating .fieldset-wrapper .form-type-radios, #edit-starrating {
+    width: 100%;
+    text-align: center !important;
+    padding-top: 0;
+}

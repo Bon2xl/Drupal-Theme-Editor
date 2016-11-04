@@ -1,0 +1,76 @@
+/**********************************************
+Admin toolbar
+***********************************************/
+html body.admin-menu {
+  margin-top: 0 !important;
+}
+
+#admin-menu {
+  position: relative !important;
+  box-shadow: none;
+  background: #151515;
+}
+
+#admin-menu-wrapper {
+  padding: 11px 10px 6px ;
+}
+
+
+/**********************************************
+Default Toolbar
+***********************************************/
+body.toolbar {
+  padding-top: 0 !important;
+}
+
+#toolbar {
+  position: relative;
+  box-shadow: none;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  .toolbar-menu {
+    background-color: $tool-bg !important;
+  }
+
+  @media #{$medium-only} {
+
+    .path-admin-reports,
+    .path-admin-help,
+    .account,
+    #edit-shortcuts {
+      display: none !important;
+    }
+
+    .home.first {
+      margin-right: .63rem;
+    }
+
+    #toolbar-menu li {
+      .first {
+        margin-right: .63rem;
+      }
+
+      a {
+        padding: 0 .25rem;
+      }
+    }
+  }
+
+  @media #{$small-only} {
+
+    .toolbar-menu {
+      padding: .63rem !important;
+    }
+
+    #toolbar-menu > li:not(.first),
+    #edit-shortcuts,
+    .account,
+    .toolbar-drawer,
+    .toolbar-toggle-processed {
+      display: none;
+    }
+  }
+}
+
+

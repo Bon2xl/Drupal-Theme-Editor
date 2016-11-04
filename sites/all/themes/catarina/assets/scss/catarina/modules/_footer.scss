@@ -1,0 +1,64 @@
+/**********************************************
+Footer
+***********************************************/
+#footer, #sub-footer {
+  max-width: 100% !important;
+}
+#footer {
+  .section {
+    @include grid-column(12);
+    clear: both;
+    border-top: 1px solid $ft-border-clr;
+    background-color: $ft-bg-clr;
+    padding-top: 2em;
+    padding-bottom: 1em;
+    margin-bottom: 0;
+    text-align: center;
+
+    h1, h2, h3, h4, h5, h6 { color: $ft-color; }
+    p {
+      font-size: .8em;
+      margin-bottom: 0;
+      color: $ft-color;
+
+      &:last-of-type {
+        margin-top: .5rem;
+      }
+    }
+  }
+
+  .social-footer {
+    margin-bottom: 1rem;
+
+    img {
+      margin: 0 .31rem;
+    }
+
+    a {
+      display: inline-block;
+      font-size: 2.7rem;
+      margin: 0 4px;
+      color: rgba(255, 255, 255, 0.94);
+    }
+  }
+
+  .ft-contact {
+    .fa {
+      font-size: 1.5rem;
+      margin-top: 11px;
+      margin: 10px 2px 3px;
+      color: rgba(255, 255, 255, 0.94);
+    }
+  }
+
+  .contact-info {
+    a {
+      display: inline-block;
+    }
+  }
+}
+
+// Fix for panels
+body.front.loggedin #footer {
+  padding-bottom: 4em;
+}

@@ -1,0 +1,37 @@
+/*****************************************
+Bg-box
+*****************************************/
+.bg-box {
+  border-radius: $bx-corner;
+  border: $bx-border;
+  position: relative;
+  display: block;
+}
+
+/**********************************************
+Single Box: sg-blck
+***********************************************/
+.sg-block {
+  position: relative;
+  @extend %margin-a;
+
+  .inner-content{
+    @extend .bg-box;
+    background: $bx-background;
+    padding-top: 10px;
+    padding: 1.25rem;
+
+    &.view{
+      padding-bottom: 2.5em;
+    }
+  }
+
+  &.top-title > h2{
+    @extend %title-a;
+  }
+
+  @media #{$small-only}, #{$medium-only}{
+    margin-top: 10px;
+  }
+}
+

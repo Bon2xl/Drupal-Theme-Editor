@@ -1,0 +1,24 @@
+/**********************************************
+Panel Wrapper
+***********************************************/
+.panels-flexible-region {
+  .pane-block {
+    margin-bottom: 2.45rem;
+  }
+}
+
+.panels-ipe-portlet-wrapper {
+	clear: both;
+	display: block;
+}
+
+
+.welcome-note {
+	text-align: center;
+	font-size: .9rem;
+	.cus-btn {
+		background-color: pink;
+		display: inline-block;
+		padding: 2px 5px;
+	}
+}

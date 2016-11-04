@@ -1,0 +1,31 @@
+/**********************************************
+Google Translate
+***********************************************/
+.gTranslate {
+  float: right;
+  margin: 0 .44rem 1.4em 0;
+  height: 1.75rem;
+
+  & > h2 {
+    display: none;
+  }
+
+  select {
+    padding: 0 .63rem;
+    font-size: .8rem;
+    border-radius: $bx-corner;
+    background: url(../img/icon_arrow-down-hover.svg) no-repeat right center;
+    color: white;
+    opacity: .7;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    @media #{$large-up} {
+      border: 1px solid white;
+      margin: 0 .63rem 0 5px;
+      height: 1.77rem;
+    }
+  }
+}

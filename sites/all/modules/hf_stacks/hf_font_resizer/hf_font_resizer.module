@@ -1,0 +1,28 @@
+<?php
+global $theme;
+
+/**
+ * Implements hook_block_info().
+ */
+function hf_font_resizer_block_info() {
+  $blocks = array();
+  $blocks['hf_font_resizer'] = array(
+	'info' => t('HF Font Resizer')
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function hf_font_resizer_block_view($delta='') {
+    $block = array();
+    switch($delta) {
+  	case 'hf_font_resizer' :
+      module_load_include('tpl.inc', 'hf_font_resizer', 'templates/hf_font_resizer');
+  	  $block['content'] = hf_font_resizer_view_page_callback();
+  	  break;
+    }
+
+    return $block;
+}

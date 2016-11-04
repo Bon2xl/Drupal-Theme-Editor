@@ -1,0 +1,7 @@
+name = Stacks Search Save
+description = Stacks EDS saved searches block.
+core = 7.x
+package = HybridForge Stacks
+version = 7.x-1.0
+dependencies[] = hf_stacks
+dependencies[] = views

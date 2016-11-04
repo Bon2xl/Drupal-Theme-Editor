@@ -1,0 +1,90 @@
+/**********************************************
+Page Admin Dashboard
+***********************************************/
+.page-admin-dashboard {
+
+  .page-title {
+    display: none !important;
+  }
+
+  i.fi-arrows-out {
+    position: absolute;
+    left: .94rem;
+    bottom: .94rem;
+    color: $my-ac-arrow-clr;
+    transform: rotate(-45deg) scale(1.5);
+    opacity: .5;
+    cursor: move !important;
+    background: url("/sites/all/modules/hf_stacks/hf_dashboard/img/fi-arrows-out.svg");
+    background-size: $my-ac-bg-size $my-ac-bg-size;
+    width: $my-ac-bg-size;
+    height: $my-ac-bg-size;
+  }
+
+  #footer {
+    display: none !important;
+  }
+}
+
+
+#-hf-stacks-patron-login-block-form {
+  input[type="submit"] {
+    @extend %form-submit-button;
+    background: $modal-button-bg;
+  }
+}
+
+/**********************************************
+My Account
+***********************************************/
+.page-my-account {
+  .your-save-items {
+    float:left !important;
+  }
+  .patron-info {
+     .views-row {
+      @include panel();
+      background: $main-gradient-fallback;
+      background: $main-gradient;
+      border-radius: $bx-corner;
+      border: $bx-border;
+      padding: $bx-padding;
+
+      h4 {
+        margin-top: .5em !important;
+        border-bottom: 1px solid $my-ac-hd-border-clr;
+        padding-bottom: .25em;
+        margin-bottom: 1em;
+      }
+
+
+      .button {
+        @extend %form-submit-button;
+        margin-bottom:0;
+      }
+
+      strong {
+        font-weight: 600;
+      }
+    }
+
+    @media #{$large-up} {
+      .views-row {
+        padding: 1.25rem 1.25rem 4.25rem;
+        min-height: 360px;
+      }
+      .btn-wrapper {
+        left:0;
+        right:0;
+        bottom:44px;
+        position:absolute;
+      }
+    }
+
+    @media #{$small-only}, #{$medium-only} {
+      ul{
+        margin-left:0!important;
+      }
+    }
+  }
+}
