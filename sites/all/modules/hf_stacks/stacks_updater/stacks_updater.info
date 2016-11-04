@@ -1,4 +1,0 @@
-name = Stacks Updater
-description = Provides scripted updates for stacks using Drush
-core = 7.x
-version = 7.x-1.0

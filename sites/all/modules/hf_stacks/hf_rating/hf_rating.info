@@ -1,8 +1,0 @@
-name = Stacks Rating
-description = Enhanced EDS Search with ratings
-core = 7.x
-package = HybridForge Stacks
-version = 7.x-0.1
-stylesheets[all][] = hf_rating.css
-dependencies[] = hf_stacks
-dependencies[] = hf_eds

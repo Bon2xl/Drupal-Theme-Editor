@@ -1,7 +1,0 @@
-name = Stacks Overrides
-description = Stacks Admin Overrides
-core = 7.x
-package = HybridForge Stacks
-
-;Styles
-stylesheets[all][] = css/hf_overrides.css

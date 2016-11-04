@@ -1,8 +1,0 @@
-name = "Stacks Google Places API"
-description = "Provides the ability to connect nodes to Google Places"
-core = 7.x
-php = 5.3
-package = HybridForge Stacks
-;configure = admin/config/system/configuration
-dependencies[] = geofield
-dependencies[] = hf_stacks

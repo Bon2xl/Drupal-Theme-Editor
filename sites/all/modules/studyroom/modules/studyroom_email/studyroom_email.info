@@ -1,6 +1,0 @@
-name = Studyroom Email
-description = Defines the email templates sent out automatically when rooms are booked.
-package = Study Room
-core = 7.x
-
-dependencies[] = studyroom

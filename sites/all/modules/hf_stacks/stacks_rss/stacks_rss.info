@@ -1,8 +1,0 @@
-name = "Stacks RSS Feeds"
-description = "Provides the ability to create and manage RSS feeds"
-core = 7.x
-php = 5.3
-package = HybridForge Stacks
-
-dependencies[] = feeds
-dependencies[] = hf_stacks

@@ -1,6 +1,0 @@
-name = Stacks Search
-description = Provides configuration options for the Search field
-core = 7.x
-package = HybridForge Stacks
-version = 7.x-1.0
-stylesheets[all][] = hf_stacks_search.css

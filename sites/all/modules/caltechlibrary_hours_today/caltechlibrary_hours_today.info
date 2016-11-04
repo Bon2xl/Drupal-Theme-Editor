@@ -1,4 +1,0 @@
-name = Caltech Library Hours Today
-description = Customizations for a Views block with the location hours for today.
-core = 7.x
-package = Caltech Library

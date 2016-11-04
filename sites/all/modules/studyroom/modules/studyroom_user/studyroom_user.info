@@ -1,7 +1,0 @@
-name = Studyroom User
-description = Add tabs to user profile to show past/future reservations.
-core = 7.x
-package = Study Room
-
-; studyroom
-dependencies[] = studyroom_reservation

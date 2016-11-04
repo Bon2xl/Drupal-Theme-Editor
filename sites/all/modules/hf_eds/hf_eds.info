@@ -1,8 +1,0 @@
-name = "HF EDS Search"
-description = "Implements the EDS Search"
-package = HybridForge
-dependencies[] = hf_eds
-scripts[] = js/hf_eds.js
-scripts[] = js/local_storage.js
-stylesheets[all][] = css/hf_eds.css
-core = 7.x
